@@ -18,6 +18,12 @@
     "description": {
       "label": "Description"
     },
+    "copy_requester": {
+      "label": "Make Requester the current agent"
+    },
+    "copy_description": {
+      "label": "Copy description of the current ticket"
+    },
     "submit": "Create Ticket"
   }
 }

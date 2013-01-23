@@ -18,11 +18,20 @@
           data: ticket,
           type: 'POST'
         };
+      },
+      updateTicket: function(data){
+        return {
+          url: '/api/v2/tickets/'+ this.ticket().id() +'.json',
+          dataType: 'json',
+          data: data,
+          type: 'PUT'
+        };
       }
     },
 
     onActivated: function(data) {
       this.doneLoading = false;
+
       this.loadIfDataReady();
     },
 
@@ -32,7 +41,7 @@
 
         var tmpl = 'home';
 
-        if(!_.isEmpty(this._childID))
+        if(!_.isEmpty(this._childID()))
           tmpl = 'child_is_present';
 
         this.switchTo(tmpl);
@@ -67,11 +76,17 @@
       this.ticket().customField("custom_field_" + this.settings.child_id,
                                 data.ticket.id
                                );
+      var fields = {};
+
+      fields[this.settings.child_id] = data.ticket.id;
+
+      this.ajax('updateTicket', { "ticket": { "fields": fields }});
+
       this.switchTo('child_is_present');
     },
 
     createTicketFail: function(data){
-
+      // TODO: WARN ON FAILURE
     },
     // Helper methods (get/set...)
     _validateField: function(field){
@@ -87,12 +102,18 @@
       return valid;
     },
     _newTicketAsJson: function(){
-      return {
-        "ticket": {
-          "subject": this.$('#subject').val(),
-          "description": this.$('#subject').val()
-        }
+      var params = {
+        "subject": this.$('#subject').val(),
+        "description": this.$('#subject').val()
       };
+
+      if (this.$('#copy_requester').is(':checked'))
+        params.requester_id = this.ticket().requester().id();
+
+      if (this.$('#copy_description').is(':checked'))
+        params.description += '\n--- Original Description --- \n' + this.ticket().description();
+
+      return { "ticket": params };
     },
     _childID: function(){
       return this.ticket().customField("custom_field_" + this.settings.child_id);

@@ -9,6 +9,12 @@
         <label>{{t "form.description.label"}}</label>
         <textarea id="description" class="input-medium"></textarea>
       </div>
+      <label class="checkbox">
+        <input type="checkbox" id="copy_requester">{{t "form.copy_requester.label"}}
+      </label>
+      <label class="checkbox">
+        <input type="checkbox" id="copy_description">{{t "form.copy_description.label"}}
+      </label>
       <button type="submit" id="create-linked-ticket" class="btn btn-success btn-large">{{t "form.submit"}}</button>
     </form>
   </div>
