@@ -6,7 +6,7 @@
     },
 
     onActivated: function() {
+
     }
   };
-
 }());

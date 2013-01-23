@@ -1,13 +1,13 @@
 {
-    "app": {
-        "description":  "Create and link a ticket from an existing one",
-        "name":         "Linked Ticket",
+  "app": {
+    "description":  "Create and link a ticket from an existing one",
+    "name":         "Linked Ticket",
 
-        "parameters": {
-            "child_id":{
-                "label": "Linked Ticket ID",
-                "helpText": "Place a custom text field ID to store the Linked Ticket ID"
-            }
-        }
+    "parameters": {
+      "child_id":{
+        "label": "Linked Ticket ID",
+        "helpText": "Place a custom text field ID to store the Linked Ticket ID"
+      }
     }
+  }
 }
