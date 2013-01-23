@@ -9,5 +9,15 @@
         "helpText": "Place a custom text field ID to store the Linked Ticket ID"
       }
     }
+  },
+
+  "form": {
+    "subject":{
+      "label": "Subject"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "submit": "Create Ticket"
   }
 }

@@ -1,0 +1,15 @@
+<div class="well">
+  <div class="row-fluid">
+    <form>
+      <div class="control-group">
+        <label>{{t "form.subject.label"}}</label>
+        <input type="text" class="input-medium" id="subject"/>
+      </div>
+      <div class="control-group">
+        <label>{{t "form.description.label"}}</label>
+        <textarea id="description" class="input-medium"></textarea>
+      </div>
+      <button type="submit" id="create-linked-ticket" class="btn btn-success btn-large">{{t "form.submit"}}</button>
+    </form>
+  </div>
+</div>

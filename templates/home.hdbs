@@ -1,0 +1,5 @@
+<div class="well">
+  <div class="row-fluid">
+    <a href="#" id="new-linked-ticket" class="btn btn-success btn-large">{{t "form.submit"}}</a>
+  </div>
+</div>
