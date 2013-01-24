@@ -18,7 +18,9 @@
           <input type="checkbox" id="copy_description">{{t "form.copy_description.label"}}
         </label>
       </div>
-      <button type="submit" id="create-linked-ticket" class="btn btn-success btn-large">{{t "form.submit"}}</button>
+      <div class="centered">
+        <button type="submit" id="create-linked-ticket" class="btn btn-success btn-large">{{t "form.submit"}}</button>
+      </div>
     </form>
   </div>
 </div>
