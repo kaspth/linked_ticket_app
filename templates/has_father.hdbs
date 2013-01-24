@@ -1,0 +1,6 @@
+<div class="well-small">
+  <p>{{t "has_father.text"}}</p>
+  <p>
+    <a href="#/tickets/{{id}}">{{t "has_father.link"}}</a>
+  </p>
+</div>

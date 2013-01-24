@@ -4,11 +4,23 @@
     "name":         "Linked Ticket",
 
     "parameters": {
-      "child_id":{
-        "label": "Linked Ticket ID",
-        "helpText": "Place a custom text field ID to store the Linked Ticket ID"
+      "data_field":{
+        "label": "Data Field",
+        "helpText": "Place a custom text field ID to store the Linked Ticket datas."
       }
     }
+  },
+
+  "ticket_creation_failed": "An error occured the creation process. Please try again later.",
+
+  "has_father": {
+    "text": "This ticket has a referring ticket.",
+    "link": "Click here to see it."
+  },
+
+  "has_child": {
+    "text": "This ticket has a descendant.",
+    "link": "Click here to see it."
   },
 
   "form": {
