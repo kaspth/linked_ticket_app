@@ -153,6 +153,9 @@
         "fields": {}
       };
 
+      if (!_.isEmpty(this.settings.child_tag))
+        params.tags = [ this.settings.child_tag ];
+
       params.fields[this.settings.data_field] = 'child_of:' + this.ticket().id();
 
       if (this.$('#copy_requester').is(':checked'))
