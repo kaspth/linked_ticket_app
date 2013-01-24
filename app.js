@@ -1,16 +1,18 @@
 (function() {
-
   return {
     childRegex: /child_of:(\d*)/,
     fatherRegex: /father_of:(\d*)/,
+    descriptionDelimiter: '\n--- Original Description --- \n',
 
     events: {
       'app.activated'                   : 'onActivated',
       'ticket.status.changed'           : 'loadIfDataReady',
+      'createChildTicket.done'          : 'createChildTicketDone',
+      'createChildTicket.fail'          : 'createChildTicketFail',
+      'fetchTicket.done'                : 'fetchTicketDone',
       'click #new-linked-ticket'        : 'displayForm',
       'click #create-linked-ticket'     : 'create',
-      'createChildTicket.done'          : 'createChildTicketDone',
-      'createChildTicket.fail'          : 'createChildTicketFail'
+      'click #copy_description'         : 'copyDescription'
     },
 
     requests: {
@@ -29,6 +31,13 @@
           data: data,
           type: 'PUT'
         };
+      },
+      fetchTicket: function(id){
+        return {
+          url: '/api/v2/tickets/' + id + '.json?include=groups,users',
+          dataType: 'json',
+          type: 'GET'
+        };
       }
     },
 
@@ -44,14 +53,30 @@
       if(!this.doneLoading &&
         !!_.isEmpty(this.ticket().id())){
 
-        if (this.hasChild())
-          return this.switchTo('has_child',{ id: this.childID() });
-
-        if (this.hasFather())
-          return this.switchTo('has_father', { id: this.fatherID() });
+        if (this.hasChild() || this.hasFather())
+          return this.ajax('fetchTicket', this.childID() || this.fatherID());
 
         this.switchTo('home');
       }
+    },
+
+    fetchTicketDone: function(data){
+      var assignee = _.find(data.users, function(user){
+        return user.id == data.ticket.assignee_id;
+      }),
+        custom_field = _.find(data.ticket.custom_fields, function(field){
+          return field.id == this.settings.data_field;
+        }, this),
+      is_child = this.childRegex.test(custom_field.value);
+
+      if (assignee)
+        assignee = assignee.name;
+
+      this.switchTo('has_relation', { ticket: data.ticket,
+                                      is_child: is_child,
+                                      assignee: assignee,
+                                      groups: data.groups
+                                    });
     },
 
     displayForm: function(event){
@@ -72,7 +97,8 @@
         isValid = true;
 
       _.each(fields, function(field){
-        isValid = this.validateField(field, isValid);
+        if (!this.validateField(field, isValid))
+          isValid = false;
       }, this);
 
       return isValid;
@@ -90,11 +116,21 @@
 
       this.ajax('updateCurrentTicket', { "ticket": { "fields": field }});
 
-      this.switchTo('has_child', { id: data.ticket.id });
+      this.ajax('fetchTicket', data.ticket.id);
     },
 
     createChildTicketFail: function(data){
       services.notify(this.I18n.t('ticket_creation_failed'), 'error');
+    },
+
+    copyDescription: function(){
+      var sDescription = this.$('#description').val().split(this.descriptionDelimiter);
+      var ret = sDescription[0];
+
+      if (sDescription.length === 1)
+        ret += this.descriptionDelimiter + this.ticket().description();
+
+      this.$('#description').val(ret);
     },
 
     // Private... I guess.
@@ -113,7 +149,7 @@
     childTicketAsJson: function(){
       var params = {
         "subject": this.$('#subject').val(),
-        "description": this.$('#subject').val(),
+        "description": this.$('#description').val(),
         "fields": {}
       };
 
@@ -121,9 +157,6 @@
 
       if (this.$('#copy_requester').is(':checked'))
         params.requester_id = this.ticket().requester().id();
-
-      if (this.$('#copy_description').is(':checked'))
-        params.description += '\n--- Original Description --- \n' + this.ticket().description();
 
       return { "ticket": params };
     },

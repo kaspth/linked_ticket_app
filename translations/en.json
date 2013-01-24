@@ -12,16 +12,8 @@
   },
 
   "ticket_creation_failed": "An error occured the creation process. Please try again later.",
-
-  "has_father": {
-    "text": "This ticket has a referring ticket.",
-    "link": "Click here to see it."
-  },
-
-  "has_child": {
-    "text": "This ticket has a descendant.",
-    "link": "Click here to see it."
-  },
+  "has_father": "This ticket has a referring ticket.",
+  "has_child": "This ticket has a descendant.",
 
   "form": {
     "subject":{

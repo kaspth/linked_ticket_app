@@ -1,0 +1,25 @@
+<div class="well well-small">
+  <p>
+    {{#if is_child}}
+      {{t "has_child"}}
+    {{else}}
+      {{t "has_father"}}
+    {{/if}}
+  </p>
+  <p>
+    {{#with ticket}}
+      <a href="#/tickets/{{id}}">Ticket {{id}}</a>
+      <br/>
+      Status: {{status}}
+      <br/>
+      Type: {{type}}
+      <br/>
+    {{/with}}
+      Assignee: {{assignee}}
+      <br/>
+      Groups:
+      {{#each groups}}
+        {{this.name}},
+      {{/each}}
+  </p>
+</div>
