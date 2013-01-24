@@ -12,7 +12,8 @@
       'fetchTicket.done'                : 'fetchTicketDone',
       'click #new-linked-ticket'        : 'displayForm',
       'click #create-linked-ticket'     : 'create',
-      'click #copy_description'         : 'copyDescription'
+      'click #copy_description'         : 'copyDescription',
+      'click #copy_requester'           : 'copyRequester'
     },
 
     requests: {
@@ -133,6 +134,10 @@
       this.$('#description').val(ret);
     },
 
+    copyRequester: function(){
+      this.$('#requester_fields').toggle();
+    },
+
     // Private... I guess.
     validateField: function(field){
       var fieldSelector = '#' +field,
@@ -156,10 +161,16 @@
       if (!_.isEmpty(this.settings.child_tag))
         params.tags = [ this.settings.child_tag ];
 
-      params.fields[this.settings.data_field] = 'child_of:' + this.ticket().id();
-
-      if (this.$('#copy_requester').is(':checked'))
+      if (this.$('#copy_requester').is(':checked')){
         params.requester_id = this.ticket().requester().id();
+      } else {
+        params.requester = {
+          "name": this.$('#requester_name').val() ,
+          "email": this.$('#requester_email').val()
+        };
+      }
+
+      params.fields[this.settings.data_field] = 'child_of:' + this.ticket().id();
 
       return { "ticket": params };
     },

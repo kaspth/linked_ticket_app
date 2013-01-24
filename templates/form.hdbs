@@ -10,6 +10,19 @@
           <input type="checkbox" id="copy_description">{{t "form.copy_description.label"}}
         </label>
       </div>
+
+      <div id="requester_fields">
+        <div class="control-group">
+          <label>{{t "form.requester_name.label"}}</label>
+          <input type="text" class="input input-full-width" id="requester_name"/>
+        </div>
+
+        <div class="control-group">
+          <label>{{t "form.requester_email.label"}}</label>
+          <input type="text" id="requester_email" class="input input-full-width"></textarea>
+        </div>
+      </div>
+
       <div class="control-group">
         <label>{{t "form.subject.label"}}</label>
         <input type="text" class="input input-full-width" id="subject"/>

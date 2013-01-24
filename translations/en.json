@@ -26,6 +26,12 @@
     "description": {
       "label": "Description"
     },
+    "requester_name": {
+      "label": "Requester Name"
+    },
+    "requester_email": {
+      "label": "Requester Email"
+    },
     "copy_requester": {
       "label": "Make Requester the current agent"
     },
