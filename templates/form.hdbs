@@ -2,14 +2,6 @@
   <div class="row-fluid">
     <form>
       <div class="control-group">
-        <label>{{t "form.subject.label"}}</label>
-        <input type="text" class="input input-full-width" id="subject"/>
-      </div>
-      <div class="control-group">
-        <label>{{t "form.description.label"}}</label>
-        <textarea id="description" rows="8" class="input input-full-width"></textarea>
-      </div>
-      <div class="control-group">
         <label class="checkbox">
           <input type="checkbox" id="copy_requester">{{t "form.copy_requester.label"}}
         </label>
@@ -17,6 +9,14 @@
         <label class="checkbox">
           <input type="checkbox" id="copy_description">{{t "form.copy_description.label"}}
         </label>
+      </div>
+      <div class="control-group">
+        <label>{{t "form.subject.label"}}</label>
+        <input type="text" class="input input-full-width" id="subject"/>
+      </div>
+      <div class="control-group">
+        <label>{{t "form.description.label"}}</label>
+        <textarea id="description" rows="8" class="input input-full-width"></textarea>
       </div>
       <div class="centered">
         <button type="submit" id="create-linked-ticket" class="btn btn-success btn-large">{{t "form.submit"}}</button>
