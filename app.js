@@ -39,6 +39,12 @@
           dataType: 'json',
           type: 'GET'
         };
+      },
+      autocompleteRequester: function(email){
+        return {
+          url: '/api/v2/users/autocomplete.json?email=' + email,
+          type: 'POST'
+        };
       }
     },
 
@@ -84,6 +90,8 @@
       event.preventDefault();
 
       this.switchTo('form');
+
+      this.bindAutocompleteOnRequesterEmail();
     },
 
     create: function(event){
@@ -136,6 +144,21 @@
 
     copyRequester: function(){
       this.$('#requester_fields').toggle();
+    },
+
+    bindAutocompleteOnRequesterEmail: function(){
+      var self = this;
+
+      this.$('#requester_email').autocomplete({
+        minLength: 3,
+        source: function(request, response) {
+          self.ajax('autocompleteRequester', request.term).done(function(data){
+            response(_.map(data.users, function(user){
+              return {"label": user.email, "value": user.email};
+            }));
+          });
+        }
+      });
     },
 
     // Private... I guess.
