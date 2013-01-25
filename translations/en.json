@@ -26,9 +26,6 @@
     "description": {
       "label": "Description"
     },
-    "requester_name": {
-      "label": "Requester Name"
-    },
     "requester_email": {
       "label": "Requester Email"
     },
@@ -38,6 +35,7 @@
     "copy_description": {
       "label": "Copy description of the current ticket"
     },
-    "submit": "Create Ticket"
+    "submit": "Create Ticket",
+    "loading": "Submitting..."
   }
 }

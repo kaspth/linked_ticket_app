@@ -13,11 +13,6 @@
 
       <div id="requester_fields">
         <div class="control-group">
-          <label>{{t "form.requester_name.label"}}</label>
-          <input type="text" class="input input-full-width" id="requester_name"/>
-        </div>
-
-        <div class="control-group">
           <label>{{t "form.requester_email.label"}}</label>
           <input type="text" id="requester_email" class="input input-full-width"></textarea>
         </div>
@@ -32,7 +27,7 @@
         <textarea id="description" rows="8" class="input input-full-width"></textarea>
       </div>
       <div class="centered">
-        <button type="submit" id="create-linked-ticket" class="btn btn-success btn-large">{{t "form.submit"}}</button>
+        <button type="submit" id="create-linked-ticket" class="btn btn-success btn-large" data-loading-text="{{t "form.loading"}}">{{t "form.submit"}}</button>
       </div>
     </form>
   </div>
