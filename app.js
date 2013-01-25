@@ -70,11 +70,13 @@
     fetchTicketDone: function(data){
       var assignee = _.find(data.users, function(user){
         return user.id == data.ticket.assignee_id;
-      }),
-        custom_field = _.find(data.ticket.custom_fields, function(field){
-          return field.id == this.settings.data_field;
-        }, this),
-      is_child = this.childRegex.test(custom_field.value);
+      });
+
+      var custom_field = _.find(data.ticket.custom_fields, function(field){
+        return field.id == this.settings.data_field;
+      }, this);
+
+      var is_child = this.childRegex.test(custom_field.value);
 
       if (assignee)
         assignee = assignee.name;
