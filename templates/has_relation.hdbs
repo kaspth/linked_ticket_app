@@ -18,8 +18,8 @@
       Assignee: {{assignee}}
       <br/>
       Group:
-      {{#with group}}
+    {{#with group}}
         {{name}}
-      {{/each}}
+    {{/with}}
   </p>
 </div>
