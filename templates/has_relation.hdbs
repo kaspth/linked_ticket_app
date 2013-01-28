@@ -17,9 +17,9 @@
     {{/with}}
       Assignee: {{assignee}}
       <br/>
-      Groups:
-      {{#each groups}}
-        {{this.name}},
+      Group:
+      {{#with group}}
+        {{name}}
       {{/each}}
   </p>
 </div>

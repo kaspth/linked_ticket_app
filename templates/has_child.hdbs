@@ -1,6 +1,0 @@
-<div class="well-small">
-  <p>{{t "has_child.text"}}</p>
-  <p>
-    <a href="#/tickets/{{id}}">{{t "has_child.link"}}</a>
-  </p>
-</div>
