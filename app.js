@@ -64,6 +64,8 @@
           return this.ajax('fetchTicket', this.childID() || this.fatherID());
 
         this.switchTo('home');
+
+        this.doneLoading = true;
       }
     },
 
