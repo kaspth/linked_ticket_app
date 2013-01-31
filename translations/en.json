@@ -37,5 +37,13 @@
     },
     "submit": "Create Ticket",
     "loading": "Submitting..."
+  },
+
+  "ticket": {
+    "id": "ID",
+    "status": "Status",
+    "type": "Type",
+    "assignee": "Assignee",
+    "group": "Group"
   }
 }

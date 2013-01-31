@@ -1,25 +1,77 @@
 <div class="well well-small">
-  <p>
-    {{#if is_child}}
-      {{t "has_child"}}
-    {{else}}
-      {{t "has_father"}}
-    {{/if}}
-  </p>
-  <p>
-    {{#with ticket}}
-      <a href="#/tickets/{{id}}">Ticket {{id}}</a>
-      <br/>
-      Status: {{status}}
-      <br/>
-      Type: {{type}}
-      <br/>
-    {{/with}}
-      Assignee: {{assignee}}
-      <br/>
-      Group:
-    {{#with group}}
-        {{name}}
-    {{/with}}
-  </p>
+  <div class="row-fluid">
+    <div class="span12">
+      <a href="#/tickets/{{ticket.id}}">
+        <strong>
+          >>&nbsp;
+          {{#if is_child}}
+          {{t "has_child"}}
+          {{else}}
+          {{t "has_father"}}
+          {{/if}}
+        </strong>
+      </a>
+    </div>
+
+    <div class="span12">
+      <div class="span3">
+        <strong>
+          {{t "ticket.id"}}
+        </strong>
+      </div>
+      <div class="span9">
+        <strong>
+          <a href="#/tickets/{{ticket.id}}">
+            {{ticket.id}}
+          </a>
+        </strong>
+      </div>
+    </div>
+
+    <div class="span12">
+      <div class="span3">
+        <strong>
+          {{t "ticket.status"}}
+        </strong>
+      </div>
+      <div class="span9">
+        <span class="ticket_status_label {{ticket.status}}">
+          <strong>{{ticket.status}}</strong>
+        </span>
+      </div>
+    </div>
+
+    <div class="span12">
+      <div class="span3">
+        <strong>
+          {{t "ticket.type"}}
+        </strong>
+      </div>
+      <div class="span9">
+        {{ticket.type}}
+      </div>
+    </div>
+
+    <div class="span12">
+      <div class="span3">
+        <strong>
+          {{t "ticket.assignee"}}
+        </strong>
+      </div>
+      <div class="span9">
+        {{assignee}}
+      </div>
+    </div>
+
+    <div class="span12">
+      <div class="span3">
+        <strong>
+          {{t "ticket.group"}}
+        </strong>
+      </div>
+      <div class="span9">
+        {{group.name}}
+      </div>
+    </div>
+  </div>
 </div>
