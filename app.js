@@ -84,7 +84,8 @@
         return item.id == data.ticket.group_id;
       });
 
-      assignee = assignee.name || "";
+      if (assignee)
+        assignee = assignee.name;
 
       this.switchTo('has_relation', { ticket: data.ticket,
                                       is_child: is_child,
