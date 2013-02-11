@@ -218,7 +218,9 @@
         users = this.users.filter(function(user){
           return user_ids.contains(user.id);
         });
-
+        this.$('#assignee-group').show();
+      } else {
+        this.$('#assignee-group').hide();
       }
 
       this.fillUserSelect(users);

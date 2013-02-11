@@ -30,7 +30,7 @@
           </select>
       </div>
 
-      <div class="control-group">
+      <div class="control-group" id="assignee-group" style="display:none;">
           <label>{{t "form.assignee.label"}}</label>
           <select id="assignee" class="input input-full-width">
             <option>-</option>
