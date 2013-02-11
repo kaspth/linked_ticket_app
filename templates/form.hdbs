@@ -14,13 +14,27 @@
       <div id="requester_fields">
         <div class="control-group">
           <label>{{t "form.requester_email.label"}}</label>
-          <input type="text" id="requester_email" class="input input-full-width"></textarea>
+          <input type="text" id="requester_email" class="input input-full-width" />
         </div>
 
         <div class="control-group">
           <label>{{t "form.requester_name.label"}}</label>
-          <input type="text" id="requester_name" class="input input-full-width"></textarea>
+          <input type="text" id="requester_name" class="input input-full-width" />
         </div>
+      </div>
+
+      <div class="control-group">
+          <label>{{t "form.group.label"}}</label>
+          <select id="group" class="input input-full-width">
+            <option>-</option>
+          </select>
+      </div>
+
+      <div class="control-group">
+          <label>{{t "form.assignee.label"}}</label>
+          <select id="assignee" class="input input-full-width">
+            <option>-</option>
+          </select>
       </div>
 
       <div class="control-group">

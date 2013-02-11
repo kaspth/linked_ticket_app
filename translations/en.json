@@ -16,6 +16,7 @@
   },
 
   "ticket_creation_failed": "An error occured the creation process. Please try again later.",
+  "fetch_groups_and_users_failed": "An error occured when fetching Users and Groups.",
   "has_father": "This ticket has a parent ticket.",
   "has_child": "This ticket has a child ticket.",
 
@@ -31,6 +32,12 @@
     },
     "requester_name": {
       "label": "Requester Name (Only for new requesters)"
+    },
+    "group": {
+      "label": "Group"
+    },
+    "assignee": {
+      "label": "Assignee"
     },
     "copy_requester": {
       "label": "Make Requester the current agent"

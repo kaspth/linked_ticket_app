@@ -10,10 +10,13 @@
       'createChildTicket.done'          : 'createChildTicketDone',
       'createChildTicket.fail'          : 'createChildTicketFail',
       'fetchTicket.done'                : 'fetchTicketDone',
+      'fetchGroupsAndUsers.done'        : 'fetchGroupsAndUsersDone',
+      'fetchGroupsAndUsers.fail'        : 'fetchGroupsAndUsersFail',
       'click #new-linked-ticket'        : 'displayForm',
       'click #create-linked-ticket'     : 'create',
       'click #copy_description'         : 'copyDescription',
-      'click #copy_requester'           : 'copyRequester'
+      'click #copy_requester'           : 'copyRequester',
+      'change #group'                   : 'groupChanged'
     },
 
     requests: {
@@ -45,6 +48,12 @@
           url: '/api/v2/users/autocomplete.json?email=' + email,
           type: 'POST'
         };
+      },
+      fetchGroupsAndUsers: function(){
+        return {
+          url: '/api/v2/group_memberships.json?include=users,groups',
+          type: 'GET'
+        };
       }
     },
 
@@ -62,6 +71,8 @@
 
         if (this.hasChild() || this.hasFather())
           return this.ajax('fetchTicket', this.childID() || this.fatherID());
+
+        this.ajax('fetchGroupsAndUsers');
 
         this.switchTo('home');
 
@@ -98,6 +109,8 @@
       event.preventDefault();
 
       this.switchTo('form');
+
+      this.fillGroups();
 
       this.bindAutocompleteOnRequesterEmail();
     },
@@ -169,7 +182,58 @@
       });
     },
 
+    fetchGroupsAndUsersDone: function(data){
+      this.users = data.users;
+      this.groups = data.groups;
+      this.group_memberships = data.group_memberships;
+    },
+
+    fetchGroupsAndUsersFail: function(){
+      services.notify(this.I18n.t('fetch_groups_and_users_failed'), 'error');
+    },
+
     // Private... I guess.
+
+    fillGroups: function(){
+      this.$('#group').html(this.optionsFor(this.groups));
+    },
+
+    fillUserSelect: function(users){
+      this.$('#assignee').html(this.optionsFor(users));
+    },
+
+    groupChanged: function(){
+      var group_id = Number(this.$('#group').val());
+      var users = [];
+
+      if (_.isFinite(group_id)){
+        var user_ids = this.group_memberships
+          .filter(function(membership) {
+            return membership.group_id == group_id;
+          })
+          .map(function(membership){
+            return membership.user_id;
+          });
+
+        users = this.users.filter(function(user){
+          return user_ids.contains(user.id);
+        });
+
+      }
+
+      this.fillUserSelect(users);
+    },
+
+    optionsFor: function(collection){
+      var options = '<option>-</option>';
+
+      _.each(collection, function(item){
+        options += '<option value="'+item.id+'">'+item.name+'</option>';
+      });
+
+      return options;
+    },
+
     validateField: function(field){
       var fieldSelector = '#' +field,
       valid = false;
@@ -188,6 +252,8 @@
         "description": this.$('#description').val(),
         "fields": {}
       };
+      var group_id = Number(this.$('#group').val());
+      var assignee_id = Number(this.$('#assignee').val());
 
       if (!_.isEmpty(this.settings.child_tag))
         params.tags = [ this.settings.child_tag ];
@@ -200,6 +266,12 @@
           "name": this.$('#requester_name').val()
         };
       }
+
+      if (_.isFinite(group_id))
+        params.group_id = group_id;
+
+      if (_.isFinite(assignee_id))
+        params.assignee_id = assignee_id;
 
       params.fields[this.settings.data_field] = 'child_of:' + this.ticket().id();
 
