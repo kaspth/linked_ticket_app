@@ -196,7 +196,8 @@
         params.requester_id = this.ticket().requester().id();
       } else {
         params.requester = {
-          "email": this.$('#requester_email').val()
+          "email": this.$('#requester_email').val(),
+          "name": this.$('#requester_name').val()
         };
       }
 
