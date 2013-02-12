@@ -118,8 +118,10 @@
     create: function(event){
       event.preventDefault();
 
-      if (this.validate())
+      if (this.validate()){
+        this.spin();
         this.ajax('createChildTicket', this.childTicketAsJson());
+      }
     },
 
     validate: function(){
@@ -147,10 +149,13 @@
       this.ajax('updateCurrentTicket', { "ticket": { "fields": field }});
 
       this.ajax('fetchTicket', data.ticket.id);
+
+      this.unSpin();
     },
 
     createChildTicketFail: function(data){
       services.notify(this.I18n.t('ticket_creation_failed'), 'error');
+      this.unSpin();
     },
 
     copyDescription: function(){
@@ -206,6 +211,8 @@
       var group_id = Number(this.$('#group').val());
       var users = [];
 
+      this.spin();
+
       if (_.isFinite(group_id)){
         var user_ids = this.group_memberships
           .filter(function(membership) {
@@ -224,6 +231,8 @@
       }
 
       this.fillUserSelect(users);
+
+      this.unSpin();
     },
 
     optionsFor: function(collection){
@@ -299,6 +308,12 @@
         return;
 
       return this.childRegex.exec(this.dataField())[1];
+    },
+    spin: function(){
+      this.$('#spinner').show();
+    },
+    unSpin: function(){
+      this.$('#spinner').hide();
     }
   };
 }());

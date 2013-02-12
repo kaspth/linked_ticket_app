@@ -9,3 +9,20 @@
 .centered {
     text-align: center;
 }
+
+div#spinner
+{
+    display: none;
+    width:100px;
+    height: 100px;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    background:app-asset-url("spinner.gif") no-repeat center center;
+    text-align:center;
+    padding:10px;
+    margin-left: -50px;
+    margin-top: -50px;
+    z-index:2;
+    overflow: auto;
+}
