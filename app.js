@@ -1,7 +1,95 @@
 (function() {
+  function Form($el){
+    this.$el = $el;
+
+    this.subject = function(val){ return this._getOrSet('#subject', val); };
+    this.description = function(val){return this._getOrSet('#description', val); };
+    this.group = function(val){return this._getOrSet('#group', val); };
+    this.assignee = function(val){return this._getOrSet('#assignee', val); };
+    this.requesterEmail = function(val){return this._getOrSet('#requester_email', val); };
+    this.requesterName = function(val){return this._getOrSet('#requester_name', val); };
+
+    this.copyRequesterChecked = function(){
+      return this.$el.find('#copy_requester').is(':checked');
+    };
+
+    this.isValid = function(){
+      var fields = [ 'subject','description' ],
+      isValid = true;
+
+      _.each(fields, function(field){
+        if (!this.validateField(field))
+          isValid = false;
+      }, this);
+
+      return isValid;
+    };
+
+    this.validateField = function(field){
+      var viewField = this.$el.find('#' + field),
+      valid = false;
+
+      if (_.isEmpty(viewField.val())){
+        viewField.parent('.control-group').addClass('error');
+      } else {
+        viewField.parent('.control-group').removeClass('error');
+        valid = true;
+      }
+      return valid;
+    };
+
+    this.toggleRequester = function(){
+      return this.$el.find('#requester_fields').toggle();
+    };
+
+    this.fillGroupWithCollection = function(collection){
+      return this.$el.find('#group').html(this._htmlOptionsFor(collection));
+    };
+
+    this.fillAssigneeWithCollection = function(collection){
+      return this.$el.find('#assignee').html(this._htmlOptionsFor(collection));
+    };
+
+    this.showAssignee = function(){
+      return this.$el.find('#assignee-group').show();
+    };
+
+    this.hideAssignee = function(){
+      return this.$el.find('#assignee-group').hide();
+    };
+
+    this._htmlOptionsFor =  function(collection){
+      var options = '<option>-</option>';
+
+      _.each(collection, function(item){
+        options += '<option value="'+item.id+'">'+item.name+'</option>';
+      });
+
+      return options;
+    };
+
+    this._getOrSet = function(selector, val){
+      if (_.isUndefined(val))
+        return this.$el.find(selector).val();
+      return this.$el.find(selector).val(val);
+    };
+  }
+
+  function Spinner($el){
+    this.$el = $el;
+
+    this.spin = function(){
+      this.$el.show();
+    };
+
+    this.unSpin = function(){
+      this.$el.hide();
+    };
+  }
+
   return {
     childRegex: /child_of:(\d*)/,
-    parentRegex: /(?:father_of|parent_of):(\d*)/,
+    parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
     descriptionDelimiter: '\n--- Original Description --- \n',
 
     events: {
@@ -15,7 +103,7 @@
       'click #new-linked-ticket'        : 'displayForm',
       'click #create-linked-ticket'     : 'create',
       'click #copy_description'         : 'copyDescription',
-      'click #copy_requester'           : 'copyRequester',
+      'click #copy_requester'           : function(){this.form.toggleRequester();},
       'change #group'                   : 'groupChanged'
     },
 
@@ -60,7 +148,7 @@
     onActivated: function(data) {
       this.doneLoading = false;
 
-      this.ticketFields("custom_field_" + this.settings.data_field).hide();
+      this.ticketFields("custom_field_" + this.ancestryFieldId()).hide();
 
       this.loadIfDataReady();
     },
@@ -87,7 +175,7 @@
       });
 
       var custom_field = _.find(data.ticket.custom_fields, function(field){
-        return field.id == this.settings.data_field;
+        return field.id == this.ancestryFieldId();
       }, this);
 
       var is_child = this.childRegex.test(custom_field.value);
@@ -111,7 +199,10 @@
 
       this.switchTo('form');
 
-      this.fillGroups();
+      this.form = new Form(this.$('form#linked_ticket_form'));
+      this.spinner = new Spinner(this.$('#spinner'));
+
+      this.form.fillGroupWithCollection(this.groups);
 
       this.bindAutocompleteOnRequesterEmail();
     },
@@ -119,63 +210,51 @@
     create: function(event){
       event.preventDefault();
 
-      if (this.validate()){
-        this.spin();
+      if (this.form.isValid()){
+        this.spinner.spin();
         this.ajax('createChildTicket', this.childTicketAsJson());
       }
-    },
-
-    validate: function(){
-      var fields = [ 'subject','description' ],
-        isValid = true;
-
-      _.each(fields, function(field){
-        if (!this.validateField(field))
-          isValid = false;
-      }, this);
-
-      return isValid;
     },
 
     createChildTicketDone: function(data){
       var field = {};
       var value = "parent_of:" + data.ticket.id;
 
-      this.ticket().customField("custom_field_" + this.settings.data_field,
+      this.ticket().customField("custom_field_" + this.ancestryFieldId(),
                                 value
                                );
 
-      field[this.settings.data_field] = value;
+      field[this.ancestryFieldId()] = value;
 
       this.ajax('updateCurrentTicket', { "ticket": { "fields": field }});
 
       this.ajax('fetchTicket', data.ticket.id);
 
-      this.unSpin();
+      this.spinner.unSpin();
     },
 
     createChildTicketFail: function(data){
       services.notify(this.I18n.t('ticket_creation_failed'), 'error');
-      this.unSpin();
+
+      this.spinner.unSpin();
     },
 
     copyDescription: function(){
-      var sDescription = this.$('#description').val().split(this.descriptionDelimiter);
-      var ret = sDescription[0];
+      var description = this.form.description()
+        .split(this.descriptionDelimiter);
 
-      if (sDescription.length === 1)
+      var ret = description[0];
+
+      if (description.length === 1)
         ret += this.descriptionDelimiter + this.ticket().description();
 
-      this.$('#description').val(ret);
-    },
-
-    copyRequester: function(){
-      this.$('#requester_fields').toggle();
+      this.form.description(ret);
     },
 
     bindAutocompleteOnRequesterEmail: function(){
       var self = this;
 
+      // bypass this.form to bind the autocomplete.
       this.$('#requester_email').autocomplete({
         minLength: 3,
         source: function(request, response) {
@@ -198,21 +277,9 @@
       services.notify(this.I18n.t('fetch_groups_and_users_failed'), 'error');
     },
 
-    // Private... I guess.
-
-    fillGroups: function(){
-      this.$('#group').html(this.optionsFor(this.groups));
-    },
-
-    fillUserSelect: function(users){
-      this.$('#assignee').html(this.optionsFor(users));
-    },
-
     groupChanged: function(){
-      var group_id = Number(this.$('#group').val());
+      var group_id = Number(this.form.group());
       var users = [];
-
-      this.spin();
 
       if (_.isFinite(group_id)){
         var user_ids = this.group_memberships
@@ -226,56 +293,33 @@
         users = this.users.filter(function(user){
           return user_ids.contains(user.id);
         });
-        this.$('#assignee-group').show();
+        this.form.showAssignee();
       } else {
-        this.$('#assignee-group').hide();
+        this.form.hideAssignee();
       }
 
-      this.fillUserSelect(users);
-
-      this.unSpin();
+      this.form.fillAssigneeWithCollection(users);
     },
 
-    optionsFor: function(collection){
-      var options = '<option>-</option>';
 
-      _.each(collection, function(item){
-        options += '<option value="'+item.id+'">'+item.name+'</option>';
-      });
-
-      return options;
-    },
-
-    validateField: function(field){
-      var fieldSelector = '#' +field,
-      valid = false;
-
-      if (_.isEmpty(this.$(fieldSelector).val())){
-        this.$(fieldSelector).parent('.control-group').addClass('error');
-      } else {
-        this.$(fieldSelector).parent('.control-group').removeClass('error');
-        valid = true;
-      }
-      return valid;
-    },
     childTicketAsJson: function(){
       var params = {
-        "subject": this.$('#subject').val(),
-        "description": this.$('#description').val(),
+        "subject": this.form.subject(),
+        "description": this.form.description(),
         "fields": {}
       };
-      var group_id = Number(this.$('#group').val());
-      var assignee_id = Number(this.$('#assignee').val());
+      var group_id = Number(this.form.group());
+      var assignee_id = Number(this.form.assignee());
 
       if (!_.isEmpty(this.settings.child_tag))
         params.tags = [ this.settings.child_tag ];
 
-      if (this.$('#copy_requester').is(':checked')){
+      if (this.form.copyRequesterChecked()){
         params.requester_id = this.ticket().requester().id();
       } else {
         params.requester = {
-          "email": this.$('#requester_email').val(),
-          "name": this.$('#requester_name').val()
+          "email": this.form.requesterEmail(),
+          "name": this.form.requesterName()
         };
       }
 
@@ -285,36 +329,33 @@
       if (_.isFinite(assignee_id))
         params.assignee_id = assignee_id;
 
-      params.fields[this.settings.data_field] = 'child_of:' + this.ticket().id();
+      params.fields[this.ancestryFieldId()] = 'child_of:' + this.ticket().id();
 
       return { "ticket": params };
     },
-    dataField: function(){
-      return this.ticket().customField("custom_field_" + this.settings.data_field);
+    ancestryValue: function(){
+      return this.ticket().customField("custom_field_" + this.ancestryFieldId());
+    },
+    ancestryFieldId: function(){
+      return this.setting('ancestry_field');
     },
     hasChild: function(){
-      return this.parentRegex.test(this.dataField());
+      return this.parentRegex.test(this.ancestryValue());
     },
     hasParent: function(){
-      return this.childRegex.test(this.dataField());
+      return this.childRegex.test(this.ancestryValue());
     },
     childID: function(){
       if (!this.hasChild())
         return;
 
-      return this.parentRegex.exec(this.dataField())[1];
+      return this.parentRegex.exec(this.ancestryValue())[1];
     },
     parentID: function(){
       if (!this.hasParent())
         return;
 
-      return this.childRegex.exec(this.dataField())[1];
-    },
-    spin: function(){
-      this.$('#spinner').show();
-    },
-    unSpin: function(){
-      this.$('#spinner').hide();
+      return this.childRegex.exec(this.ancestryValue())[1];
     }
   };
 }());

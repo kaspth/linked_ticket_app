@@ -1,48 +1,48 @@
 <div class="well">
   <div class="row-fluid">
-    <form>
+    <form id="linked_ticket_form">
       <div class="control-group">
-        <label class="checkbox">
+        <label class="checkbox" for="copy_requester">
           <input type="checkbox" id="copy_requester">{{t "form.copy_requester.label"}}
         </label>
         <br/>
-        <label class="checkbox">
+        <label class="checkbox" for="copy_description">
           <input type="checkbox" id="copy_description">{{t "form.copy_description.label"}}
         </label>
       </div>
 
       <div id="requester_fields">
         <div class="control-group">
-          <label>{{t "form.requester_email.label"}}</label>
+          <label for="requester_email">{{t "form.requester_email.label"}}</label>
           <input type="text" id="requester_email" class="input input-full-width" />
         </div>
 
         <div class="control-group">
-          <label>{{t "form.requester_name.label"}}</label>
+          <label for="requester_name">{{t "form.requester_name.label"}}</label>
           <input type="text" id="requester_name" class="input input-full-width" />
         </div>
       </div>
 
       <div class="control-group">
-        <label>{{t "form.group.label"}}</label>
+        <label for="group">{{t "form.group.label"}}</label>
         <select id="group" class="input input-full-width">
           <option>-</option>
         </select>
       </div>
 
       <div class="control-group" id="assignee-group" style="display:none;">
-        <label>{{t "form.assignee.label"}}</label>
+        <label for="assignee">{{t "form.assignee.label"}}</label>
         <select id="assignee" class="input input-full-width">
           <option>-</option>
         </select>
       </div>
 
       <div class="control-group">
-        <label>{{t "form.subject.label"}}</label>
+        <label for="subject">{{t "form.subject.label"}}</label>
         <input type="text" class="input input-full-width" id="subject"/>
       </div>
       <div class="control-group">
-        <label>{{t "form.description.label"}}</label>
+        <label for="description">{{t "form.description.label"}}</label>
         <textarea id="description" rows="8" class="input input-full-width"></textarea>
       </div>
       <div class="centered">

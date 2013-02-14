@@ -4,9 +4,9 @@
     "name":         "Linked Ticket",
 
     "parameters": {
-      "data_field":{
-        "label": "Data Field",
-        "helpText": "Place a custom text field ID to store the Linked Ticket datas."
+      "ancestry_field":{
+        "label": "Ancestry Field",
+        "helpText": "Place a custom text field ID to store the Linked Ticket ancestry data."
       },
       "child_tag": {
         "label": "Child Tag",
@@ -51,6 +51,7 @@
 
   "ticket": {
     "id": "ID",
+    "subject": "Subject",
     "status": "Status",
     "type": "Type",
     "assignee": "Assignee",

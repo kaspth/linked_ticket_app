@@ -7,7 +7,7 @@
 
   "parameters": [
     {
-      "name": "data_field",
+      "name": "ancestry_field",
       "type": "text",
       "required": true
     },
