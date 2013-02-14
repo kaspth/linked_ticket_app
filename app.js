@@ -1,7 +1,7 @@
 (function() {
   return {
     childRegex: /child_of:(\d*)/,
-    fatherRegex: /father_of:(\d*)/,
+    parentRegex: /(?:father_of|parent_of):(\d*)/,
     descriptionDelimiter: '\n--- Original Description --- \n',
 
     events: {
@@ -69,8 +69,8 @@
       if(!this.doneLoading &&
         !!_.isEmpty(this.ticket().id())){
 
-        if (this.hasChild() || this.hasFather())
-          return this.ajax('fetchTicket', this.childID() || this.fatherID());
+        if (this.hasChild() || this.hasParent())
+          return this.ajax('fetchTicket', this.childID() || this.parentID());
 
         this.ajax('fetchGroupsAndUsers');
 
@@ -138,7 +138,7 @@
 
     createChildTicketDone: function(data){
       var field = {};
-      var value = "father_of:" + data.ticket.id;
+      var value = "parent_of:" + data.ticket.id;
 
       this.ticket().customField("custom_field_" + this.settings.data_field,
                                 value
@@ -292,19 +292,19 @@
       return this.ticket().customField("custom_field_" + this.settings.data_field);
     },
     hasChild: function(){
-      return this.fatherRegex.test(this.dataField());
+      return this.parentRegex.test(this.dataField());
     },
-    hasFather: function(){
+    hasParent: function(){
       return this.childRegex.test(this.dataField());
     },
     childID: function(){
       if (!this.hasChild())
         return;
 
-      return this.fatherRegex.exec(this.dataField())[1];
+      return this.parentRegex.exec(this.dataField())[1];
     },
-    fatherID: function(){
-      if (!this.hasFather())
+    parentID: function(){
+      if (!this.hasParent())
         return;
 
       return this.childRegex.exec(this.dataField())[1];

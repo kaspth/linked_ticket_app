@@ -17,7 +17,7 @@
 
   "ticket_creation_failed": "An error occured the creation process. Please try again later.",
   "fetch_groups_and_users_failed": "An error occured when fetching Users and Groups.",
-  "has_father": "This ticket has a parent ticket.",
+  "has_parent": "This ticket has a parent ticket.",
   "has_child": "This ticket has a child ticket.",
 
   "form": {
