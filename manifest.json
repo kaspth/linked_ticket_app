@@ -18,7 +18,7 @@
   ],
 
   "defaultLocale": "en",
-  "private": true,
+  "private": false,
   "location": "ticket_sidebar",
   "frameworkVersion": "0.5"
 }
