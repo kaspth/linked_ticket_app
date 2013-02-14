@@ -67,7 +67,8 @@
 
     loadIfDataReady: function(){
       if(!this.doneLoading &&
-        !!_.isEmpty(this.ticket().id())){
+         this.ticket() &&
+         this.ticket().id()){
 
         if (this.hasChild() || this.hasParent())
           return this.ajax('fetchTicket', this.childID() || this.parentID());
@@ -129,7 +130,7 @@
         isValid = true;
 
       _.each(fields, function(field){
-        if (!this.validateField(field, isValid))
+        if (!this.validateField(field))
           isValid = false;
       }, this);
 
