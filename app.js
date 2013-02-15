@@ -2,54 +2,54 @@
   function Form($el){
     this.$el = $el;
 
-    this.subject = function(val){ return this._getOrSet('#subject', val); };
-    this.description = function(val){return this._getOrSet('#description', val); };
-    this.group = function(val){return this._getOrSet('#group', val); };
-    this.assignee = function(val){return this._getOrSet('#assignee', val); };
-    this.requesterEmail = function(val){return this._getOrSet('#requester_email', val); };
-    this.requesterName = function(val){return this._getOrSet('#requester_name', val); };
+    this.subject = function(val){ return this._getOrSet('.subject', val); };
+    this.description = function(val){return this._getOrSet('.description', val); };
+    this.group = function(val){return this._getOrSet('.group', val); };
+    this.assignee = function(val){return this._getOrSet('.assignee', val); };
+    this.requesterEmail = function(val){return this._getOrSet('.requester_email', val); };
+    this.requesterName = function(val){return this._getOrSet('.requester_name', val); };
 
     this.copyRequesterChecked = function(){
-      return this.$el.find('#copy_requester').is(':checked');
+      return this.$el.find('.copy_requester').is(':checked');
     };
 
     this.isValid = function(){
-      return _.all(['subject', 'description'], function(field) {
+      return _.all(['.subject', '.description'], function(field) {
         return this.validateField(field);
       }, this);
     };
 
     this.validateField = function(field){
-      var viewField = this.$el.find('#' + field),
-      valid = false;
+      var viewField = this.$el.find(field),
+      valid = !_.isEmpty(viewField.val());
 
-      if (_.isEmpty(viewField.val())){
-        viewField.parent('.control-group').addClass('error');
+      if (valid){
+        viewField.parents('.control-group').removeClass('error');
       } else {
-        viewField.parent('.control-group').removeClass('error');
-        valid = true;
+        viewField.parents('.control-group').addClass('error');
       }
+
       return valid;
     };
 
     this.toggleRequester = function(){
-      return this.$el.find('#requester_fields').toggle();
+      return this.$el.find('.requester_fields').toggle();
     };
 
     this.fillGroupWithCollection = function(collection){
-      return this.$el.find('#group').html(this._htmlOptionsFor(collection));
+      return this.$el.find('.group').html(this._htmlOptionsFor(collection));
     };
 
     this.fillAssigneeWithCollection = function(collection){
-      return this.$el.find('#assignee').html(this._htmlOptionsFor(collection));
+      return this.$el.find('.assignee').html(this._htmlOptionsFor(collection));
     };
 
     this.showAssignee = function(){
-      return this.$el.find('#assignee-group').show();
+      return this.$el.find('.assignee-group').show();
     };
 
     this.hideAssignee = function(){
-      return this.$el.find('#assignee-group').hide();
+      return this.$el.find('.assignee-group').hide();
     };
 
     this._htmlOptionsFor =  function(collection){
@@ -94,11 +94,11 @@
       'fetchTicket.done'                : 'fetchTicketDone',
       'fetchGroupsAndUsers.done'        : 'fetchGroupsAndUsersDone',
       'fetchGroupsAndUsers.fail'        : 'fetchGroupsAndUsersFail',
-      'click #new-linked-ticket'        : 'displayForm',
-      'click #create-linked-ticket'     : 'create',
-      'click #copy_description'         : 'copyDescription',
-      'click #copy_requester'           : function(){this.form.toggleRequester();},
-      'change #group'                   : 'groupChanged'
+      'click .new-linked-ticket'        : 'displayForm',
+      'click .create-linked-ticket'     : 'create',
+      'click .copy_description'         : 'copyDescription',
+      'click .copy_requester'           : function(){this.form.toggleRequester();},
+      'change .group'                   : 'groupChanged'
     },
 
     requests: {
@@ -193,8 +193,8 @@
 
       this.switchTo('form');
 
-      this.form = new Form(this.$('form#linked_ticket_form'));
-      this.spinner = new Spinner(this.$('#spinner'));
+      this.form = new Form(this.$('form.linked_ticket_form'));
+      this.spinner = new Spinner(this.$('.spinner'));
 
       this.form.fillGroupWithCollection(this.groups);
 
@@ -249,7 +249,7 @@
       var self = this;
 
       // bypass this.form to bind the autocomplete.
-      this.$('#requester_email').autocomplete({
+      this.$('.requester_email').autocomplete({
         minLength: 3,
         source: function(request, response) {
           self.ajax('autocompleteRequester', request.term).done(function(data){

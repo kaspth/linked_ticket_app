@@ -10,7 +10,7 @@
     text-align: center;
 }
 
-div#spinner
+div.spinner
 {
     display: none;
     width:100px;

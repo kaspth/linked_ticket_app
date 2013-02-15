@@ -1,55 +1,63 @@
 <div class="well">
   <div class="row-fluid">
-    <form id="linked_ticket_form">
+    <form class="linked_ticket_form">
       <div class="control-group">
-        <label class="checkbox" for="copy_requester">
-          <input type="checkbox" id="copy_requester">{{t "form.copy_requester.label"}}
+        <label class="checkbox">
+          <input type="checkbox" class="copy_requester">{{t "form.copy_requester.label"}}
         </label>
         <br/>
-        <label class="checkbox" for="copy_description">
-          <input type="checkbox" id="copy_description">{{t "form.copy_description.label"}}
+        <label class="checkbox">
+          <input type="checkbox" class="copy_description">{{t "form.copy_description.label"}}
         </label>
       </div>
 
-      <div id="requester_fields">
+      <div class="requester_fields">
         <div class="control-group">
-          <label for="requester_email">{{t "form.requester_email.label"}}</label>
-          <input type="text" id="requester_email" class="input input-full-width" />
+          <label>
+            {{t "form.requester_email.label"}}
+            <input type="text" class="requester_email input input-full-width" />
+          </label>
         </div>
 
         <div class="control-group">
-          <label for="requester_name">{{t "form.requester_name.label"}}</label>
-          <input type="text" id="requester_name" class="input input-full-width" />
+          <label>
+            {{t "form.requester_name.label"}}
+            <input type="text" class="requester_name input input-full-width" />
+          </label>
         </div>
       </div>
 
       <div class="control-group">
-        <label for="group">{{t "form.group.label"}}</label>
-        <select id="group" class="input input-full-width">
-          <option>-</option>
-        </select>
+        <label>{{t "form.group.label"}}
+          <select class="group input input-full-width">
+            <option>-</option>
+          </select>
+        </label>
       </div>
 
-      <div class="control-group" id="assignee-group" style="display:none;">
-        <label for="assignee">{{t "form.assignee.label"}}</label>
-        <select id="assignee" class="input input-full-width">
-          <option>-</option>
-        </select>
+      <div class="assignee-group control-group" style="display:none;">
+        <label>{{t "form.assignee.label"}}
+          <select class="assignee input input-full-width">
+            <option>-</option>
+          </select>
+        </label>
       </div>
 
       <div class="control-group">
-        <label for="subject">{{t "form.subject.label"}}</label>
-        <input type="text" class="input input-full-width" id="subject"/>
+        <label>* {{t "form.subject.label"}}
+          <input type="text" class="subject input input-full-width" />
+        </label>
       </div>
       <div class="control-group">
-        <label for="description">{{t "form.description.label"}}</label>
-        <textarea id="description" rows="8" class="input input-full-width"></textarea>
+        <label>* {{t "form.description.label"}}
+          <textarea rows="8" class="description input input-full-width"></textarea>
+        </label>
       </div>
       <div class="centered">
-        <button type="submit" id="create-linked-ticket" class="btn btn-success btn-large" data-loading-text="{{t "form.loading"}}">{{t "form.submit"}}</button>
+        <button type="submit" class="create-linked-ticket btn btn-success btn-large">{{t "form.submit"}}</button>
       </div>
     </form>
   </div>
 </div>
 
-<div id="spinner"></div>
+<div class="spinner"></div>
