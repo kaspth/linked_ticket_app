@@ -1,0 +1,2 @@
+2013-02-15 Pierre Nespo <pierre.nespo@gmail.com>
+	* Bump to v1.0: Major change is the modification of the parameter name (from data_field to ancestry_field)
