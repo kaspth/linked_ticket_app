@@ -14,15 +14,9 @@
     };
 
     this.isValid = function(){
-      var fields = [ 'subject','description' ],
-      isValid = true;
-
-      _.each(fields, function(field){
-        if (!this.validateField(field))
-          isValid = false;
+      return _.all(['subject', 'description'], function(field) {
+        return this.validateField(field);
       }, this);
-
-      return isValid;
     };
 
     this.validateField = function(field){
