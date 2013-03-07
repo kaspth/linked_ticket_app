@@ -16,6 +16,7 @@
   },
 
   "ajax_failure": "An error occured. Please try reloading the app.",
+  "ancestry_field_missing": "<strong>Linked Ticket App:</strong> Did you follow the set up instructions and set up a custom field?",
   "has_parent": "This ticket has a parent ticket.",
   "has_child": "This ticket has a child ticket.",
 

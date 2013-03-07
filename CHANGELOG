@@ -7,3 +7,6 @@
 	* Change the way groups are fetched. We now fetch groups from /api/v2/groups/assignable.json
 	* Change the way the users are fetched. We now fetch users from /api/v2/groups/{id}/users.json.
 	* Use of a genericAjaxFailure method to handle all .fail events.
+2013-03-07 Pierre Nespo <pierre.nespo@gmail.com>
+	* Bump to v1.2
+	* Warn the user and stop the app if the ancestry field is not present.

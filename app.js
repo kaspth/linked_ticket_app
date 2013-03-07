@@ -82,7 +82,7 @@
   }
 
   return {
-    appVersion: '1.1',
+    appVersion: '1.2',
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
     descriptionDelimiter: '\n--- Original Description --- \n',
@@ -158,7 +158,8 @@
     onActivated: function(data) {
       this.doneLoading = false;
 
-      this.ticketFields("custom_field_" + this.ancestryFieldId()).hide();
+      if (!this.hideAncestryField())
+        return this.doneLoading = true;
 
       this.loadIfDataReady();
     },
@@ -321,6 +322,16 @@
     },
     genericAjaxFailure: function(){
       services.notify(this.I18n.t('ajax_failure'), 'error');
+    },
+    hideAncestryField: function(){
+      var field = this.ticketFields("custom_field_" + this.ancestryFieldId());
+
+      if (!field){
+        services.notify(this.I18n.t("ancestry_field_missing"), "error");
+        return false;
+      }
+
+      return field.hide();
     },
     ancestryValue: function(){
       return this.ticket().customField("custom_field_" + this.ancestryFieldId());
