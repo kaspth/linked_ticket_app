@@ -40,7 +40,7 @@
       "label": "Assignee"
     },
     "copy_requester": {
-      "label": "Make Requester the current agent"
+      "label": "Make current agent the requester"
     },
     "copy_description": {
       "label": "Copy description of the current ticket"

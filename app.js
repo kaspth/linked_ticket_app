@@ -310,7 +310,7 @@
         params.tags = [ this.settings.child_tag ];
 
       if (this.form.copyRequesterChecked()){
-        params.requester_id = this.ticket().requester().id();
+        params.requester_id = this.currentUser().id();
       } else {
         params.requester = {
           "email": this.form.requesterEmail(),
