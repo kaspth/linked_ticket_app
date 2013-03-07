@@ -82,19 +82,28 @@
   }
 
   return {
-    appVersion: '1.0',
+    appVersion: '1.1',
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
     descriptionDelimiter: '\n--- Original Description --- \n',
+    groups: [],
 
     events: {
+      // APP EVENTS
       'app.activated'                   : 'onActivated',
       'ticket.status.changed'           : 'loadIfDataReady',
+      // AJAX EVENTS
       'createChildTicket.done'          : 'createChildTicketDone',
-      'createChildTicket.fail'          : 'createChildTicketFail',
       'fetchTicket.done'                : 'fetchTicketDone',
-      'fetchGroupsAndUsers.done'        : 'fetchGroupsAndUsersDone',
-      'fetchGroupsAndUsers.fail'        : 'fetchGroupsAndUsersFail',
+      'fetchGroups.done'                : function(data){ this.groups = data.groups; },
+
+      'createChildTicket.fail'          : 'genericAjaxFailure',
+      'updateCurrentTicket.fail'        : 'genericAjaxFailure',
+      'fetchTicket.fail'                : 'genericAjaxFailure',
+      'autocompleteRequester.fail'      : 'genericAjaxFailure',
+      'fetchGroups.fail'                : 'genericAjaxFailure',
+      'fetchUsersFromGroup.fail'        : 'genericAjaxFailure',
+      // DOM EVENTS
       'click .new-linked-ticket'        : 'displayForm',
       'click .create-linked-ticket'     : 'create',
       'click .copy_description'         : 'copyDescription',
@@ -132,9 +141,15 @@
           type: 'POST'
         };
       },
-      fetchGroupsAndUsers: function(){
+      fetchGroups: function(){
         return {
-          url: '/api/v2/group_memberships.json?include=users,groups',
+          url: '/api/v2/groups/assignable.json',
+          type: 'GET'
+        };
+      },
+      fetchUsersFromGroup: function(group_id){
+        return {
+          url: '/api/v2/groups/' + group_id + '/users.json',
           type: 'GET'
         };
       }
@@ -156,11 +171,34 @@
         if (this.hasChild() || this.hasParent())
           return this.ajax('fetchTicket', this.childID() || this.parentID());
 
-        this.ajax('fetchGroupsAndUsers');
+        this.ajax('fetchGroups');
 
         this.switchTo('home');
 
         this.doneLoading = true;
+      }
+    },
+
+    displayForm: function(event){
+      event.preventDefault();
+
+      this.switchTo('form');
+
+      this.form = new Form(this.$('form.linked_ticket_form'));
+      this.spinner = new Spinner(this.$('.spinner'));
+
+      this.form.fillGroupWithCollection(this.groups);
+
+      this.bindAutocompleteOnRequesterEmail();
+    },
+
+    create: function(event){
+      event.preventDefault();
+
+      if (this.form.isValid()){
+        this.spinner.spin();
+        this.ajax('createChildTicket', this.childTicketAsJson())
+          .always(function(){ this.spinner.unSpin(); });
       }
     },
 
@@ -189,28 +227,6 @@
                                     });
     },
 
-    displayForm: function(event){
-      event.preventDefault();
-
-      this.switchTo('form');
-
-      this.form = new Form(this.$('form.linked_ticket_form'));
-      this.spinner = new Spinner(this.$('.spinner'));
-
-      this.form.fillGroupWithCollection(this.groups);
-
-      this.bindAutocompleteOnRequesterEmail();
-    },
-
-    create: function(event){
-      event.preventDefault();
-
-      if (this.form.isValid()){
-        this.spinner.spin();
-        this.ajax('createChildTicket', this.childTicketAsJson());
-      }
-    },
-
     createChildTicketDone: function(data){
       var field = {};
       var value = "parent_of:" + data.ticket.id;
@@ -224,12 +240,6 @@
       this.ajax('updateCurrentTicket', { "ticket": { "fields": field }});
 
       this.ajax('fetchTicket', data.ticket.id);
-
-      this.spinner.unSpin();
-    },
-
-    createChildTicketFail: function(data){
-      services.notify(this.I18n.t('ticket_creation_failed'), 'error');
 
       this.spinner.unSpin();
     },
@@ -262,40 +272,21 @@
       });
     },
 
-    fetchGroupsAndUsersDone: function(data){
-      this.users = data.users;
-      this.groups = data.groups;
-      this.group_memberships = data.group_memberships;
-    },
-
-    fetchGroupsAndUsersFail: function(){
-      services.notify(this.I18n.t('fetch_groups_and_users_failed'), 'error');
-    },
-
     groupChanged: function(){
       var group_id = Number(this.form.group());
-      var users = [];
 
-      if (_.isFinite(group_id)){
-        var user_ids = this.group_memberships
-          .filter(function(membership) {
-            return membership.group_id == group_id;
-          })
-          .map(function(membership){
-            return membership.user_id;
-          });
+      if (!_.isFinite(group_id))
+        return this.form.hideAssignee();
 
-        users = this.users.filter(function(user){
-          return user_ids.contains(user.id);
-        });
-        this.form.showAssignee();
-      } else {
-        this.form.hideAssignee();
-      }
+      this.spinner.spin();
 
-      this.form.fillAssigneeWithCollection(users);
+      this.ajax('fetchUsersFromGroup', group_id)
+        .done(function(data){
+          this.form.showAssignee();
+          this.form.fillAssigneeWithCollection(data.users);
+        })
+        .always(function(){ this.spinner.unSpin(); });
     },
-
 
     childTicketAsJson: function(){
       var params = {
@@ -327,6 +318,9 @@
       params.fields[this.ancestryFieldId()] = 'child_of:' + this.ticket().id();
 
       return { "ticket": params };
+    },
+    genericAjaxFailure: function(){
+      services.notify(this.I18n.t('ajax_failure'), 'error');
     },
     ancestryValue: function(){
       return this.ticket().customField("custom_field_" + this.ancestryFieldId());

@@ -1,2 +1,9 @@
 2013-02-15 Pierre Nespo <pierre.nespo@gmail.com>
 	* Bump to v1.0: Major change is the modification of the parameter name (from data_field to ancestry_field)
+2013-03-07 Pierre Nespo <pierre.nespo@gmail.com>
+	* Bump to v1.1
+	* Change wording for copy_requester.
+	* Use currentUser().id() instead of ticket().requester().id() when copy_requester is checked.
+	* Change the way groups are fetched. We now fetch groups from /api/v2/groups/assignable.json
+	* Change the way the users are fetched. We now fetch users from /api/v2/groups/{id}/users.json.
+	* Use of a genericAjaxFailure method to handle all .fail events.
