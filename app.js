@@ -207,7 +207,7 @@
 
     create: function(event){
       event.preventDefault();
-      this.spinner.spin();
+
       if (this.form.isValid()){
         this.spinner.spin();
         this.form.disableSubmit();
