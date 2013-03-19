@@ -1,7 +1,7 @@
 {
   "app": {
     "description":  "Créer un nouveau ticket lié à partir d'un ticket existant",
-    "name":         "Ticket lié",
+    "name":         "App Ticket lié",
 
     "parameters": {
       "ancestry_field":{
@@ -15,48 +15,48 @@
     }
   },
 
-  "ajax_failure": "An error occured. Please try reloading the app.",
-  "ancestry_field_missing": "<strong>Linked Ticket App:</strong> Did you follow the set up instructions and set up a custom field?",
-  "has_parent": "This ticket has a parent ticket.",
-  "has_child": "This ticket has a child ticket.",
+  "ajax_failure": "Une erreur est parvenue, Merci de recharger l'application.",
+  "ancestry_field_missing": "<strong>App Ticket lié :</strong> Avez vous suivi les instructions de configuration et renseigné un champ de ticket dans les paramètres ?",
+  "has_parent": "Ce ticket a un ticket Parent.",
+  "has_child": "Ce ticket a un ticket lié.",
 
   "form": {
     "subject":{
-      "label": "Subject"
+      "label": "Sujet"
     },
     "description": {
       "label": "Description"
     },
     "requester_email": {
-      "label": "Requester Email"
+      "label": "Email du demandeur"
     },
     "requester_name": {
-      "label": "Requester Name (For new requesters only)"
+      "label": "Nom du demandeur (Nouveaux demandeurs)"
     },
     "group": {
-      "label": "Group"
+      "label": "Groupe"
     },
     "assignee": {
-      "label": "Assignee"
+      "label": "Assigné"
     },
     "requester":{
-      "current_user": "Make me requester",
-      "ticket_requester": "Use current requester",
-      "custom": "Select/Create requester"
+      "current_user": "Me passer comme demandeur",
+      "ticket_requester": "Utiliser le demandeur actuel",
+      "custom": "Séléctionner/Créer le demandeur"
     },
     "copy_description": {
-      "label": "Copy current ticket description"
+      "label": "Copier la description du ticket actuel"
     },
-    "submit": "Create Ticket",
-    "loading": "Submitting..."
+    "submit": "Créer le ticket",
+    "loading": "En cours..."
   },
 
   "ticket": {
     "id": "ID",
-    "subject": "Subject",
-    "status": "Status",
+    "subject": "Sujet",
+    "status": "Statut",
     "type": "Type",
-    "assignee": "Assignee",
-    "group": "Group"
+    "assignee": "Assigné",
+    "group": "Groupe"
   }
 }
