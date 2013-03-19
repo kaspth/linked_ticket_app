@@ -1,5 +1,5 @@
 .control-group {
-    margin-bottom:15px;
+    margin-bottom:10px;
 }
 
 .centered {
@@ -8,12 +8,15 @@
 
 .requester_fields {
   display: none;
-  margin-left: 18px;
 }
 
 select {
   display: block;
   border: 1px solid #CCC; 
+}
+
+label.radio {
+  padding-bottom:5px;
 }
 
 div.spinner

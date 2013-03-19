@@ -149,7 +149,7 @@
       },
       autocompleteRequester: function(email){
         return {
-          url: '/api/v2/users/autocomplete.json?email=' + email,
+          url: '/api/v2/users/autocomplete.json?name=' + email,
           type: 'POST'
         };
       },

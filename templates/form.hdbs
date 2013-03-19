@@ -6,11 +6,9 @@
         <label class="radio">
           <input type="radio" name="requester_type" value="current_user">{{t "form.requester.current_user"}}
         </label>
-        <br/>
         <label class="radio">
           <input type="radio" name="requester_type" value="ticket_requester">{{t "form.requester.ticket_requester"}}
         </label>
-        <br/>
         <label class="radio" class="custom_requester">
           <input type="radio" name="requester_type" value="custom">{{t "form.requester.custom"}}
         </label>
