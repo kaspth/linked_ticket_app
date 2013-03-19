@@ -52,6 +52,14 @@
       return this.$el.find('.assignee-group').hide();
     };
 
+    this.disableSubmit = function(){
+      return this.$el.find('.btn').prop('disabled', true);
+    };
+
+    this.enableSubmit = function(){
+      return this.$el.find('.btn').prop('disabled', false);
+    };
+
     this._htmlOptionsFor =  function(collection){
       var options = '<option>-</option>';
 
@@ -199,11 +207,16 @@
 
     create: function(event){
       event.preventDefault();
-
+      this.spinner.spin();
       if (this.form.isValid()){
         this.spinner.spin();
+        this.form.disableSubmit();
+
         this.ajax('createChildTicket', this.childTicketAsJson())
-          .always(function(){ this.spinner.unSpin(); });
+          .always(function(){
+            this.spinner.unSpin();
+            this.enableSubmit();
+          });
       }
     },
 
