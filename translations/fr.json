@@ -1,0 +1,62 @@
+{
+  "app": {
+    "description":  "Créer un nouveau ticket lié à partir d'un ticket existant",
+    "name":         "App Ticket lié",
+
+    "parameters": {
+      "ancestry_field":{
+        "label": "Champ de référence",
+        "helpText": "Insérer ici l'ID du champ texte créé pour conserver les éléments du ticket lié. Exemple : 2240041"
+      },
+      "child_tag": {
+        "label": "Tag du ticket lié",
+        "helpText": "Ce tag sera ajouté sur le ticket lié. Exemple : child_ticket"
+      }
+    }
+  },
+
+  "ajax_failure": "Une erreur est parvenue, Merci de recharger l'application.",
+  "ancestry_field_missing": "<strong>App Ticket lié :</strong> Avez vous suivi les instructions de configuration et renseigné un champ de ticket dans les paramètres ?",
+  "has_parent": "Ce ticket a un ticket Parent.",
+  "has_child": "Ce ticket a un ticket lié.",
+
+  "form": {
+    "subject":{
+      "label": "Sujet"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "requester_email": {
+      "label": "Email du demandeur"
+    },
+    "requester_name": {
+      "label": "Nom du demandeur (Nouveaux demandeurs)"
+    },
+    "group": {
+      "label": "Groupe"
+    },
+    "assignee": {
+      "label": "Assigné"
+    },
+    "requester":{
+      "current_user": "Me passer comme demandeur",
+      "ticket_requester": "Utiliser le demandeur actuel",
+      "custom": "Séléctionner/Créer le demandeur"
+    },
+    "copy_description": {
+      "label": "Copier la description du ticket actuel"
+    },
+    "submit": "Créer le ticket",
+    "loading": "En cours..."
+  },
+
+  "ticket": {
+    "id": "ID",
+    "subject": "Sujet",
+    "status": "Statut",
+    "type": "Type",
+    "assignee": "Assigné",
+    "group": "Groupe"
+  }
+}
