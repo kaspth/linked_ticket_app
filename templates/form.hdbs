@@ -1,13 +1,18 @@
 <div class="well">
   <div class="row-fluid">
     <form class="linked_ticket_form">
+
       <div class="control-group">
-        <label class="checkbox">
-          <input type="checkbox" class="copy_requester">{{t "form.copy_requester.label"}}
+        <label class="radio">
+          <input type="radio" name="requester_type" value="current_user">{{t "form.requester.current_user"}}
         </label>
         <br/>
-        <label class="checkbox">
-          <input type="checkbox" class="copy_description">{{t "form.copy_description.label"}}
+        <label class="radio">
+          <input type="radio" name="requester_type" value="ticket_requester">{{t "form.requester.ticket_requester"}}
+        </label>
+        <br/>
+        <label class="radio" class="custom_requester">
+          <input type="radio" name="requester_type" value="custom">{{t "form.requester.custom"}}
         </label>
       </div>
 
@@ -46,6 +51,11 @@
       <div class="control-group">
         <label>* {{t "form.subject.label"}}
           <input type="text" class="subject input input-full-width" />
+        </label>
+      </div>
+      <div class="control-group">
+        <label class="checkbox">
+          <input type="checkbox" class="copy_description">{{t "form.copy_description.label"}}
         </label>
       </div>
       <div class="control-group">

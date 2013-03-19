@@ -9,8 +9,8 @@
     this.requesterEmail = function(val){return this._getOrSet('.requester_email', val); };
     this.requesterName = function(val){return this._getOrSet('.requester_name', val); };
 
-    this.copyRequesterChecked = function(){
-      return this.$el.find('.copy_requester').is(':checked');
+    this.requesterType = function(){
+      return this.$el.find('input[name=requester_type]:checked').val();
     };
 
     this.isValid = function(){
@@ -32,8 +32,8 @@
       return valid;
     };
 
-    this.toggleRequester = function(){
-      return this.$el.find('.requester_fields').toggle();
+    this.requesterFields = function(){
+      return this.$el.find('.requester_fields');
     };
 
     this.fillGroupWithCollection = function(collection){
@@ -82,7 +82,7 @@
   }
 
   return {
-    appVersion: '1.2',
+    appVersion: '1.3',
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
     descriptionDelimiter: '\n--- Original Description --- \n',
@@ -107,7 +107,11 @@
       'click .new-linked-ticket'        : 'displayForm',
       'click .create-linked-ticket'     : 'create',
       'click .copy_description'         : 'copyDescription',
-      'click .copy_requester'           : function(){this.form.toggleRequester();},
+      'change input[name=requester_type]' : function(event){
+        if (this.$(event.currentTarget).val() == 'custom')
+          return this.form.requesterFields().show();
+        return this.form.requesterFields().hide();
+      },
       'change .group'                   : 'groupChanged'
     },
 
@@ -297,13 +301,18 @@
       };
       var group_id = Number(this.form.group());
       var assignee_id = Number(this.form.assignee());
+      var requester_type = this.form.requesterType();
 
       if (!_.isEmpty(this.settings.child_tag))
         params.tags = [ this.settings.child_tag ];
 
-      if (this.form.copyRequesterChecked()){
+      if ( requester_type == 'current_user'){
         params.requester_id = this.currentUser().id();
-      } else {
+      } else if (requester_type == 'ticket_requester' &&
+                 this.ticket().requester().id()) {
+        params.requester_id = this.ticket().requester().id();
+      } else if (requester_type == 'custom' &&
+                 this.form.requesterEmail()){
         params.requester = {
           "email": this.form.requesterEmail(),
           "name": this.form.requesterName()

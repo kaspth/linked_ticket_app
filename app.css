@@ -3,11 +3,16 @@
 }
 
 .control-group {
-    margin-bottom:20px;
+    margin-bottom:15px;
 }
 
 .centered {
     text-align: center;
+}
+
+.requester_fields {
+  display: none;
+  margin-left: 18px;
 }
 
 div.spinner

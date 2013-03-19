@@ -39,8 +39,10 @@
     "assignee": {
       "label": "Assignee"
     },
-    "copy_requester": {
-      "label": "Make current agent the requester"
+    "requester":{
+      "current_user": "Make me as the requester",
+      "ticket_requester": "Use the ticket requester",
+      "custom": "Select/Create another requester"
     },
     "copy_description": {
       "label": "Copy description of the current ticket"
