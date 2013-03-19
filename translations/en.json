@@ -6,11 +6,11 @@
     "parameters": {
       "ancestry_field":{
         "label": "Ancestry Field",
-        "helpText": "Place a custom text field ID to store the Linked Ticket ancestry data."
+        "helpText": "Place a custom text field ID here to store the Linked Ticket ancestry data. Example : 2240041"
       },
       "child_tag": {
         "label": "Child Tag",
-        "helpText": "This tag will be added to the created child ticket."
+        "helpText": "This tag will be added to the created child ticket. Example : child_ticket"
       }
     }
   },
@@ -31,7 +31,7 @@
       "label": "Requester Email"
     },
     "requester_name": {
-      "label": "Requester Name (Only for new requesters)"
+      "label": "Requester Name (For new requesters only)"
     },
     "group": {
       "label": "Group"
@@ -40,12 +40,12 @@
       "label": "Assignee"
     },
     "requester":{
-      "current_user": "Make me as the requester",
-      "ticket_requester": "Use the ticket requester",
-      "custom": "Select/Create another requester"
+      "current_user": "Make me requester",
+      "ticket_requester": "Use current requester",
+      "custom": "Select/Create requester"
     },
     "copy_description": {
-      "label": "Copy description of the current ticket"
+      "label": "Copy current ticket description"
     },
     "submit": "Create Ticket",
     "loading": "Submitting..."
