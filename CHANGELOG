@@ -14,3 +14,8 @@
 	* Bump to v1.3
 	* Use radio button instead of checkboxes for the requester selection.
 	* Add an new requester option (copy the current ticket requester)
+2013-03-20 Pierre Nespo <pierre.nespo@gmail.com>
+	* Bump to v1.4
+	* Fix the use of the REST API users autocomplete.
+	* Add french translations.
+	* Disable submit button on submit

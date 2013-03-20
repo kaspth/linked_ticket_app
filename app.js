@@ -90,7 +90,7 @@
   }
 
   return {
-    appVersion: '1.3',
+    appVersion: '1.4',
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
     descriptionDelimiter: '\n--- Original Description --- \n',
