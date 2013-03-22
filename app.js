@@ -90,7 +90,7 @@
   }
 
   return {
-    appVersion: '1.4',
+    appVersion: '1.5',
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
     descriptionDelimiter: '\n--- Original Description --- \n',
@@ -128,7 +128,9 @@
         return {
           url: '/api/v2/tickets.json',
           dataType: 'json',
-          data: ticket,
+          data: JSON.stringify(ticket),
+          processData: false,
+          contentType: 'application/json',
           type: 'POST'
         };
       },
@@ -136,7 +138,9 @@
         return {
           url: '/api/v2/tickets/'+ this.ticket().id() +'.json',
           dataType: 'json',
-          data: data,
+          data: JSON.stringify(data),
+          processData: false,
+          contentType: 'application/json',
           type: 'PUT'
         };
       },
@@ -170,8 +174,8 @@
     onActivated: function(data) {
       this.doneLoading = false;
 
-      if (!this.hideAncestryField())
-        return this.doneLoading = true;
+      /*if (!this.hideAncestryField())
+        return this.doneLoading = true;*/
 
       this.loadIfDataReady();
     },
@@ -215,7 +219,7 @@
         this.ajax('createChildTicket', this.childTicketAsJson())
           .always(function(){
             this.spinner.unSpin();
-            this.enableSubmit();
+            this.form.enableSubmit();
           });
       }
     },
@@ -246,16 +250,16 @@
     },
 
     createChildTicketDone: function(data){
-      var field = {};
       var value = "parent_of:" + data.ticket.id;
 
       this.ticket().customField("custom_field_" + this.ancestryFieldId(),
                                 value
                                );
 
-      field[this.ancestryFieldId()] = value;
-
-      this.ajax('updateCurrentTicket', { "ticket": { "fields": field }});
+      this.ajax('updateCurrentTicket',
+                { "ticket": { "custom_fields": [
+                  { "id": this.ancestryFieldId(), "value": value }
+                ]}});
 
       this.ajax('fetchTicket', data.ticket.id);
 
@@ -310,7 +314,9 @@
       var params = {
         "subject": this.form.subject(),
         "description": this.form.description(),
-        "fields": {}
+        "custom_fields": [
+          { id: this.ancestryFieldId(), value: 'child_of:' + this.ticket().id() }
+        ]
       };
       var group_id = Number(this.form.group());
       var assignee_id = Number(this.form.assignee());
@@ -337,8 +343,6 @@
 
       if (_.isFinite(assignee_id))
         params.assignee_id = assignee_id;
-
-      params.fields[this.ancestryFieldId()] = 'child_of:' + this.ticket().id();
 
       return { "ticket": params };
     },

@@ -19,3 +19,6 @@
 	* Fix the use of the REST API users autocomplete.
 	* Add french translations.
 	* Disable submit button on submit
+2013-03-22 Pierre Nespo <pierre.nespo@gmail.com>
+	* Bump to v1.5
+	* Use custom_fields instead of fields to update/insert custom field
