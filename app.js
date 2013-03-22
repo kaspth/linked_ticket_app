@@ -174,8 +174,8 @@
     onActivated: function(data) {
       this.doneLoading = false;
 
-      /*if (!this.hideAncestryField())
-        return this.doneLoading = true;*/
+      if (!this.hideAncestryField())
+        return this.doneLoading = true;
 
       this.loadIfDataReady();
     },
