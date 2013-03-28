@@ -1,4 +1,78 @@
 (function() {
+  function ChildTicketAttributes(app){
+    this.requesterAttributes = function(){
+      var type = app.form.requesterType();
+      var attributes  = {};
+
+      if (type == 'current_user'){
+        attributes.requester_id = app.currentUser().id();
+      } else if (type == 'ticket_requester' &&
+                 app.ticket().requester().id()) {
+        attributes.requester_id = app.ticket().requester().id();
+      } else if (type == 'custom' &&
+                 app.form.requesterEmail()){
+        attributes.requester = {
+          "email": app.form.requesterEmail(),
+          "name": app.form.requesterName()
+        };
+      }
+
+      return attributes;
+    };
+
+    this.assigneeAttributes = function(){
+      var type = app.form.assigneeType();
+      var attributes = {};
+
+      // Very nice looking if/elseif/if/if/elseif/if/if
+      // see: http://i.imgur.com/XA7BG5N.jpg
+      if (type == 'current_user'){
+        attributes.assignee_id = app.currentUser().id();
+      } else if (type == 'ticket_assignee' &&
+                 app.ticket().assignee()) {
+
+        if (app.ticket().assignee().user()){
+          attributes.assignee_id = app.ticket().assignee().user().id();
+        }
+        if (app.ticket().assignee().group()){
+          attributes.group_id = app.ticket().assignee().group().id();
+        }
+      } else if (type == 'custom' &&
+                 (app.form.group() || app.form.assignee())){
+        var group_id = Number(app.form.group());
+        var assignee_id = Number(app.form.assignee());
+
+        if (_.isFinite(group_id))
+          attributes.group_id = group_id;
+
+        if (_.isFinite(assignee_id))
+          attributes.assignee_id = assignee_id;
+      }
+
+      return attributes;
+    };
+
+    this.toJSON = function(){
+      var params = {
+        "subject": app.form.subject(),
+        "description": app.form.description(),
+        "custom_fields": [
+          { id: app.ancestryFieldId(), value: 'child_of:' + app.ticket().id() }
+        ]
+      };
+
+      _.extend(params,
+               this.requesterAttributes(),
+               this.assigneeAttributes()
+              );
+
+      if (!_.isEmpty(app.settings.child_tag))
+        params.tags = [ app.settings.child_tag ];
+
+      return { "ticket": params };
+    };
+  }
+
   function Form($el){
     this.$el = $el;
 
@@ -10,7 +84,11 @@
     this.requesterName = function(val){return this._getOrSet('.requester_name', val); };
 
     this.requesterType = function(){
-      return this.$el.find('input[name=requester_type]:checked').val();
+      return this.$el.find('select[name=requester_type]').val();
+    };
+
+    this.assigneeType = function(){
+      return this.$el.find('select[name=assignee_type]').val();
     };
 
     this.isValid = function(){
@@ -34,6 +112,10 @@
 
     this.requesterFields = function(){
       return this.$el.find('.requester_fields');
+    };
+
+    this.assigneeFields = function(){
+      return this.$el.find('.assignee_fields');
     };
 
     this.fillGroupWithCollection = function(collection){
@@ -115,10 +197,15 @@
       'click .new-linked-ticket'        : 'displayForm',
       'click .create-linked-ticket'     : 'create',
       'click .copy_description'         : 'copyDescription',
-      'change input[name=requester_type]' : function(event){
+      'change select[name=requester_type]' : function(event){
         if (this.$(event.currentTarget).val() == 'custom')
           return this.form.requesterFields().show();
         return this.form.requesterFields().hide();
+      },
+      'change select[name=assignee_type]' : function(event){
+        if (this.$(event.currentTarget).val() == 'custom')
+          return this.form.assigneeFields().show();
+        return this.form.assigneeFields().hide();
       },
       'change .group'                   : 'groupChanged'
     },
@@ -199,7 +286,11 @@
     displayForm: function(event){
       event.preventDefault();
 
-      this.switchTo('form');
+      this.switchTo('form', {
+        current_user: {
+          email: this.currentUser().email()
+        }
+      });
 
       this.form = new Form(this.$('form.linked_ticket_form'));
       this.spinner = new Spinner(this.$('.spinner'));
@@ -212,11 +303,13 @@
     create: function(event){
       event.preventDefault();
 
+      var attributes = new ChildTicketAttributes(this).toJSON();
+
       if (this.form.isValid()){
         this.spinner.spin();
         this.form.disableSubmit();
 
-        this.ajax('createChildTicket', this.childTicketAsJson())
+        this.ajax('createChildTicket', attributes)
           .always(function(){
             this.spinner.unSpin();
             this.form.enableSubmit();
@@ -310,42 +403,6 @@
         .always(function(){ this.spinner.unSpin(); });
     },
 
-    childTicketAsJson: function(){
-      var params = {
-        "subject": this.form.subject(),
-        "description": this.form.description(),
-        "custom_fields": [
-          { id: this.ancestryFieldId(), value: 'child_of:' + this.ticket().id() }
-        ]
-      };
-      var group_id = Number(this.form.group());
-      var assignee_id = Number(this.form.assignee());
-      var requester_type = this.form.requesterType();
-
-      if (!_.isEmpty(this.settings.child_tag))
-        params.tags = [ this.settings.child_tag ];
-
-      if ( requester_type == 'current_user'){
-        params.requester_id = this.currentUser().id();
-      } else if (requester_type == 'ticket_requester' &&
-                 this.ticket().requester().id()) {
-        params.requester_id = this.ticket().requester().id();
-      } else if (requester_type == 'custom' &&
-                 this.form.requesterEmail()){
-        params.requester = {
-          "email": this.form.requesterEmail(),
-          "name": this.form.requesterName()
-        };
-      }
-
-      if (_.isFinite(group_id))
-        params.group_id = group_id;
-
-      if (_.isFinite(assignee_id))
-        params.assignee_id = assignee_id;
-
-      return { "ticket": params };
-    },
     genericAjaxFailure: function(){
       services.notify(this.I18n.t('ajax_failure'), 'error');
     },

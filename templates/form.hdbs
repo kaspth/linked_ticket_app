@@ -2,16 +2,14 @@
   <div class="well span12">
     <form class="linked_ticket_form">
 
+      <strong>Requester:</strong>
       <div class="control-group">
-        <label class="radio">
-          <input type="radio" name="requester_type" value="current_user">{{t "form.requester.current_user"}}
-        </label>
-        <label class="radio">
-          <input type="radio" name="requester_type" value="ticket_requester">{{t "form.requester.ticket_requester"}}
-        </label>
-        <label class="radio" class="custom_requester">
-          <input type="radio" name="requester_type" value="custom">{{t "form.requester.custom"}}
-        </label>
+        <select name="requester_type" class="span12">
+            <option>-</option>
+            <option value="current_user">Me - {{current_user.email}}</option>
+            <option value="ticket_requester">Ticket Requester - {{ticket.requester.email}}</option>
+            <option value="custom">Other</option>
+          </select>
       </div>
 
       <div class="requester_fields">
@@ -30,20 +28,33 @@
         </div>
       </div>
 
+      <strong>Assignee:</strong>
       <div class="control-group">
-        <label>{{t "form.group.label"}}
-          <select class="group span12">
+        <label>
+          <select name="assignee_type" class="span12">
             <option>-</option>
+            <option value="current_user">Me - {{current_user.email}}</option>
+            <option value="ticket_assignee">Ticket Assignee - {{ticket.assignee.group.name}}/{{ticket.assignee.user.email}}</option>
+            <option value="custom">Other</option>
           </select>
         </label>
       </div>
+      <div class="assignee_fields">
+        <div class="control-group">
+          <label>Assignee Group
+            <select class="group span12">
+              <option>-</option>
+            </select>
+          </label>
+        </div>
 
-      <div class="assignee-group control-group" style="display:none;">
-        <label>{{t "form.assignee.label"}}
-          <select class="assignee span12">
-            <option>-</option>
-          </select>
-        </label>
+        <div class="assignee-group control-group" style="display:none;">
+          <label>Assignee Name
+            <select class="assignee span12">
+              <option>-</option>
+            </select>
+          </label>
+        </div>
       </div>
 
       <div class="control-group">
