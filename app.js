@@ -52,6 +52,16 @@
       return attributes;
     };
 
+    this.tagAttributes = function(){
+      var attributes = { tags: [] };
+      var tags = app.form.tags();
+
+      if (tags)
+        attributes.tags = tags;
+
+      return attributes;
+    };
+
     this.toJSON = function(){
       var params = {
         "subject": app.form.subject(),
@@ -63,11 +73,9 @@
 
       _.extend(params,
                this.requesterAttributes(),
-               this.assigneeAttributes()
+               this.assigneeAttributes(),
+               this.tagAttributes()
               );
-
-      if (!_.isEmpty(app.settings.child_tag))
-        params.tags = [ app.settings.child_tag ];
 
       return { "ticket": params };
     };
@@ -89,6 +97,23 @@
 
     this.assigneeType = function(){
       return this.$el.find('select[name=assignee_type]').val();
+    };
+
+    this.tags = function(){
+      return _.map(this.$el.find('li.token span'), function(i){ return i.innerHTML; });
+    };
+
+    this.tagInput = function(force){
+      var input = this.$el.find('.add_tag input');
+      var value = input.val();
+
+      if ((value.indexOf(' ') >= 0) || force){
+        _.each(_.compact(value.split(' ')), function(tag){
+          this.$el.find('li.token').last().
+            after('<li class="token"><span>'+tag+'</span><a class="delete" tabindex="-1">×</a></li>');
+        }, this);
+        input.val('');
+      }
     };
 
     this.isValid = function(){
@@ -198,16 +223,19 @@
       'click .create-linked-ticket'     : 'create',
       'click .copy_description'         : 'copyDescription',
       'change select[name=requester_type]' : function(event){
-        if (this.$(event.currentTarget).val() == 'custom')
+        if (this.$(event.target).val() == 'custom')
           return this.form.requesterFields().show();
         return this.form.requesterFields().hide();
       },
       'change select[name=assignee_type]' : function(event){
-        if (this.$(event.currentTarget).val() == 'custom')
+        if (this.$(event.target).val() == 'custom')
           return this.form.assigneeFields().show();
         return this.form.assigneeFields().hide();
       },
-      'change .group'                   : 'groupChanged'
+      'change .group'                   : 'groupChanged',
+      'click .token .delete'            : function(e) { this.$(e.target).parent('li.token').remove(); },
+      'input .add_tag input'            : function() { this.form.tagInput(); },
+      'focusout .add_tag input'         : function() { this.form.tagInput(true); }
     },
 
     requests: {
@@ -289,7 +317,8 @@
       this.switchTo('form', {
         current_user: {
           email: this.currentUser().email()
-        }
+        },
+        tags: this.tags()
       });
 
       this.form = new Form(this.$('form.linked_ticket_form'));
@@ -405,6 +434,17 @@
 
     genericAjaxFailure: function(){
       services.notify(this.I18n.t('ajax_failure'), 'error');
+    },
+    tags: function(){
+      var tags = [];
+
+      if (!_.isEmpty(this.ticket().tags()))
+        tags = _.union(tags,this.ticket().tags());
+
+      if (!_.isEmpty(this.settings.child_tag))
+        tags = _.union(tags, [ this.settings.child_tag ]);
+
+      return tags;
     },
     hideAncestryField: function(){
       var field = this.ticketFields("custom_field_" + this.ancestryFieldId());

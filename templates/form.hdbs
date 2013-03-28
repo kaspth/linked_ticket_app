@@ -57,6 +57,21 @@
         </div>
       </div>
 
+      {{#if tags}}
+      <strong>Tags:</strong>
+      <div class="control-group form_field tags">
+        <ul class="token_list span12">
+          {{#each tags}}
+          <li class="token">
+            <span>{{this}}</span>
+            <a class="delete" tabindex="-1">×</a>
+          </li>
+          {{/each}}
+          <li class="add_tag"><input class="highlightable" type="text"></li>
+        </ul>
+      </div>
+      {{/if}}
+
       <div class="control-group">
         <label>* {{t "form.subject.label"}}
           <input type="text" class="subject span12">
