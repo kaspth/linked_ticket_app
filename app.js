@@ -103,14 +103,22 @@
       return _.map(this.$el.find('li.token span'), function(i){ return i.innerHTML; });
     };
 
+    this.macro = function(){
+      var value = Number(this.$el.find('select.macro').val());
+
+      if (!_.isFinite(value))
+        return null;
+      return value;
+    };
+
     this.tagInput = function(force){
       var input = this.$el.find('.add_tag input');
       var value = input.val();
 
       if ((value.indexOf(' ') >= 0) || force){
         _.each(_.compact(value.split(' ')), function(tag){
-          this.$el.find('li.token').last().
-            after('<li class="token"><span>'+tag+'</span><a class="delete" tabindex="-1">×</a></li>');
+          var li = '<li class="token"><span>'+tag+'</span><a class="delete" tabindex="-1">×</a></li>';
+            this.$el.find('li.add_tag').before(li);
         }, this);
         input.val('');
       }
@@ -151,6 +159,10 @@
       return this.$el.find('.assignee').html(this._htmlOptionsFor(collection));
     };
 
+    this.fillMacroWithCollection = function(collection){
+      return this.$el.find('.macro').html(this._htmlOptionsFor(collection));
+    };
+
     this.showAssignee = function(){
       return this.$el.find('.assignee-group').show();
     };
@@ -171,7 +183,7 @@
       var options = '<option>-</option>';
 
       _.each(collection, function(item){
-        options += '<option value="'+item.id+'">'+item.name+'</option>';
+        options += '<option value="'+item.id+'">'+(item.name || item.title)+'</option>';
       });
 
       return options;
@@ -201,7 +213,6 @@
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
     descriptionDelimiter: '\n--- Original Description --- \n',
-    groups: [],
 
     events: {
       // APP EVENTS
@@ -210,14 +221,15 @@
       // AJAX EVENTS
       'createChildTicket.done'          : 'createChildTicketDone',
       'fetchTicket.done'                : 'fetchTicketDone',
-      'fetchGroups.done'                : function(data){ this.groups = data.groups; },
-
+      'fetchGroups.done'                : function(data){ this.form.fillGroupWithCollection(data.groups); },
+      'fetchMacros.done'                : function(data){ this.form.fillMacroWithCollection(data.macros); },
       'createChildTicket.fail'          : 'genericAjaxFailure',
-      'updateCurrentTicket.fail'        : 'genericAjaxFailure',
+      'updateTicket.fail'               : 'genericAjaxFailure',
       'fetchTicket.fail'                : 'genericAjaxFailure',
       'autocompleteRequester.fail'      : 'genericAjaxFailure',
       'fetchGroups.fail'                : 'genericAjaxFailure',
       'fetchUsersFromGroup.fail'        : 'genericAjaxFailure',
+      'fetchMacros.fail'                : 'genericAjaxFailure',
       // DOM EVENTS
       'click .new-linked-ticket'        : 'displayForm',
       'click .create-linked-ticket'     : 'create',
@@ -249,9 +261,9 @@
           type: 'POST'
         };
       },
-      updateCurrentTicket: function(data){
+      updateTicket: function(id, data){
         return {
-          url: '/api/v2/tickets/'+ this.ticket().id() +'.json',
+          url: '/api/v2/tickets/'+ id +'.json',
           dataType: 'json',
           data: JSON.stringify(data),
           processData: false,
@@ -283,6 +295,18 @@
           url: '/api/v2/groups/' + group_id + '/users.json',
           type: 'GET'
         };
+      },
+      fetchMacros: function(){
+        return {
+          url: '/api/v2/macros/active.json',
+          type: 'GET'
+        };
+      },
+      applyMacro: function(data){
+        return {
+          url: '/api/v2/tickets/'+data.ticket_id+'/macros/'+data.macro_id+'/apply.json',
+          type: 'GET'
+        };
       }
     },
 
@@ -303,8 +327,6 @@
         if (this.hasChild() || this.hasParent())
           return this.ajax('fetchTicket', this.childID() || this.parentID());
 
-        this.ajax('fetchGroups');
-
         this.switchTo('home');
 
         this.doneLoading = true;
@@ -313,6 +335,9 @@
 
     displayForm: function(event){
       event.preventDefault();
+
+      this.ajax('fetchGroups');
+      this.ajax('fetchMacros');
 
       this.switchTo('form', {
         current_user: {
@@ -323,8 +348,6 @@
 
       this.form = new Form(this.$('form.linked_ticket_form'));
       this.spinner = new Spinner(this.$('.spinner'));
-
-      this.form.fillGroupWithCollection(this.groups);
 
       this.bindAutocompleteOnRequesterEmail();
     },
@@ -373,12 +396,21 @@
 
     createChildTicketDone: function(data){
       var value = "parent_of:" + data.ticket.id;
+      var macro_id = this.form.macro();
 
-      this.ticket().customField("custom_field_" + this.ancestryFieldId(),
-                                value
-                               );
+      if (macro_id){
+        this.ajax('applyMacro', { macro_id: macro_id, ticket_id: data.ticket.id })
+          .done(function(data){
+            this.ajax('updateTicket',
+                      data.result.ticket.id,
+                      data.result);
+          });
+      }
 
-      this.ajax('updateCurrentTicket',
+      this.ticket().customField("custom_field_" + this.ancestryFieldId(),value);
+
+      this.ajax('updateTicket',
+                this.ticket().id(),
                 { "ticket": { "custom_fields": [
                   { "id": this.ancestryFieldId(), "value": value }
                 ]}});

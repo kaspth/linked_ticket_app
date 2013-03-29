@@ -5,11 +5,11 @@
       <strong>Requester:</strong>
       <div class="control-group">
         <select name="requester_type" class="span12">
-            <option>-</option>
-            <option value="current_user">Me - {{current_user.email}}</option>
-            <option value="ticket_requester">Ticket Requester - {{ticket.requester.email}}</option>
-            <option value="custom">Other</option>
-          </select>
+          <option>-</option>
+          <option value="current_user">Me - {{current_user.email}}</option>
+          <option value="ticket_requester">Ticket Requester - {{ticket.requester.email}}</option>
+          <option value="custom">Other</option>
+        </select>
       </div>
 
       <div class="requester_fields">
@@ -39,6 +39,7 @@
           </select>
         </label>
       </div>
+
       <div class="assignee_fields">
         <div class="control-group">
           <label>Assignee Group
@@ -57,9 +58,8 @@
         </div>
       </div>
 
-      {{#if tags}}
       <strong>Tags:</strong>
-      <div class="control-group form_field tags">
+      <div class="form_field tags">
         <ul class="token_list span12">
           {{#each tags}}
           <li class="token">
@@ -70,23 +70,29 @@
           <li class="add_tag"><input class="highlightable" type="text"></li>
         </ul>
       </div>
-      {{/if}}
 
       <div class="control-group">
-        <label>* {{t "form.subject.label"}}
-          <input type="text" class="subject span12">
-        </label>
+        <strong>Macro:</strong>
+        <select class="macro span12">
+        </select>
       </div>
+
+      <div class="control-group">
+        <strong>* {{t "form.subject.label"}}:</strong>
+        <input type="text" class="subject span12">
+      </div>
+
       <div class="control-group">
         <label class="checkbox">
           <input type="checkbox" class="copy_description">{{t "form.copy_description.label"}}
         </label>
       </div>
+
       <div class="control-group">
-        <label>* {{t "form.description.label"}}
-          <textarea rows="8" class="description span12"></textarea>
-        </label>
+        <strong>* {{t "form.description.label"}}:</strong>
+        <textarea rows="8" class="description span12"></textarea>
       </div>
+
       <div class="centered">
         <button type="submit" class="create-linked-ticket btn btn-success btn-large">{{t "form.submit"}}</button>
       </div>
