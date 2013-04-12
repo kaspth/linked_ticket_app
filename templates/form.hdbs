@@ -2,13 +2,13 @@
   <div class="well span12">
     <form class="linked_ticket_form">
 
-      <strong>Requester:</strong>
+      <strong>{{t "form.requester.label"}}:</strong>
       <div class="control-group">
         <select name="requester_type" class="span12">
           <option>-</option>
-          <option value="current_user">Me - {{current_user.email}}</option>
-          <option value="ticket_requester">Ticket Requester - {{ticket.requester.email}}</option>
-          <option value="custom">Other</option>
+          <option value="current_user">{{t "form.requester.current_user"}} - {{current_user.email}}</option>
+          <option value="ticket_requester">{{t "form.requester.ticket_requester"}} - {{ticket.requester.email}}</option>
+          <option value="custom">{{t "form.requester.custom"}}</option>
         </select>
       </div>
 
@@ -28,21 +28,21 @@
         </div>
       </div>
 
-      <strong>Assignee:</strong>
+      <strong>{{t "form.assignee.label"}}:</strong>
       <div class="control-group">
         <label>
           <select name="assignee_type" class="span12">
             <option>-</option>
-            <option value="current_user">Me - {{current_user.email}}</option>
-            <option value="ticket_assignee">Ticket Assignee - {{ticket.assignee.group.name}}/{{ticket.assignee.user.email}}</option>
-            <option value="custom">Other</option>
+            <option value="current_user">{{t "form.assignee.current_user"}} - {{current_user.email}}</option>
+            <option value="ticket_assignee">{{t "form.assignee.ticket_assignee"}} - {{ticket.assignee.group.name}}/{{ticket.assignee.user.email}}</option>
+            <option value="custom">{{t "form.assignee.custom"}}</option>
           </select>
         </label>
       </div>
 
       <div class="assignee_fields">
         <div class="control-group">
-          <label>Assignee Group
+          <label>{{t "form.assignee.group_label"}}
             <select class="group span12">
               <option>-</option>
             </select>
@@ -50,7 +50,7 @@
         </div>
 
         <div class="assignee-group control-group" style="display:none;">
-          <label>Assignee Name
+          <label>{{t "form.assignee.name_label"}}
             <select class="assignee span12">
               <option>-</option>
             </select>
@@ -58,7 +58,7 @@
         </div>
       </div>
 
-      <strong>Tags:</strong>
+      <strong>{{t "form.tags.label"}}:</strong>
       <div class="form_field tags">
         <ul class="token_list span12">
           {{#each tags}}
@@ -69,12 +69,6 @@
           {{/each}}
           <li class="add_tag"><input class="highlightable" type="text"></li>
         </ul>
-      </div>
-
-      <div class="control-group">
-        <strong>Macro:</strong>
-        <select class="macro span12">
-        </select>
       </div>
 
       <div class="control-group">

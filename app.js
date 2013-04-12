@@ -103,14 +103,6 @@
       return _.map(this.$el.find('li.token span'), function(i){ return i.innerHTML; });
     };
 
-    this.macro = function(){
-      var value = Number(this.$el.find('select.macro').val());
-
-      if (!_.isFinite(value))
-        return null;
-      return value;
-    };
-
     this.tagInput = function(force){
       var input = this.$el.find('.add_tag input');
       var value = input.val();
@@ -157,10 +149,6 @@
 
     this.fillAssigneeWithCollection = function(collection){
       return this.$el.find('.assignee').html(this._htmlOptionsFor(collection));
-    };
-
-    this.fillMacroWithCollection = function(collection){
-      return this.$el.find('.macro').html(this._htmlOptionsFor(collection));
     };
 
     this.showAssignee = function(){
@@ -222,14 +210,12 @@
       'createChildTicket.done'          : 'createChildTicketDone',
       'fetchTicket.done'                : 'fetchTicketDone',
       'fetchGroups.done'                : function(data){ this.form.fillGroupWithCollection(data.groups); },
-      'fetchMacros.done'                : function(data){ this.form.fillMacroWithCollection(data.macros); },
       'createChildTicket.fail'          : 'genericAjaxFailure',
       'updateTicket.fail'               : 'genericAjaxFailure',
       'fetchTicket.fail'                : 'genericAjaxFailure',
       'autocompleteRequester.fail'      : 'genericAjaxFailure',
       'fetchGroups.fail'                : 'genericAjaxFailure',
       'fetchUsersFromGroup.fail'        : 'genericAjaxFailure',
-      'fetchMacros.fail'                : 'genericAjaxFailure',
       // DOM EVENTS
       'click .new-linked-ticket'        : 'displayForm',
       'click .create-linked-ticket'     : 'create',
@@ -295,18 +281,6 @@
           url: '/api/v2/groups/' + group_id + '/users.json',
           type: 'GET'
         };
-      },
-      fetchMacros: function(){
-        return {
-          url: '/api/v2/macros/active.json',
-          type: 'GET'
-        };
-      },
-      applyMacro: function(data){
-        return {
-          url: '/api/v2/tickets/'+data.ticket_id+'/macros/'+data.macro_id+'/apply.json',
-          type: 'GET'
-        };
       }
     },
 
@@ -337,7 +311,6 @@
       event.preventDefault();
 
       this.ajax('fetchGroups');
-      this.ajax('fetchMacros');
 
       this.switchTo('form', {
         current_user: {
@@ -396,16 +369,6 @@
 
     createChildTicketDone: function(data){
       var value = "parent_of:" + data.ticket.id;
-      var macro_id = this.form.macro();
-
-      if (macro_id){
-        this.ajax('applyMacro', { macro_id: macro_id, ticket_id: data.ticket.id })
-          .done(function(data){
-            this.ajax('updateTicket',
-                      data.result.ticket.id,
-                      data.result);
-          });
-      }
 
       this.ticket().customField("custom_field_" + this.ancestryFieldId(),value);
 

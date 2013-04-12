@@ -36,13 +36,22 @@
     "group": {
       "label": "Groupe"
     },
-    "assignee": {
-      "label": "Assigné"
-    },
     "requester":{
-      "current_user": "Me passer comme demandeur",
-      "ticket_requester": "Utiliser le demandeur actuel",
-      "custom": "Séléctionner/Créer le demandeur"
+      "label": "Demandeur",
+      "current_user": "moi",
+      "ticket_requester": "demandeur du ticket",
+      "custom": "autre"
+    },
+    "assignee":{
+      "label": "Assigné",
+      "current_user": "moi",
+      "ticket_assignee": "Assigné du ticket",
+      "custom": "autre",
+      "group_label": "Groupe de l'assigné",
+      "name_label": "Nom de l'asigné"
+    },
+    "tags": {
+      "label": "Tags"
     },
     "copy_description": {
       "label": "Copier la description du ticket actuel"
