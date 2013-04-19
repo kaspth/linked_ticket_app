@@ -2,16 +2,14 @@
   <div class="well span12">
     <form class="linked_ticket_form">
 
+      <strong>{{t "form.requester.label"}}:</strong>
       <div class="control-group">
-        <label class="radio">
-          <input type="radio" name="requester_type" value="current_user">{{t "form.requester.current_user"}}
-        </label>
-        <label class="radio">
-          <input type="radio" name="requester_type" value="ticket_requester">{{t "form.requester.ticket_requester"}}
-        </label>
-        <label class="radio" class="custom_requester">
-          <input type="radio" name="requester_type" value="custom">{{t "form.requester.custom"}}
-        </label>
+        <select name="requester_type" class="span12">
+          <option>-</option>
+          <option value="current_user">{{t "form.requester.current_user"}} - {{current_user.email}}</option>
+          <option value="ticket_requester">{{t "form.requester.ticket_requester"}} - {{ticket.requester.email}}</option>
+          <option value="custom">{{t "form.requester.custom"}}</option>
+        </select>
       </div>
 
       <div class="requester_fields">
@@ -30,37 +28,65 @@
         </div>
       </div>
 
+      <strong>{{t "form.assignee.label"}}:</strong>
       <div class="control-group">
-        <label>{{t "form.group.label"}}
-          <select class="group span12">
+        <label>
+          <select name="assignee_type" class="span12">
             <option>-</option>
+            <option value="current_user">{{t "form.assignee.current_user"}} - {{current_user.email}}</option>
+            <option value="ticket_assignee">{{t "form.assignee.ticket_assignee"}} - {{ticket.assignee.group.name}}/{{ticket.assignee.user.email}}</option>
+            <option value="custom">{{t "form.assignee.custom"}}</option>
           </select>
         </label>
       </div>
 
-      <div class="assignee-group control-group" style="display:none;">
-        <label>{{t "form.assignee.label"}}
-          <select class="assignee span12">
-            <option>-</option>
-          </select>
-        </label>
+      <div class="assignee_fields">
+        <div class="control-group">
+          <label>{{t "form.assignee.group_label"}}
+            <select class="group span12">
+              <option>-</option>
+            </select>
+          </label>
+        </div>
+
+        <div class="assignee-group control-group" style="display:none;">
+          <label>{{t "form.assignee.name_label"}}
+            <select class="assignee span12">
+              <option>-</option>
+            </select>
+          </label>
+        </div>
+      </div>
+
+      <strong>{{t "form.tags.label"}}:</strong>
+      <div class="form_field tags">
+        <ul class="token_list span12">
+          {{#each tags}}
+          <li class="token">
+            <span>{{this}}</span>
+            <a class="delete" tabindex="-1">×</a>
+          </li>
+          {{/each}}
+          <li class="add_tag"><input class="highlightable" type="text"></li>
+        </ul>
       </div>
 
       <div class="control-group">
-        <label>* {{t "form.subject.label"}}
-          <input type="text" class="subject span12">
-        </label>
+        <strong>* {{t "form.subject.label"}}:</strong>
+        <input type="text" class="subject span12">
       </div>
+
       <div class="control-group">
         <label class="checkbox">
           <input type="checkbox" class="copy_description">{{t "form.copy_description.label"}}
         </label>
       </div>
+
       <div class="control-group">
-        <label>* {{t "form.description.label"}}
-          <textarea rows="8" class="description span12"></textarea>
-        </label>
+        <strong>* {{t "form.description.label"}}:</strong>
+        <textarea rows="8" class="description span12"></textarea>
       </div>
+
       <div class="centered">
         <button type="submit" class="create-linked-ticket btn btn-success btn-large">{{t "form.submit"}}</button>
       </div>

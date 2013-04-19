@@ -36,16 +36,25 @@
     "group": {
       "label": "Group"
     },
-    "assignee": {
-      "label": "Assignee"
-    },
     "requester":{
-      "current_user": "Make me requester",
-      "ticket_requester": "Use current requester",
-      "custom": "Select/Create requester"
+      "label": "Requester",
+      "current_user": "me",
+      "ticket_requester": "ticket requester",
+      "custom": "other"
+    },
+    "assignee":{
+      "label": "Assignee",
+      "current_user": "me",
+      "ticket_assignee": "ticket assignee",
+      "custom": "other",
+      "group_label": "Assignee group",
+      "name_label": "Assignee name"
     },
     "copy_description": {
       "label": "Copy current ticket description"
+    },
+    "tags": {
+      "label": "Tags"
     },
     "submit": "Create Ticket",
     "loading": "Submitting..."

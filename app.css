@@ -1,12 +1,16 @@
 .control-group {
-    margin-bottom:10px;
+  margin-bottom:10px;
 }
 
 .centered {
-    text-align: center;
+  text-align: center;
 }
 
 .requester_fields {
+  display: none;
+}
+
+.assignee_fields {
   display: none;
 }
 
@@ -15,23 +19,26 @@ select {
   border: 1px solid #CCC; 
 }
 
-label.radio {
-  padding-bottom:5px;
+.token_list {
+  margin-bottom:10px;
+}
+.token_list .token {
+  white-space: normal;
 }
 
 div.spinner
 {
-    display: none;
-    width:100px;
-    height: 100px;
-    position: absolute;
-    top: 40%;
-    left: 50%;
-    background:app-asset-url("spinner.gif") no-repeat center center;
-    text-align:center;
-    padding:10px;
-    margin-left: -50px;
-    margin-top: -50px;
-    z-index:2;
-    overflow: auto;
+  display: none;
+  width:100px;
+  height: 100px;
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  background:app-asset-url("spinner.gif") no-repeat center center;
+  text-align:center;
+  padding:10px;
+  margin-left: -50px;
+  margin-top: -50px;
+  z-index:2;
+  overflow: auto;
 }

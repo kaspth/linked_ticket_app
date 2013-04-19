@@ -1,100 +1,9 @@
 (function() {
-  function Form($el){
-    this.$el = $el;
-
-    this.subject = function(val){ return this._getOrSet('.subject', val); };
-    this.description = function(val){return this._getOrSet('.description', val); };
-    this.group = function(val){return this._getOrSet('.group', val); };
-    this.assignee = function(val){return this._getOrSet('.assignee', val); };
-    this.requesterEmail = function(val){return this._getOrSet('.requester_email', val); };
-    this.requesterName = function(val){return this._getOrSet('.requester_name', val); };
-
-    this.requesterType = function(){
-      return this.$el.find('input[name=requester_type]:checked').val();
-    };
-
-    this.isValid = function(){
-      return _.all(['.subject', '.description'], function(field) {
-        return this.validateField(field);
-      }, this);
-    };
-
-    this.validateField = function(field){
-      var viewField = this.$el.find(field),
-      valid = !_.isEmpty(viewField.val());
-
-      if (valid){
-        viewField.parents('.control-group').removeClass('error');
-      } else {
-        viewField.parents('.control-group').addClass('error');
-      }
-
-      return valid;
-    };
-
-    this.requesterFields = function(){
-      return this.$el.find('.requester_fields');
-    };
-
-    this.fillGroupWithCollection = function(collection){
-      return this.$el.find('.group').html(this._htmlOptionsFor(collection));
-    };
-
-    this.fillAssigneeWithCollection = function(collection){
-      return this.$el.find('.assignee').html(this._htmlOptionsFor(collection));
-    };
-
-    this.showAssignee = function(){
-      return this.$el.find('.assignee-group').show();
-    };
-
-    this.hideAssignee = function(){
-      return this.$el.find('.assignee-group').hide();
-    };
-
-    this.disableSubmit = function(){
-      return this.$el.find('.btn').prop('disabled', true);
-    };
-
-    this.enableSubmit = function(){
-      return this.$el.find('.btn').prop('disabled', false);
-    };
-
-    this._htmlOptionsFor =  function(collection){
-      var options = '<option>-</option>';
-
-      _.each(collection, function(item){
-        options += '<option value="'+item.id+'">'+item.name+'</option>';
-      });
-
-      return options;
-    };
-
-    this._getOrSet = function(selector, val){
-      if (_.isUndefined(val))
-        return this.$el.find(selector).val();
-      return this.$el.find(selector).val(val);
-    };
-  }
-
-  function Spinner($el){
-    this.$el = $el;
-
-    this.spin = function(){
-      this.$el.show();
-    };
-
-    this.unSpin = function(){
-      this.$el.hide();
-    };
-  }
-
   return {
-    appVersion: '1.5',
+    appVersion: '1.6',
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
     descriptionDelimiter: '\n--- Original Description --- \n',
-    groups: [],
 
     events: {
       // APP EVENTS
@@ -103,10 +12,9 @@
       // AJAX EVENTS
       'createChildTicket.done'          : 'createChildTicketDone',
       'fetchTicket.done'                : 'fetchTicketDone',
-      'fetchGroups.done'                : function(data){ this.groups = data.groups; },
-
+      'fetchGroups.done'                : function(data){ this.fillGroupWithCollection(data.groups); },
       'createChildTicket.fail'          : 'genericAjaxFailure',
-      'updateCurrentTicket.fail'        : 'genericAjaxFailure',
+      'updateTicket.fail'               : 'genericAjaxFailure',
       'fetchTicket.fail'                : 'genericAjaxFailure',
       'autocompleteRequester.fail'      : 'genericAjaxFailure',
       'fetchGroups.fail'                : 'genericAjaxFailure',
@@ -115,12 +23,20 @@
       'click .new-linked-ticket'        : 'displayForm',
       'click .create-linked-ticket'     : 'create',
       'click .copy_description'         : 'copyDescription',
-      'change input[name=requester_type]' : function(event){
-        if (this.$(event.currentTarget).val() == 'custom')
-          return this.form.requesterFields().show();
-        return this.form.requesterFields().hide();
+      'change select[name=requester_type]' : function(event){
+        if (this.$(event.target).val() == 'custom')
+          return this.formRequesterFields().show();
+        return this.formRequesterFields().hide();
       },
-      'change .group'                   : 'groupChanged'
+      'change select[name=assignee_type]' : function(event){
+        if (this.$(event.target).val() == 'custom')
+          return this.formAssigneeFields().show();
+        return this.formAssigneeFields().hide();
+      },
+      'change .group'                   : 'groupChanged',
+      'click .token .delete'            : function(e) { this.$(e.target).parent('li.token').remove(); },
+      'input .add_tag input'            : function() { this.formTagInput(); },
+      'focusout .add_tag input'         : function() { this.formTagInput(true); }
     },
 
     requests: {
@@ -134,9 +50,9 @@
           type: 'POST'
         };
       },
-      updateCurrentTicket: function(data){
+      updateTicket: function(id, data){
         return {
-          url: '/api/v2/tickets/'+ this.ticket().id() +'.json',
+          url: '/api/v2/tickets/'+ id +'.json',
           dataType: 'json',
           data: JSON.stringify(data),
           processData: false,
@@ -188,8 +104,6 @@
         if (this.hasChild() || this.hasParent())
           return this.ajax('fetchTicket', this.childID() || this.parentID());
 
-        this.ajax('fetchGroups');
-
         this.switchTo('home');
 
         this.doneLoading = true;
@@ -199,12 +113,14 @@
     displayForm: function(event){
       event.preventDefault();
 
-      this.switchTo('form');
+      this.ajax('fetchGroups');
 
-      this.form = new Form(this.$('form.linked_ticket_form'));
-      this.spinner = new Spinner(this.$('.spinner'));
-
-      this.form.fillGroupWithCollection(this.groups);
+      this.switchTo('form', {
+        current_user: {
+          email: this.currentUser().email()
+        },
+        tags: this.tags()
+      });
 
       this.bindAutocompleteOnRequesterEmail();
     },
@@ -212,17 +128,130 @@
     create: function(event){
       event.preventDefault();
 
-      if (this.form.isValid()){
-        this.spinner.spin();
-        this.form.disableSubmit();
+      if (this.formIsValid()){
+        var attributes = this.childTicketAttributes();
 
-        this.ajax('createChildTicket', this.childTicketAsJson())
+        this.spinnerOn();
+        this.disableSubmit();
+
+        this.ajax('createChildTicket', attributes)
           .always(function(){
-            this.spinner.unSpin();
-            this.form.enableSubmit();
+            this.spinnerOff();
+            this.enableSubmit();
           });
       }
     },
+
+    // FORM RELATED
+
+    formSubject: function(val){ return this.formGetOrSet('.subject', val); },
+    formDescription: function(val){ return this.formGetOrSet('.description', val); },
+    formGroup: function(val){return this.formGetOrSet('.group', val); },
+    formAssignee: function(val){return this.formGetOrSet('.assignee', val); },
+    formRequesterEmail: function(val){return this.formGetOrSet('.requester_email', val); },
+    formRequesterName: function(val){return this.formGetOrSet('.requester_name', val); },
+
+    formGetOrSet: function(selector, val){
+      if (_.isUndefined(val))
+        return this.$(selector).val();
+      return this.$(selector).val(val);
+    },
+
+    formRequesterType: function(){
+      return this.$('select[name=requester_type]').val();
+    },
+
+    formRequesterFields: function(){
+      return this.$('.requester_fields');
+    },
+
+    formAssigneeFields: function(){
+      return this.$('.assignee_fields');
+    },
+
+    formAssigneeType: function(){
+      return this.$('select[name=assignee_type]').val();
+    },
+
+    formTags: function(){
+      return _.map(this.$('li.token span'), function(i){ return i.innerHTML; });
+    },
+
+    formTagInput: function(force){
+      var input = this.$('.add_tag input');
+      var value = input.val();
+
+      if ((value.indexOf(' ') >= 0) || force){
+        _.each(_.compact(value.split(' ')), function(tag){
+          var li = '<li class="token"><span>'+tag+'</span><a class="delete" tabindex="-1">×</a></li>';
+          this.$('li.add_tag').before(li);
+        }, this);
+        input.val('');
+      }
+    },
+
+    fillGroupWithCollection: function(collection){
+      return this.$('.group').html(this.htmlOptionsFor(collection));
+    },
+
+    fillAssigneeWithCollection: function(collection){
+      return this.$('.assignee').html(this.htmlOptionsFor(collection));
+    },
+
+    formShowAssignee: function(){
+      return this.$('.assignee-group').show();
+    },
+
+    formHideAssignee: function(){
+      return this.$('.assignee-group').hide();
+    },
+
+    disableSubmit: function(){
+      return this.$('.btn').prop('disabled', true);
+    },
+
+    enableSubmit: function(){
+      return this.$('.btn').prop('disabled', false);
+    },
+
+    htmlOptionsFor:  function(collection){
+      var options = '<option>-</option>';
+
+      _.each(collection, function(item){
+        options += '<option value="'+item.id+'">'+(item.name || item.title)+'</option>';
+      });
+
+      return options;
+    },
+
+    formIsValid: function(){
+      return _.all(['.subject', '.description'], function(field) {
+        return this.validateFormField(field);
+      }, this);
+    },
+
+    validateFormField: function(field){
+      var viewField = this.$(field),
+      valid = !_.isEmpty(viewField.val());
+
+      if (valid){
+        viewField.parents('.control-group').removeClass('error');
+      } else {
+        viewField.parents('.control-group').addClass('error');
+      }
+
+      return valid;
+    },
+
+    spinnerOff: function(){
+      this.$('.spinner').hide();
+    },
+
+    spinnerOn: function(){
+      this.$('.spinner').show();
+    },
+
+    // EVENT CALLBACKS
 
     fetchTicketDone: function(data){
       var assignee = _.find(data.users, function(user){
@@ -252,22 +281,21 @@
     createChildTicketDone: function(data){
       var value = "parent_of:" + data.ticket.id;
 
-      this.ticket().customField("custom_field_" + this.ancestryFieldId(),
-                                value
-                               );
+      this.ticket().customField("custom_field_" + this.ancestryFieldId(),value);
 
-      this.ajax('updateCurrentTicket',
+      this.ajax('updateTicket',
+                this.ticket().id(),
                 { "ticket": { "custom_fields": [
                   { "id": this.ancestryFieldId(), "value": value }
                 ]}});
 
       this.ajax('fetchTicket', data.ticket.id);
 
-      this.spinner.unSpin();
+      this.spinnerOff();
     },
 
     copyDescription: function(){
-      var description = this.form.description()
+      var description = this.formDescription()
         .split(this.descriptionDelimiter);
 
       var ret = description[0];
@@ -275,7 +303,7 @@
       if (description.length === 1)
         ret += this.descriptionDelimiter + this.ticket().description();
 
-      this.form.description(ret);
+      this.formDescription(ret);
     },
 
     bindAutocompleteOnRequesterEmail: function(){
@@ -295,59 +323,118 @@
     },
 
     groupChanged: function(){
-      var group_id = Number(this.form.group());
+      var group_id = Number(this.formGroup());
 
       if (!_.isFinite(group_id))
-        return this.form.hideAssignee();
+        return this.formHideAssignee();
 
-      this.spinner.spin();
+      this.spinnerOn();
 
       this.ajax('fetchUsersFromGroup', group_id)
         .done(function(data){
-          this.form.showAssignee();
-          this.form.fillAssigneeWithCollection(data.users);
+          this.formShowAssignee();
+          this.fillAssigneeWithCollection(data.users);
         })
-        .always(function(){ this.spinner.unSpin(); });
+        .always(function(){ this.spinnerOff(); });
     },
 
-    childTicketAsJson: function(){
+    genericAjaxFailure: function(){
+      services.notify(this.I18n.t('ajax_failure'), 'error');
+    },
+
+    // FORM TO JSON
+
+    childTicketAttributes: function(){
       var params = {
-        "subject": this.form.subject(),
-        "description": this.form.description(),
+        "subject": this.formSubject(),
+        "description": this.formDescription(),
         "custom_fields": [
           { id: this.ancestryFieldId(), value: 'child_of:' + this.ticket().id() }
         ]
       };
-      var group_id = Number(this.form.group());
-      var assignee_id = Number(this.form.assignee());
-      var requester_type = this.form.requesterType();
 
-      if (!_.isEmpty(this.settings.child_tag))
-        params.tags = [ this.settings.child_tag ];
-
-      if ( requester_type == 'current_user'){
-        params.requester_id = this.currentUser().id();
-      } else if (requester_type == 'ticket_requester' &&
-                 this.ticket().requester().id()) {
-        params.requester_id = this.ticket().requester().id();
-      } else if (requester_type == 'custom' &&
-                 this.form.requesterEmail()){
-        params.requester = {
-          "email": this.form.requesterEmail(),
-          "name": this.form.requesterName()
-        };
-      }
-
-      if (_.isFinite(group_id))
-        params.group_id = group_id;
-
-      if (_.isFinite(assignee_id))
-        params.assignee_id = assignee_id;
+      _.extend(params,
+               this.serializeRequesterAttributes(),
+               this.serializeAssigneeAttributes(),
+               this.serializeTagAttributes()
+              );
 
       return { "ticket": params };
     },
-    genericAjaxFailure: function(){
-      services.notify(this.I18n.t('ajax_failure'), 'error');
+
+    serializeTagAttributes: function(){
+      var attributes = { tags: [] };
+      var tags = this.formTags();
+
+      if (tags)
+        attributes.tags = tags;
+
+      return attributes;
+    },
+
+    serializeAssigneeAttributes: function(){
+      var type = this.formAssigneeType();
+      var attributes = {};
+
+      // Very nice looking if/elseif/if/if/elseif/if/if
+      // see: http://i.imgur.com/XA7BG5N.jpg
+      if (type == 'current_user'){
+        attributes.assignee_id = this.currentUser().id();
+      } else if (type == 'ticket_assignee' &&
+                 this.ticket().assignee()) {
+
+        if (this.ticket().assignee().user()){
+          attributes.assignee_id = this.ticket().assignee().user().id();
+        }
+        if (this.ticket().assignee().group()){
+          attributes.group_id = this.ticket().assignee().group().id();
+        }
+      } else if (type == 'custom' &&
+                 (this.formGroup() || this.formAssignee())){
+        var group_id = Number(this.formGroup());
+        var assignee_id = Number(this.formAssignee());
+
+        if (_.isFinite(group_id))
+          attributes.group_id = group_id;
+
+        if (_.isFinite(assignee_id))
+          attributes.assignee_id = assignee_id;
+      }
+
+      return attributes;
+    },
+
+    serializeRequesterAttributes: function(){
+      var type = this.formRequesterType();
+      var attributes  = {};
+
+      if (type == 'current_user'){
+        attributes.requester_id = this.currentUser().id();
+      } else if (type == 'ticket_requester' &&
+                 this.ticket().requester().id()) {
+        attributes.requester_id = this.ticket().requester().id();
+      } else if (type == 'custom' &&
+                 this.formRequesterEmail()){
+        attributes.requester = {
+          "email": this.formRequesterEmail(),
+          "name": this.formRequesterName()
+        };
+      }
+      return attributes;
+    },
+
+    // HELPERS
+
+    tags: function(){
+      var tags = [];
+
+      if (!_.isEmpty(this.ticket().tags()))
+        tags = _.union(tags,this.ticket().tags());
+
+      if (!_.isEmpty(this.settings.child_tag))
+        tags = _.union(tags, [ this.settings.child_tag ]);
+
+      return tags;
     },
     hideAncestryField: function(){
       var field = this.ticketFields("custom_field_" + this.ancestryFieldId());

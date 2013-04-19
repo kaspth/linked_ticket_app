@@ -22,3 +22,7 @@
 2013-03-22 Pierre Nespo <pierre.nespo@gmail.com>
 	* Bump to v1.5
 	* Use custom_fields instead of fields to update/insert custom field
+2013-04-19 Pierre Nespo <pierre.nespo@gmail.com>
+	* Bump to v1.6
+	* Change Logo
+	* Move all app logic inside the return to avoid memory leak
