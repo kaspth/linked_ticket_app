@@ -1,201 +1,4 @@
 (function() {
-  function ChildTicketAttributes(app){
-    this.requesterAttributes = function(){
-      var type = app.form.requesterType();
-      var attributes  = {};
-
-      if (type == 'current_user'){
-        attributes.requester_id = app.currentUser().id();
-      } else if (type == 'ticket_requester' &&
-                 app.ticket().requester().id()) {
-        attributes.requester_id = app.ticket().requester().id();
-      } else if (type == 'custom' &&
-                 app.form.requesterEmail()){
-        attributes.requester = {
-          "email": app.form.requesterEmail(),
-          "name": app.form.requesterName()
-        };
-      }
-
-      return attributes;
-    };
-
-    this.assigneeAttributes = function(){
-      var type = app.form.assigneeType();
-      var attributes = {};
-
-      // Very nice looking if/elseif/if/if/elseif/if/if
-      // see: http://i.imgur.com/XA7BG5N.jpg
-      if (type == 'current_user'){
-        attributes.assignee_id = app.currentUser().id();
-      } else if (type == 'ticket_assignee' &&
-                 app.ticket().assignee()) {
-
-        if (app.ticket().assignee().user()){
-          attributes.assignee_id = app.ticket().assignee().user().id();
-        }
-        if (app.ticket().assignee().group()){
-          attributes.group_id = app.ticket().assignee().group().id();
-        }
-      } else if (type == 'custom' &&
-                 (app.form.group() || app.form.assignee())){
-        var group_id = Number(app.form.group());
-        var assignee_id = Number(app.form.assignee());
-
-        if (_.isFinite(group_id))
-          attributes.group_id = group_id;
-
-        if (_.isFinite(assignee_id))
-          attributes.assignee_id = assignee_id;
-      }
-
-      return attributes;
-    };
-
-    this.tagAttributes = function(){
-      var attributes = { tags: [] };
-      var tags = app.form.tags();
-
-      if (tags)
-        attributes.tags = tags;
-
-      return attributes;
-    };
-
-    this.toJSON = function(){
-      var params = {
-        "subject": app.form.subject(),
-        "description": app.form.description(),
-        "custom_fields": [
-          { id: app.ancestryFieldId(), value: 'child_of:' + app.ticket().id() }
-        ]
-      };
-
-      _.extend(params,
-               this.requesterAttributes(),
-               this.assigneeAttributes(),
-               this.tagAttributes()
-              );
-
-      return { "ticket": params };
-    };
-  }
-
-  function Form($el){
-    this.$el = $el;
-
-    this.subject = function(val){ return this._getOrSet('.subject', val); };
-    this.description = function(val){return this._getOrSet('.description', val); };
-    this.group = function(val){return this._getOrSet('.group', val); };
-    this.assignee = function(val){return this._getOrSet('.assignee', val); };
-    this.requesterEmail = function(val){return this._getOrSet('.requester_email', val); };
-    this.requesterName = function(val){return this._getOrSet('.requester_name', val); };
-
-    this.requesterType = function(){
-      return this.$el.find('select[name=requester_type]').val();
-    };
-
-    this.assigneeType = function(){
-      return this.$el.find('select[name=assignee_type]').val();
-    };
-
-    this.tags = function(){
-      return _.map(this.$el.find('li.token span'), function(i){ return i.innerHTML; });
-    };
-
-    this.tagInput = function(force){
-      var input = this.$el.find('.add_tag input');
-      var value = input.val();
-
-      if ((value.indexOf(' ') >= 0) || force){
-        _.each(_.compact(value.split(' ')), function(tag){
-          var li = '<li class="token"><span>'+tag+'</span><a class="delete" tabindex="-1">×</a></li>';
-            this.$el.find('li.add_tag').before(li);
-        }, this);
-        input.val('');
-      }
-    };
-
-    this.isValid = function(){
-      return _.all(['.subject', '.description'], function(field) {
-        return this.validateField(field);
-      }, this);
-    };
-
-    this.validateField = function(field){
-      var viewField = this.$el.find(field),
-      valid = !_.isEmpty(viewField.val());
-
-      if (valid){
-        viewField.parents('.control-group').removeClass('error');
-      } else {
-        viewField.parents('.control-group').addClass('error');
-      }
-
-      return valid;
-    };
-
-    this.requesterFields = function(){
-      return this.$el.find('.requester_fields');
-    };
-
-    this.assigneeFields = function(){
-      return this.$el.find('.assignee_fields');
-    };
-
-    this.fillGroupWithCollection = function(collection){
-      return this.$el.find('.group').html(this._htmlOptionsFor(collection));
-    };
-
-    this.fillAssigneeWithCollection = function(collection){
-      return this.$el.find('.assignee').html(this._htmlOptionsFor(collection));
-    };
-
-    this.showAssignee = function(){
-      return this.$el.find('.assignee-group').show();
-    };
-
-    this.hideAssignee = function(){
-      return this.$el.find('.assignee-group').hide();
-    };
-
-    this.disableSubmit = function(){
-      return this.$el.find('.btn').prop('disabled', true);
-    };
-
-    this.enableSubmit = function(){
-      return this.$el.find('.btn').prop('disabled', false);
-    };
-
-    this._htmlOptionsFor =  function(collection){
-      var options = '<option>-</option>';
-
-      _.each(collection, function(item){
-        options += '<option value="'+item.id+'">'+(item.name || item.title)+'</option>';
-      });
-
-      return options;
-    };
-
-    this._getOrSet = function(selector, val){
-      if (_.isUndefined(val))
-        return this.$el.find(selector).val();
-      return this.$el.find(selector).val(val);
-    };
-  }
-
-  function Spinner($el){
-    this.$el = $el;
-
-    this.spin = function(){
-      this.$el.show();
-    };
-
-    this.unSpin = function(){
-      this.$el.hide();
-    };
-  }
-
   return {
     appVersion: '1.5',
     childRegex: /child_of:(\d*)/,
@@ -209,7 +12,7 @@
       // AJAX EVENTS
       'createChildTicket.done'          : 'createChildTicketDone',
       'fetchTicket.done'                : 'fetchTicketDone',
-      'fetchGroups.done'                : function(data){ this.form.fillGroupWithCollection(data.groups); },
+      'fetchGroups.done'                : function(data){ this.fillGroupWithCollection(data.groups); },
       'createChildTicket.fail'          : 'genericAjaxFailure',
       'updateTicket.fail'               : 'genericAjaxFailure',
       'fetchTicket.fail'                : 'genericAjaxFailure',
@@ -222,18 +25,18 @@
       'click .copy_description'         : 'copyDescription',
       'change select[name=requester_type]' : function(event){
         if (this.$(event.target).val() == 'custom')
-          return this.form.requesterFields().show();
-        return this.form.requesterFields().hide();
+          return this.formRequesterFields().show();
+        return this.formRequesterFields().hide();
       },
       'change select[name=assignee_type]' : function(event){
         if (this.$(event.target).val() == 'custom')
-          return this.form.assigneeFields().show();
-        return this.form.assigneeFields().hide();
+          return this.formAssigneeFields().show();
+        return this.formAssigneeFields().hide();
       },
       'change .group'                   : 'groupChanged',
       'click .token .delete'            : function(e) { this.$(e.target).parent('li.token').remove(); },
-      'input .add_tag input'            : function() { this.form.tagInput(); },
-      'focusout .add_tag input'         : function() { this.form.tagInput(true); }
+      'input .add_tag input'            : function() { this.formTagInput(); },
+      'focusout .add_tag input'         : function() { this.formTagInput(true); }
     },
 
     requests: {
@@ -319,28 +122,136 @@
         tags: this.tags()
       });
 
-      this.form = new Form(this.$('form.linked_ticket_form'));
-      this.spinner = new Spinner(this.$('.spinner'));
-
       this.bindAutocompleteOnRequesterEmail();
     },
 
     create: function(event){
       event.preventDefault();
 
-      var attributes = new ChildTicketAttributes(this).toJSON();
+      if (this.formIsValid()){
+        var attributes = this.childTicketAttributes();
 
-      if (this.form.isValid()){
-        this.spinner.spin();
-        this.form.disableSubmit();
+        this.spinnerOn();
+        this.disableSubmit();
 
         this.ajax('createChildTicket', attributes)
           .always(function(){
-            this.spinner.unSpin();
-            this.form.enableSubmit();
+            this.spinnerOff();
+            this.enableSubmit();
           });
       }
     },
+
+    // FORM RELATED
+
+    formSubject: function(val){ return this.formGetOrSet('.subject', val); },
+    formDescription: function(val){ return this.formGetOrSet('.description', val); },
+    formGroup: function(val){return this.formGetOrSet('.group', val); },
+    formAssignee: function(val){return this.formGetOrSet('.assignee', val); },
+    formRequesterEmail: function(val){return this.formGetOrSet('.requester_email', val); },
+    formRequesterName: function(val){return this.formGetOrSet('.requester_name', val); },
+
+    formGetOrSet: function(selector, val){
+      if (_.isUndefined(val))
+        return this.$(selector).val();
+      return this.$(selector).val(val);
+    },
+
+    formRequesterType: function(){
+      return this.$('select[name=requester_type]').val();
+    },
+
+    formRequesterFields: function(){
+      return this.$('.requester_fields');
+    },
+
+    formAssigneeFields: function(){
+      return this.$('.assignee_fields');
+    },
+
+    formAssigneeType: function(){
+      return this.$('select[name=assignee_type]').val();
+    },
+
+    formTags: function(){
+      return _.map(this.$('li.token span'), function(i){ return i.innerHTML; });
+    },
+
+    formTagInput: function(force){
+      var input = this.$('.add_tag input');
+      var value = input.val();
+
+      if ((value.indexOf(' ') >= 0) || force){
+        _.each(_.compact(value.split(' ')), function(tag){
+          var li = '<li class="token"><span>'+tag+'</span><a class="delete" tabindex="-1">×</a></li>';
+          this.$('li.add_tag').before(li);
+        }, this);
+        input.val('');
+      }
+    },
+
+    fillGroupWithCollection: function(collection){
+      return this.$('.group').html(this.htmlOptionsFor(collection));
+    },
+
+    fillAssigneeWithCollection: function(collection){
+      return this.$('.assignee').html(this.htmlOptionsFor(collection));
+    },
+
+    formShowAssignee: function(){
+      return this.$('.assignee-group').show();
+    },
+
+    formHideAssignee: function(){
+      return this.$('.assignee-group').hide();
+    },
+
+    disableSubmit: function(){
+      return this.$('.btn').prop('disabled', true);
+    },
+
+    enableSubmit: function(){
+      return this.$('.btn').prop('disabled', false);
+    },
+
+    htmlOptionsFor:  function(collection){
+      var options = '<option>-</option>';
+
+      _.each(collection, function(item){
+        options += '<option value="'+item.id+'">'+(item.name || item.title)+'</option>';
+      });
+
+      return options;
+    },
+
+    formIsValid: function(){
+      return _.all(['.subject', '.description'], function(field) {
+        return this.validateFormField(field);
+      }, this);
+    },
+
+    validateFormField: function(field){
+      var viewField = this.$(field),
+      valid = !_.isEmpty(viewField.val());
+
+      if (valid){
+        viewField.parents('.control-group').removeClass('error');
+      } else {
+        viewField.parents('.control-group').addClass('error');
+      }
+
+      return valid;
+    },
+
+    spinnerOff: function(){
+      this.$('.spinner').hide();
+    },
+
+    spinnerOn: function(){
+      this.$('.spinner').show();
+    },
+
+    // EVENT CALLBACKS
 
     fetchTicketDone: function(data){
       var assignee = _.find(data.users, function(user){
@@ -380,11 +291,11 @@
 
       this.ajax('fetchTicket', data.ticket.id);
 
-      this.spinner.unSpin();
+      this.spinnerOff();
     },
 
     copyDescription: function(){
-      var description = this.form.description()
+      var description = this.formDescription()
         .split(this.descriptionDelimiter);
 
       var ret = description[0];
@@ -392,7 +303,7 @@
       if (description.length === 1)
         ret += this.descriptionDelimiter + this.ticket().description();
 
-      this.form.description(ret);
+      this.formDescription(ret);
     },
 
     bindAutocompleteOnRequesterEmail: function(){
@@ -412,24 +323,108 @@
     },
 
     groupChanged: function(){
-      var group_id = Number(this.form.group());
+      var group_id = Number(this.formGroup());
 
       if (!_.isFinite(group_id))
-        return this.form.hideAssignee();
+        return this.formHideAssignee();
 
-      this.spinner.spin();
+      this.spinnerOn();
 
       this.ajax('fetchUsersFromGroup', group_id)
         .done(function(data){
-          this.form.showAssignee();
-          this.form.fillAssigneeWithCollection(data.users);
+          this.formShowAssignee();
+          this.fillAssigneeWithCollection(data.users);
         })
-        .always(function(){ this.spinner.unSpin(); });
+        .always(function(){ this.spinnerOff(); });
     },
 
     genericAjaxFailure: function(){
       services.notify(this.I18n.t('ajax_failure'), 'error');
     },
+
+    // FORM TO JSON
+
+    childTicketAttributes: function(){
+      var params = {
+        "subject": this.formSubject(),
+        "description": this.formDescription(),
+        "custom_fields": [
+          { id: this.ancestryFieldId(), value: 'child_of:' + this.ticket().id() }
+        ]
+      };
+
+      _.extend(params,
+               this.serializeRequesterAttributes(),
+               this.serializeAssigneeAttributes(),
+               this.serializeTagAttributes()
+              );
+
+      return { "ticket": params };
+    },
+
+    serializeTagAttributes: function(){
+      var attributes = { tags: [] };
+      var tags = this.formTags();
+
+      if (tags)
+        attributes.tags = tags;
+
+      return attributes;
+    },
+
+    serializeAssigneeAttributes: function(){
+      var type = this.formAssigneeType();
+      var attributes = {};
+
+      // Very nice looking if/elseif/if/if/elseif/if/if
+      // see: http://i.imgur.com/XA7BG5N.jpg
+      if (type == 'current_user'){
+        attributes.assignee_id = this.currentUser().id();
+      } else if (type == 'ticket_assignee' &&
+                 this.ticket().assignee()) {
+
+        if (this.ticket().assignee().user()){
+          attributes.assignee_id = this.ticket().assignee().user().id();
+        }
+        if (this.ticket().assignee().group()){
+          attributes.group_id = this.ticket().assignee().group().id();
+        }
+      } else if (type == 'custom' &&
+                 (this.formGroup() || this.formAssignee())){
+        var group_id = Number(this.formGroup());
+        var assignee_id = Number(this.formAssignee());
+
+        if (_.isFinite(group_id))
+          attributes.group_id = group_id;
+
+        if (_.isFinite(assignee_id))
+          attributes.assignee_id = assignee_id;
+      }
+
+      return attributes;
+    },
+
+    serializeRequesterAttributes: function(){
+      var type = this.formRequesterType();
+      var attributes  = {};
+
+      if (type == 'current_user'){
+        attributes.requester_id = this.currentUser().id();
+      } else if (type == 'ticket_requester' &&
+                 this.ticket().requester().id()) {
+        attributes.requester_id = this.ticket().requester().id();
+      } else if (type == 'custom' &&
+                 this.formRequesterEmail()){
+        attributes.requester = {
+          "email": this.formRequesterEmail(),
+          "name": this.formRequesterName()
+        };
+      }
+      return attributes;
+    },
+
+    // HELPERS
+
     tags: function(){
       var tags = [];
 
