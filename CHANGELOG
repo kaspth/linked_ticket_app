@@ -26,3 +26,6 @@
 	* Bump to v1.6
 	* Change Logo
 	* Move all app logic inside the return to avoid memory leak
+2013-06-18 Pierre Nespo <pierre.nespo@gmail.com>
+	* Bump to v1.6.1
+	* BUGFIX - Wait for the ancestry custom field to be ready before starting the app.
