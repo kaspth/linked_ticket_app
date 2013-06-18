@@ -99,7 +99,8 @@
     loadIfDataReady: function(){
       if(!this.doneLoading &&
          this.ticket() &&
-         this.ticket().id()){
+         this.ticket().id() &&
+        !_.isUndefined(this.ancestryValue())){
 
         if (this.hasChild() || this.hasParent())
           return this.ajax('fetchTicket', this.childID() || this.parentID());
