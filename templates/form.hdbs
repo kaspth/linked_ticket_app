@@ -58,6 +58,20 @@
         </div>
       </div>
 
+      <strong>{{t "form.ccs.label"}}:</strong>
+      <div class="form_field ccs">
+        <ul class="token_list span12">
+          {{#each ccs}}
+          <li class="token">
+            <span>{{this}}</span>
+            <a class="delete" tabindex="-1">×</a>
+          </li>
+          {{/each}}
+          <li class="add_token"><input class="highlightable" type="text"></li>
+        </ul>
+      </div>
+      <br/>
+
       <strong>{{t "form.tags.label"}}:</strong>
       <div class="form_field tags">
         <ul class="token_list span12">
@@ -67,7 +81,7 @@
             <a class="delete" tabindex="-1">×</a>
           </li>
           {{/each}}
-          <li class="add_tag"><input class="highlightable" type="text"></li>
+          <li class="add_token"><input class="highlightable" type="text"></li>
         </ul>
       </div>
 

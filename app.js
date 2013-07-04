@@ -35,8 +35,9 @@
       },
       'change .group'                   : 'groupChanged',
       'click .token .delete'            : function(e) { this.$(e.target).parent('li.token').remove(); },
-      'input .add_tag input'            : function() { this.formTagInput(); },
-      'focusout .add_tag input'         : function() { this.formTagInput(true); }
+      'keypress .add_token input'       : function(e) { if(e.charCode === 13) { this.formTokenInput(e.target, true);}},
+      'input .add_token input'            : function(e) { this.formTokenInput(e.target); },
+      'focusout .add_token input'         : function(e) { this.formTokenInput(e.target,true); }
     },
 
     requests: {
@@ -120,7 +121,8 @@
         current_user: {
           email: this.currentUser().email()
         },
-        tags: this.tags()
+        tags: this.tags(),
+        ccs: this.ccs()
       });
 
       this.bindAutocompleteOnRequesterEmail();
@@ -174,18 +176,18 @@
       return this.$('select[name=assignee_type]').val();
     },
 
-    formTags: function(){
-      return _.map(this.$('li.token span'), function(i){ return i.innerHTML; });
+    formToken: function(type){
+      return _.map(this.$('.'+type+' li.token span'), function(i){ return i.innerHTML; });
     },
 
-    formTagInput: function(force){
-      var input = this.$('.add_tag input');
+    formTokenInput: function(el, force){
+      var input = this.$(el);
       var value = input.val();
 
       if ((value.indexOf(' ') >= 0) || force){
-        _.each(_.compact(value.split(' ')), function(tag){
-          var li = '<li class="token"><span>'+tag+'</span><a class="delete" tabindex="-1">×</a></li>';
-          this.$('li.add_tag').before(li);
+        _.each(_.compact(value.split(' ')), function(token){
+          var li = '<li class="token"><span>'+token+'</span><a class="delete" tabindex="-1">×</a></li>';
+          this.$(el).before(li);
         }, this);
         input.val('');
       }
@@ -365,10 +367,14 @@
 
     serializeTagAttributes: function(){
       var attributes = { tags: [] };
-      var tags = this.formTags();
+      var tags = this.formToken('tags');
+      var ccs = this.formToken('ccs');
 
       if (tags)
         attributes.tags = tags;
+
+      if (ccs)
+        attributes.collaborators = ccs;
 
       return attributes;
     },
@@ -437,6 +443,11 @@
 
       return tags;
     },
+
+    ccs: function(){
+      return _.map(this.ticket().collaborators(), function(cc){ return cc.email(); });
+    },
+
     hideAncestryField: function(){
       var field = this.ticketFields("custom_field_" + this.ancestryFieldId());
 
