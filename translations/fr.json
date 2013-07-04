@@ -50,6 +50,9 @@
       "group_label": "Groupe de l'assigné",
       "name_label": "Nom de l'asigné"
     },
+    "ccs": {
+      "label": "CCs"
+    },
     "tags": {
       "label": "Tags"
     },

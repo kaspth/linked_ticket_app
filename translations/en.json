@@ -53,6 +53,9 @@
     "copy_description": {
       "label": "Copy current ticket description"
     },
+    "ccs": {
+      "label": "CCs"
+    },
     "tags": {
       "label": "Tags"
     },
