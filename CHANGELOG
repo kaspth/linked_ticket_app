@@ -29,3 +29,7 @@
 2013-06-18 Pierre Nespo <pierre.nespo@gmail.com>
 	* Bump to v1.6.1
 	* BUGFIX - Wait for the ancestry custom field to be ready before starting the app.
+2013-07-04 Pierre Nespo <pierre.nespo@gmail.com>
+	* Bump to v1.6.2
+	* Add CCs to the form field.
+	* Allow tags/ccs to be submitted by hitting the enter key
