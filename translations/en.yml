@@ -1,0 +1,152 @@
+---
+title: "Linked Ticket"
+packages:
+  - default
+  - app_linked_ticket_app
+
+parts:
+  - translation:
+      key: "txt.apps.linked_ticket_app.app.description"
+      title: "This is the app description"
+      value: "Create and link a ticket from an existing one"
+  - translation:
+      key: "txt.apps.linked_ticket_app.app.name"
+      title: "This is the app name"
+      value: "Linked Ticket"
+  - translation:
+      key: "txt.apps.linked_ticket_app.app.parameters.ancestry_field.label"
+      title: "This is the field that will contain the linked ticket data, like the ID etc..."
+      value: "Reference Field"
+  - translation:
+      key: "txt.apps.linked_ticket_app.app.parameters.ancestry_field.helpText"
+      title: "This is the helptext of the reference field so the user knows what to enter. this appears on the settings page of an app"
+      value: "Place a custom text field ID here to store the Linked Ticket reference data. Example : 2240041"
+  - translation:
+      key: "txt.apps.linked_ticket_app.app.parameters.child_tag.label"
+      title: "this is the tag that the admin wishes to apply to every ticket that has gone through the app. this is to be defined on the settings page"
+      value: "Child Tag"
+  - translation:
+      key: "txt.apps.linked_ticket_app.app.parameters.child_tag.helpText"
+      title: "this is the help text for the child tag field"
+      value: "This tag will be added to the created child ticket. Example : child_ticket"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ajax_failure"
+      title: "standard error message"
+      value: "An error occured. Please try reloading the app."
+  - translation:
+      key: "txt.apps.linked_ticket_app.ancestry_field_missing"
+      title: "standard error message trying to help the user troubleshoot"
+      value: "<strong>Linked Ticket App:</strong> Did you follow the set up instructions and set up a custom field?"
+  - translation:
+      key: "txt.apps.linked_ticket_app.has_parent"
+      title: "this is displayed on the right hand side of a ticket once the ticket has been broken into two. it's to inform the agent that this ticket has a parent ticket which is a linked ticket basically"
+      value: "This ticket has a parent ticket."
+  - translation:
+      key: "txt.apps.linked_ticket_app.has_child"
+      title: "this is displayed on the right hand side of a ticket once the ticket has been broken into two. it's to inform the agent that this ticket has a child ticket which is a linked ticket basically"
+      value: "This ticket has a child ticket."
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.subject.label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the subject of the future child ticket"
+      value: "Subject"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.description.label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the description of the future child ticket"
+      value: "Description"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.requester_email.label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the requester email of the future child ticket"
+      value: "Requester Email"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.requester_name.label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the requester name of the future child ticket"
+      value: "Requester Name (For new requesters only)"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.group.label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the assignee group of the future child ticket"
+      value: "Group"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.requester.label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the label for the requester from of the app"
+      value: "Requester"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.requester.current_user"
+      title: "This is a value from the requester dropdown, a bunch of options, one of them being making yourself as the requester"
+      value: "me"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.requester.ticket_requester"
+      title: "This is a value from the requester dropdown, a bunch of options, one of them being making the original ticker requester the new requester too"
+      value: "ticket requester"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.requester.custom"
+      title: "This is a value from the requester dropdown, a bunch of options, one of them being creating a new requester"
+      value: "other"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.assignee.label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the label for the assignee from of the app"
+      value: "Assignee"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.assignee.current_user"
+      title: "This is a value from the requester dropdown, a bunch of options, one of them being making yourself as the assignee"
+      value: "me"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.assignee.ticket_assignee"
+      title: "This is a value from the requester dropdown, a bunch of options, one of them being making the current ticket assignee the new assignee"
+      value: "ticket assignee"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.assignee.custom"
+      title: "This is a value from the requester dropdown, a bunch of options, one of them being creating a new assignee"
+      value: "other"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.assignee.group_label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the label for the assignee group from of the app"
+      value: "Assignee group"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.assignee.name_label"
+      title: "This is a form to create a linked ticket from an existing regular ticket, this is the label for the assignee name from of the app"
+      value: "Assignee name"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.copy_description.label"
+      title: "This is a checkbox option to copy the current ticket description into the future ticket created through the app"
+      value: "Copy current ticket description"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.ccs.label"
+      title: "this is a field containing CCs on this ticket"
+      value: "CCs"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.tags.label"
+      title: "this is a field containing tags on this ticket"
+      value: "Tags"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.submit"
+      title: "this is a big button to submit the ticket creation form"
+      value: "Create Ticket"
+  - translation:
+      key: "txt.apps.linked_ticket_app.form.loading"
+      title: "wait text while ticket is being submitted"
+      value: "Submitting..."
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.id"
+      title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the ID of the other ticket"
+      value: "ID"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.subject"
+      title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the subject of the other ticket"
+      value: "Subject"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.status"
+      title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the status of the other ticket"
+      value: "Status"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.type"
+      title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the type of the other ticket"
+      value: "Type"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.assignee"
+      title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the assignee of the other ticket"
+      value: "Assignee"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.group"
+      title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the group of the other ticket"
+      value: "Group"
+

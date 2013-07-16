@@ -5,8 +5,8 @@
 
     "parameters": {
       "ancestry_field":{
-        "label": "Ancestry Field",
-        "helpText": "Place a custom text field ID here to store the Linked Ticket ancestry data. Example : 2240041"
+        "label": "Reference Field",
+        "helpText": "Place a custom text field ID here to store the Linked Ticket reference data. Example : 2240041"
       },
       "child_tag": {
         "label": "Child Tag",
