@@ -32,7 +32,7 @@ parts:
   - translation:
       key: "txt.apps.linked_ticket_app.ajax_failure"
       title: "standard error message"
-      value: "An error occured. Please try reloading the app."
+      value: "An error occurred. Please try reloading the app."
   - translation:
       key: "txt.apps.linked_ticket_app.ancestry_field_missing"
       title: "standard error message trying to help the user troubleshoot"
