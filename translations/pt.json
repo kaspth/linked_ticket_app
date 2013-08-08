@@ -1,0 +1,70 @@
+{
+  "app": {
+    "description": "Criar e vincular um ticket a outro existente",
+    "name": "Ticket vinculado",
+    "parameters": {
+      "ancestry_field": {
+        "label": "Campo de referência",
+        "helpText": "Coloque uma ID de campo de texto personalizado aqui para armazenar os dados de referência do Ticket vinculado. Exemplo: 2240041"
+      },
+      "child_tag": {
+        "label": "Tag filha",
+        "helpText": "Essa tag será adicionada ao ticket filho criado. Exemplo: ticket_filho"
+      }
+    }
+  },
+  "ajax_failure": "Ocorreu um erro. Tente atualizar o aplicativo.",
+  "ancestry_field_missing": "<strong>Aplicativo de Ticket vinculado:</strong> Você seguiu as instruções de configuração e configurou um campo personalizado?",
+  "has_parent": "Esse ticket tem um ticket pai.",
+  "has_child": "Esse ticket tem um ticket filho.",
+  "form": {
+    "subject": {
+      "label": "Assunto"
+    },
+    "description": {
+      "label": "Descrição"
+    },
+    "requester_email": {
+      "label": "Email do solicitante"
+    },
+    "requester_name": {
+      "label": "Nome do solicitante (apenas para novos solicitantes)"
+    },
+    "group": {
+      "label": "Grupo"
+    },
+    "requester": {
+      "label": "Solicitante",
+      "current_user": "eu",
+      "ticket_requester": "solicitante do ticket",
+      "custom": "outro"
+    },
+    "assignee": {
+      "label": "Atribuído para",
+      "current_user": "eu",
+      "ticket_assignee": "atribuído do ticket",
+      "custom": "outro",
+      "group_label": "Grupo atribuído",
+      "name_label": "Nome do atribuído"
+    },
+    "copy_description": {
+      "label": "Copiar descrição atual do ticket"
+    },
+    "ccs": {
+      "label": "CCs"
+    },
+    "tags": {
+      "label": "Tags"
+    },
+    "submit": "Criar ticket",
+    "loading": "Enviando..."
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "Assunto",
+    "status": "Status",
+    "type": "Tipo",
+    "assignee": "Atribuído para",
+    "group": "Grupo"
+  }
+}

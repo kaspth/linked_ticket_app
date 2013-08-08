@@ -1,0 +1,70 @@
+{
+  "app": {
+    "description": "Erstellen und Verknüpfen eines Tickets von einem existierenden Ticket aus",
+    "name": "Verknüpftes Ticket",
+    "parameters": {
+      "ancestry_field": {
+        "label": "Referenzfeld",
+        "helpText": "Geben Sie hier die ID eines angepassten Textfelds ein, in dem die Referenzdaten für die verknüpften Tickets gespeichert werden sollen. Beispiel: 2240041"
+      },
+      "child_tag": {
+        "label": "Tag für untergeordnetes Ticket",
+        "helpText": "Dieses Stichwort wird zum untergeordneten Ticket hinzugefügt. Beispiel: untergeordnetes_Ticket"
+      }
+    }
+  },
+  "ajax_failure": "Fehler aufgetreten. Versuchen Sie noch einmal, die App zu laden.",
+  "ancestry_field_missing": "<strong>App zum Verknüpfen von Tickets:</strong> Haben Sie die Konfigurationsanweisungen befolgt und ein angepasstes Feld eingerichtet?",
+  "has_parent": "Zu diesem Ticket gibt es ein übergeordnetes Ticket.",
+  "has_child": "Zu diesem Ticket gibt es ein untergeordnetes Ticket.",
+  "form": {
+    "subject": {
+      "label": "Betreff"
+    },
+    "description": {
+      "label": "Beschreibung"
+    },
+    "requester_email": {
+      "label": "E-Mail-Adresse des Anfragenden"
+    },
+    "requester_name": {
+      "label": "Name des Anfragenden (nur bei neuen Anfragenden)"
+    },
+    "group": {
+      "label": "Gruppe"
+    },
+    "requester": {
+      "label": "Anfragender",
+      "current_user": "ich",
+      "ticket_requester": "Ticket-Anfragender",
+      "custom": "andere"
+    },
+    "assignee": {
+      "label": "Mitarbeiter",
+      "current_user": "ich",
+      "ticket_assignee": "Mitarbeiter für Ticket",
+      "custom": "andere",
+      "group_label": "Mitarbeitergruppe",
+      "name_label": "Mitarbeitername"
+    },
+    "copy_description": {
+      "label": "Aktuelle Ticketbeschreibung kopieren"
+    },
+    "ccs": {
+      "label": "CC"
+    },
+    "tags": {
+      "label": "Stichworte"
+    },
+    "submit": "Ticket erstellen",
+    "loading": "Einreichen..."
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "Betreff",
+    "status": "Status",
+    "type": "Typ",
+    "assignee": "Mitarbeiter",
+    "group": "Gruppe"
+  }
+}

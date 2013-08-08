@@ -1,10 +1,9 @@
 {
   "app": {
-    "description":  "Create and link a ticket from an existing one",
-    "name":         "Linked Ticket",
-
+    "description": "Create and link a ticket from an existing one",
+    "name": "Linked Ticket",
     "parameters": {
-      "ancestry_field":{
+      "ancestry_field": {
         "label": "Reference Field",
         "helpText": "Place a custom text field ID here to store the Linked Ticket reference data. Example : 2240041"
       },
@@ -14,14 +13,12 @@
       }
     }
   },
-
-  "ajax_failure": "An error occured. Please try reloading the app.",
+  "ajax_failure": "An error occurred. Please try reloading the app.",
   "ancestry_field_missing": "<strong>Linked Ticket App:</strong> Did you follow the set up instructions and set up a custom field?",
   "has_parent": "This ticket has a parent ticket.",
   "has_child": "This ticket has a child ticket.",
-
   "form": {
-    "subject":{
+    "subject": {
       "label": "Subject"
     },
     "description": {
@@ -36,13 +33,13 @@
     "group": {
       "label": "Group"
     },
-    "requester":{
+    "requester": {
       "label": "Requester",
       "current_user": "me",
       "ticket_requester": "ticket requester",
       "custom": "other"
     },
-    "assignee":{
+    "assignee": {
       "label": "Assignee",
       "current_user": "me",
       "ticket_assignee": "ticket assignee",
@@ -62,7 +59,6 @@
     "submit": "Create Ticket",
     "loading": "Submitting..."
   },
-
   "ticket": {
     "id": "ID",
     "subject": "Subject",

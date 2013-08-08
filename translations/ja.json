@@ -1,0 +1,70 @@
+{
+  "app": {
+    "description": "既存のチケットからチケットを作成してリンク",
+    "name": "リンクされたチケット",
+    "parameters": {
+      "ancestry_field": {
+        "label": "参照フィールド",
+        "helpText": "ここにカスタム チケット フィールドIDを入力して、リンクされたチケットの参照データを保存します。例： 2240041"
+      },
+      "child_tag": {
+        "label": "子タグ",
+        "helpText": "このタグは作成された子チケットに追加されます。例：子_チケット"
+      }
+    }
+  },
+  "ajax_failure": "エラーが発生しました。もう一度アプリをロードしてみてください。",
+  "ancestry_field_missing": "<strong>リンクされたチケットアプリ:</strong> 設定手順に従って、カスタムフィールドを設定しましたか?",
+  "has_parent": "このチケットには、親チケットがあります。",
+  "has_child": "このチケットには、子チケットがあります。",
+  "form": {
+    "subject": {
+      "label": "件名"
+    },
+    "description": {
+      "label": "説明"
+    },
+    "requester_email": {
+      "label": "リクエスタのメール"
+    },
+    "requester_name": {
+      "label": "リクエスタ名（新規リクエスタのみ）"
+    },
+    "group": {
+      "label": "グループ"
+    },
+    "requester": {
+      "label": "リクエスタ",
+      "current_user": "自分",
+      "ticket_requester": "チケットリクエスタ",
+      "custom": "その他"
+    },
+    "assignee": {
+      "label": "担当者",
+      "current_user": "自分",
+      "ticket_assignee": "チケット担当者",
+      "custom": "その他",
+      "group_label": "担当者グループ",
+      "name_label": "担当者名"
+    },
+    "copy_description": {
+      "label": "現在のチケットの説明をコピー"
+    },
+    "ccs": {
+      "label": "CC"
+    },
+    "tags": {
+      "label": "タグ"
+    },
+    "submit": "チケットを作成",
+    "loading": "送信中・・・"
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "件名",
+    "status": "ステータス",
+    "type": "タイプ",
+    "assignee": "担当者",
+    "group": "グループ"
+  }
+}

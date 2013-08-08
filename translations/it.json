@@ -1,0 +1,70 @@
+{
+  "app": {
+    "description": "Crea e collega un ticket da un altro esistente",
+    "name": "Ticket collegato",
+    "parameters": {
+      "ancestry_field": {
+        "label": "Campo di riferimento",
+        "helpText": "Inserisci un ID del campo testo personalizzato qui per memorizzare i dati di riferimento del ticket collegato. Esempio: 2240041"
+      },
+      "child_tag": {
+        "label": "Tag figlio",
+        "helpText": "Questo tag verrà aggiunto al ticket figlio creato. Esempio: ticket_figlio"
+      }
+    }
+  },
+  "ajax_failure": "Si è verificato un errore. Prova a caricare di nuovo l’app.",
+  "ancestry_field_missing": "<strong>App link collegato:</strong> Hai seguito le istruzioni per l’impostazione definendo un campo personalizzato?",
+  "has_parent": "Questo ticket ha un ticket padre.",
+  "has_child": "Questo ticket ha un ticket figlio.",
+  "form": {
+    "subject": {
+      "label": "Oggetto"
+    },
+    "description": {
+      "label": "Descrizione"
+    },
+    "requester_email": {
+      "label": "E-mail richiedente"
+    },
+    "requester_name": {
+      "label": "Nome richiedente (solo per nuovi richiedenti)"
+    },
+    "group": {
+      "label": "Gruppo"
+    },
+    "requester": {
+      "label": "Richiedente",
+      "current_user": "io",
+      "ticket_requester": "richiedente del ticket",
+      "custom": "altro"
+    },
+    "assignee": {
+      "label": "Assegnatario",
+      "current_user": "Io",
+      "ticket_assignee": "assegnatario ticket",
+      "custom": "altro",
+      "group_label": "Gruppo assegnatario",
+      "name_label": "Nome assegnatario"
+    },
+    "copy_description": {
+      "label": "Copia descrizione dal ticket corrente"
+    },
+    "ccs": {
+      "label": "CC"
+    },
+    "tags": {
+      "label": "Tag"
+    },
+    "submit": "Crea ticket",
+    "loading": "Invio in corso..."
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "Oggetto",
+    "status": "Stato",
+    "type": "Tipo",
+    "assignee": "Assegnatario",
+    "group": "Gruppo"
+  }
+}

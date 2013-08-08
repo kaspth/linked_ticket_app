@@ -1,0 +1,70 @@
+{
+  "app": {
+    "description": "Cree y vincule un ticket a partir de uno existente",
+    "name": "Ticket vinculado",
+    "parameters": {
+      "ancestry_field": {
+        "label": "Campo de referencia",
+        "helpText": "Coloque una ID de campo de texto personalizado para almacenar los datos de referencia del ticket vinculado. Ejemplo: 2240041"
+      },
+      "child_tag": {
+        "label": "Etiqueta secundaria",
+        "helpText": "Esta etiqueta se agregará al ticket secundario creado. Ejemplo: ticket_secundario"
+      }
+    }
+  },
+  "ajax_failure": "Se ha producido un error. Intente volver a cargar la aplicación.",
+  "ancestry_field_missing": "<strong>Aplicación de ticket vinculado:</strong> ¿Siguió las instrucciones de instalación y configuró un campo personalizado?",
+  "has_parent": "Este ticket tiene un ticket principal.",
+  "has_child": "Este ticket tiene un ticket secundario.",
+  "form": {
+    "subject": {
+      "label": "Asunto"
+    },
+    "description": {
+      "label": "Descripción"
+    },
+    "requester_email": {
+      "label": "Correo electrónico del solicitante"
+    },
+    "requester_name": {
+      "label": "Nombre del solicitante (solo para nuevos solicitantes)"
+    },
+    "group": {
+      "label": "Grupo"
+    },
+    "requester": {
+      "label": "Solicitante",
+      "current_user": "yo",
+      "ticket_requester": "solicitante de ticket",
+      "custom": "otro"
+    },
+    "assignee": {
+      "label": "Agente asignado",
+      "current_user": "yo",
+      "ticket_assignee": "Agente asignado del ticket",
+      "custom": "otro",
+      "group_label": "Grupo de agente asignado",
+      "name_label": "Nombre de agente asignado"
+    },
+    "copy_description": {
+      "label": "Copiar descripción de ticket actual"
+    },
+    "ccs": {
+      "label": "CC"
+    },
+    "tags": {
+      "label": "Etiquetas"
+    },
+    "submit": "Crear ticket",
+    "loading": "Enviando..."
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "Asunto",
+    "status": "Estado",
+    "type": "Tipo",
+    "assignee": "Agente asignado",
+    "group": "Grupo"
+  }
+}

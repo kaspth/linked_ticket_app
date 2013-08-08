@@ -1,0 +1,70 @@
+{
+  "app": {
+    "description": "Créer et lier un ticket à partir d’un ticket existant",
+    "name": "Linked Ticket",
+    "parameters": {
+      "ancestry_field": {
+        "label": "Champ de référence",
+        "helpText": "Placez un ID de champ texte personnalisé pour stocker les données de référence Linked Ticket. Exemple : 2240041"
+      },
+      "child_tag": {
+        "label": "Marqueur enfant",
+        "helpText": "Ce marqueur sera ajouté au ticket enfant créé. Exemple : ticket_enfant"
+      }
+    }
+  },
+  "ajax_failure": "Une erreur est survenue. Essayez de recharger l’application.",
+  "ancestry_field_missing": "<strong>Application Linked Ticket :</strong> Avez-vous suivi les instructions de configuration et défini un champ personnalisé ?",
+  "has_parent": "Ce ticket a un ticket parent.",
+  "has_child": "Ce ticket a un ticket enfant.",
+  "form": {
+    "subject": {
+      "label": "Sujet"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "requester_email": {
+      "label": "E-mail du demandeur"
+    },
+    "requester_name": {
+      "label": "Nom du demandeur (pour les nouveaux demandeurs uniquement)"
+    },
+    "group": {
+      "label": "Groupe"
+    },
+    "requester": {
+      "label": "Demandeur",
+      "current_user": "moi",
+      "ticket_requester": "demandeur du ticket",
+      "custom": "autre"
+    },
+    "assignee": {
+      "label": "Assigné",
+      "current_user": "moi",
+      "ticket_assignee": "assigné au ticket",
+      "custom": "autre",
+      "group_label": "Groupe de l’assigné",
+      "name_label": "Nom de l’assigné"
+    },
+    "copy_description": {
+      "label": "Copier la description du ticket actuel"
+    },
+    "ccs": {
+      "label": "CC"
+    },
+    "tags": {
+      "label": "Marqueurs"
+    },
+    "submit": "Créer le ticket",
+    "loading": "Envoi..."
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "Sujet",
+    "status": "Statut",
+    "type": "Type",
+    "assignee": "Assigné",
+    "group": "Groupe"
+  }
+}

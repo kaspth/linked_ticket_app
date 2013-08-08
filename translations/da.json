@@ -1,0 +1,70 @@
+{
+  "app": {
+    "description": "Opret og sammenkæd en ticket fra en eksisterende ticket",
+    "name": "Sammenkædet ticket",
+    "parameters": {
+      "ancestry_field": {
+        "label": "Referencefelt",
+        "helpText": "Anbring id'et til et brugerdefineret tekstfelt her for at lagre referencedataene til den sammenkædede ticket. Eksempel: 2240041"
+      },
+      "child_tag": {
+        "label": "Underordnet tag",
+        "helpText": "Denne tag vil blive føjet til den oprettede underordnede ticket. Eksempel: Underordnet_ticket"
+      }
+    }
+  },
+  "ajax_failure": "Der forekom en fejl. Prøv at indlæse applikationen igen.",
+  "ancestry_field_missing": "<strong>Sammenkædet ticket-applikation:</strong> Fulgte du opsætningsinstruktionerne og konfigurerede et brugerdefineret felt?",
+  "has_parent": "Denne ticket har en overordnet ticket.",
+  "has_child": "Denne ticket har en underordnet ticket.",
+  "form": {
+    "subject": {
+      "label": "Emne"
+    },
+    "description": {
+      "label": "Beskrivelse"
+    },
+    "requester_email": {
+      "label": "Anmoderens e-mail"
+    },
+    "requester_name": {
+      "label": "Anmoderens navn (kun nye anmodere)"
+    },
+    "group": {
+      "label": "Gruppe"
+    },
+    "requester": {
+      "label": "Anmoder",
+      "current_user": "mig",
+      "ticket_requester": "Ticket-anmoder",
+      "custom": "anden"
+    },
+    "assignee": {
+      "label": "Ansvarlig",
+      "current_user": "mig",
+      "ticket_assignee": "ansvarlig for ticket",
+      "custom": "anden",
+      "group_label": "Gruppe med ansvarlige",
+      "name_label": "Navn på ansvarlig"
+    },
+    "copy_description": {
+      "label": "Kopier aktuel ticket-beskrivelse"
+    },
+    "ccs": {
+      "label": "CC’er"
+    },
+    "tags": {
+      "label": "Tags"
+    },
+    "submit": "Opret ticket",
+    "loading": "Sender…"
+  },
+  "ticket": {
+    "id": "Id",
+    "subject": "Emne",
+    "status": "Status",
+    "type": "Type",
+    "assignee": "Ansvarlig",
+    "group": "Gruppe"
+  }
+}
