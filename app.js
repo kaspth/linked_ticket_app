@@ -125,7 +125,7 @@
         ccs: this.ccs()
       });
 
-      this.bindAutocompleteOnRequesterEmail();
+      this.bindAutocomplete();
     },
 
     create: function(event){
@@ -204,7 +204,6 @@
     formShowAssignee: function(){
       return this.$('.assignee-group').show();
     },
-
     formHideAssignee: function(){
       return this.$('.assignee-group').hide();
     },
@@ -309,11 +308,10 @@
       this.formDescription(ret);
     },
 
-    bindAutocompleteOnRequesterEmail: function(){
+    bindAutocomplete: function(){
       var self = this;
 
-      // bypass this.form to bind the autocomplete.
-      this.$('.requester_email').autocomplete({
+      this.$('.user-autocomplete').autocomplete({
         minLength: 3,
         source: function(request, response) {
           self.ajax('autocompleteRequester', request.term).done(function(data){
@@ -321,6 +319,16 @@
               return {"label": user.email, "value": user.email};
             }));
           });
+        },
+        select: function(event, ui){
+          var $tag_container = self.$(this).parents('ul.token_list')[0];
+
+          if ($tag_container){
+            event.preventDefault();
+            self.$($tag_container).find('li.token').last().remove();
+            self.$(this).val(ui.item.value);
+            self.formTokenInput(this, true);
+          }
         }
       });
     },

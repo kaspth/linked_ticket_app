@@ -16,7 +16,7 @@
         <div class="control-group">
           <label>
             {{t "form.requester_email.label"}}
-            <input type="text" class="requester_email span12" >
+            <input type="text" class="requester_email span12 user-autocomplete" >
           </label>
         </div>
 
@@ -67,7 +67,7 @@
             <a class="delete" tabindex="-1">×</a>
           </li>
           {{/each}}
-          <li class="add_token"><input class="highlightable" type="text"></li>
+          <li class="add_token"><input class="highlightable user-autocomplete" type="text"></li>
         </ul>
       </div>
       <br/>
