@@ -31,7 +31,6 @@ div.spinner
   display: none;
   width:100px;
   height: 100px;
-  position: absolute;
   top: 40%;
   left: 50%;
   background:app-asset-url("spinner.gif") no-repeat center center;
