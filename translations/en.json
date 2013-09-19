@@ -13,6 +13,7 @@
       }
     }
   },
+  "delimiter": "Original Description",
   "ajax_failure": "An error occurred. Please try reloading the app.",
   "ancestry_field_missing": "<strong>Linked Ticket App:</strong> Did you follow the set up instructions and set up a custom field?",
   "has_parent": "This ticket has a parent ticket.",

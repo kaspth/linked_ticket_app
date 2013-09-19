@@ -3,7 +3,6 @@
     appVersion: '1.6.2',
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
-    descriptionDelimiter: '\n--- Original Description --- \n',
 
     events: {
       // APP EVENTS
@@ -308,13 +307,14 @@
     },
 
     copyDescription: function(){
+      var descriptionDelimiter = helpers.fmt("\n--- %@ --- \n", this.I18n.t("delimiter"));
       var description = this.formDescription()
-        .split(this.descriptionDelimiter);
+        .split(descriptionDelimiter);
 
       var ret = description[0];
 
       if (description.length === 1)
-        ret += this.descriptionDelimiter + this.ticket().description();
+        ret += descriptionDelimiter + this.ticket().description();
 
       this.formDescription(ret);
     },
