@@ -274,11 +274,21 @@
       if (assignee)
         assignee = assignee.name;
 
+      data.ticket.locale = {};
+      _.each(['status', 'type'], (function(name) {
+        data.ticket.locale[name] = this.localizeTicketValue(name, data.ticket[name]);
+      }).bind(this));
+
       this.switchTo('has_relation', { ticket: data.ticket,
                                       is_child: is_child,
                                       assignee: assignee,
                                       group: group
                                     });
+    },
+
+    localizeTicketValue: function(name, value) {
+      var path = helpers.fmt("ticket.values.%@.%@", name, value);
+      return this.I18n.t(path);
     },
 
     createChildTicketDone: function(data){
