@@ -47,7 +47,7 @@
       </div>
       <div class="span9">
         <span class="ticket_status_label {{ticket.status}}">
-          <strong>{{ticket.status}}</strong>
+          <strong>{{ticket.locale.status}}</strong>
         </span>
       </div>
     </div>
@@ -59,7 +59,7 @@
         </strong>
       </div>
       <div class="span9">
-        {{ticket.type}}
+        {{ticket.locale.type}}
       </div>
     </div>
 
