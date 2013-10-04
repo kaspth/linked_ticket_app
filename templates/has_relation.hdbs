@@ -52,16 +52,18 @@
       </div>
     </div>
 
-    <div class="span12">
-      <div class="span3">
-        <strong>
-          {{t "ticket.type"}}
-        </strong>
+    {{#if ticket.type}}
+      <div class="span12">
+        <div class="span3">
+          <strong>
+            {{t "ticket.type"}}
+          </strong>
+        </div>
+        <div class="span9">
+          {{ticket.locale.type}}
+        </div>
       </div>
-      <div class="span9">
-        {{ticket.locale.type}}
-      </div>
-    </div>
+    {{/if}}
 
     <div class="span12">
       <div class="span3">
