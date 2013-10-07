@@ -1,6 +1,5 @@
 (function() {
   return {
-    appVersion: '1.6.2',
     childRegex: /child_of:(\d*)/,
     parentRegex: /(?:father_of|parent_of):(\d*)/, //father_of is here to ensure compatibility with older versions
 
