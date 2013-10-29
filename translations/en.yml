@@ -149,4 +149,43 @@ parts:
       key: "txt.apps.linked_ticket_app.ticket.group"
       title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the group of the other ticket"
       value: "Group"
-
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.status.new"
+      title: "when the ticket is new"
+      value: "New"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.status.open"
+      title: "when the ticket is open"
+      value: "Open"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.status.pending"
+      title: "when the ticket is pending"
+      value: "Pending"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.status.hold"
+      title: "when the ticket is hold"
+      value: "Hold"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.status.solved"
+      title: "when the ticket is solved"
+      value: "Solved"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.status.closed"
+      title: "when the ticket is closed"
+      value: "Closed"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.type.problem"
+      title: "when the ticket type is about a problem"
+      value: "Problem"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.type.incident"
+      title: "when the ticket type is about an incident"
+      value: "Incident"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.type.question"
+      title: "when the ticket type is about an question"
+      value: "Question"
+  - translation:
+      key: "txt.apps.linked_ticket_app.ticket.values.type.task"
+      title: "when the ticket type is about a task"
+      value: "Task"
