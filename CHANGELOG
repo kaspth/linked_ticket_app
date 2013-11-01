@@ -33,3 +33,9 @@
 	* Bump to v1.6.2
 	* Add CCs to the form field.
 	* Allow tags/ccs to be submitted by hitting the enter key
+2013-07-04 Maxime <mprades>
+	* Bump to v1.7
+	* Loads of changes to be more in line with official Apps guidelines
+	* Legal README and Licence file
+	* full i18n of the App
+	* proper versioning
