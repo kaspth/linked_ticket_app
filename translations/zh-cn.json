@@ -1,0 +1,86 @@
+{
+  "app": {
+    "description": "从一张现有的工单创建并链接一张工单",
+    "name": "已链接工单",
+    "parameters": {
+      "ancestry_field": {
+        "label": "参考字段",
+        "helpText": "在这里放置一个自定义文本字段 ID 以储存链接工单参考数据。例如：2240041"
+      },
+      "child_tag": {
+        "label": "子标签",
+        "helpText": "此标签将被添加到已创建的子工单。例如：子工单"
+      }
+    }
+  },
+  "ajax_failure": "发生错误。请尝试重新加载 app。",
+  "ancestry_field_missing": "<strong>已链接工单 App：</strong> 您遵循设置说明来设置自定义字段了吗？",
+  "has_parent": "此工单有一张父工单。",
+  "has_child": "此工单有一张子工单。",
+  "form": {
+    "subject": {
+      "label": "标题"
+    },
+    "description": {
+      "label": "描述"
+    },
+    "requester_email": {
+      "label": "请求者电邮"
+    },
+    "requester_name": {
+      "label": "请求者名称（仅供新的请求者）"
+    },
+    "group": {
+      "label": "组"
+    },
+    "requester": {
+      "label": "请求者",
+      "current_user": "我",
+      "ticket_requester": "工单请求者",
+      "custom": "其他人"
+    },
+    "assignee": {
+      "label": "受托人",
+      "current_user": "我",
+      "ticket_assignee": "工单受托人",
+      "custom": "其他人",
+      "group_label": "受托人组",
+      "name_label": "受托人名称"
+    },
+    "copy_description": {
+      "label": "复制当前的工单描述"
+    },
+    "ccs": {
+      "label": "副本"
+    },
+    "tags": {
+      "label": "标签"
+    },
+    "submit": "创建工单",
+    "loading": "正在提交……"
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "标题",
+    "status": "状态",
+    "type": "类型",
+    "assignee": "受托人",
+    "group": "组",
+    "values": {
+      "status": {
+        "new": "新建",
+        "open": "已开启",
+        "pending": "未决",
+        "hold": "暂停",
+        "solved": "已解决",
+        "closed": "已关闭"
+      },
+      "type": {
+        "problem": "事故",
+        "incident": "事件",
+        "question": "问题",
+        "task": "任务"
+      }
+    }
+  }
+}

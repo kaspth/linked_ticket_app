@@ -65,6 +65,22 @@
     "status": "Status",
     "type": "Typ",
     "assignee": "Mitarbeiter",
-    "group": "Gruppe"
+    "group": "Gruppe",
+    "values": {
+      "status": {
+        "new": "Neu",
+        "open": "Offen",
+        "pending": "Wartend",
+        "hold": "Angehalten",
+        "solved": "Gelöst",
+        "closed": "Geschlossen"
+      },
+      "type": {
+        "problem": "Problem",
+        "incident": "Vorfall",
+        "question": "Frage",
+        "task": "Aufgabe"
+      }
+    }
   }
 }

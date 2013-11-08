@@ -14,7 +14,7 @@
     }
   },
   "ajax_failure": "Si è verificato un errore. Prova a caricare di nuovo l’app.",
-  "ancestry_field_missing": "<strong>App link collegato:</strong> Hai seguito le istruzioni per l’impostazione definendo un campo personalizzato?",
+  "ancestry_field_missing": "<strong>App ticket collegato:</strong> Hai seguito le istruzioni per l’impostazione definendo un campo personalizzato?",
   "has_parent": "Questo ticket ha un ticket padre.",
   "has_child": "Questo ticket ha un ticket figlio.",
   "form": {
@@ -65,6 +65,22 @@
     "status": "Stato",
     "type": "Tipo",
     "assignee": "Assegnatario",
-    "group": "Gruppo"
+    "group": "Gruppo",
+    "values": {
+      "status": {
+        "new": "Nuovo",
+        "open": "Aperto",
+        "pending": "In attesa",
+        "hold": "In attesa",
+        "solved": "Risolto",
+        "closed": "Chiuso"
+      },
+      "type": {
+        "problem": "Problema",
+        "incident": "Incidente",
+        "question": "Domanda",
+        "task": "Compito"
+      }
+    }
   }
 }

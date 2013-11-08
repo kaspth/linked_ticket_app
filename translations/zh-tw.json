@@ -1,0 +1,86 @@
+{
+  "app": {
+    "description": "從現有工單建立並連結一張工單",
+    "name": "已連結工單",
+    "parameters": {
+      "ancestry_field": {
+        "label": "參考欄位",
+        "helpText": "在此放置自訂文字欄位 ID 以儲存已連結工單的參考資料。例如：2240041"
+      },
+      "child_tag": {
+        "label": "子標籤",
+        "helpText": "此標籤將新增至已建立的子工單。例如：子工單"
+      }
+    }
+  },
+  "ajax_failure": "發生錯誤。請嘗試重新載入 app。",
+  "ancestry_field_missing": "<strong>已連結工單 App：</strong> 您是否已按設定說明設定了自訂欄位？",
+  "has_parent": "此工單有一張父工單。",
+  "has_child": "此工單有一張子工單。",
+  "form": {
+    "subject": {
+      "label": "標題"
+    },
+    "description": {
+      "label": "描述"
+    },
+    "requester_email": {
+      "label": "請求者電郵"
+    },
+    "requester_name": {
+      "label": "請求者名稱（僅限新請求者）"
+    },
+    "group": {
+      "label": "組"
+    },
+    "requester": {
+      "label": "請求者",
+      "current_user": "我",
+      "ticket_requester": "工單請求者",
+      "custom": "他人"
+    },
+    "assignee": {
+      "label": "受託人",
+      "current_user": "我",
+      "ticket_assignee": "工單受託人",
+      "custom": "他人",
+      "group_label": "受託人組",
+      "name_label": "受託人名稱"
+    },
+    "copy_description": {
+      "label": "複製當前工單描述"
+    },
+    "ccs": {
+      "label": "副本"
+    },
+    "tags": {
+      "label": "標籤"
+    },
+    "submit": "建立工單",
+    "loading": "提交中……"
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "標題",
+    "status": "狀態",
+    "type": "類型",
+    "assignee": "受託人",
+    "group": "組",
+    "values": {
+      "status": {
+        "new": "新建",
+        "open": "已開啟",
+        "pending": "未決",
+        "hold": "暫停",
+        "solved": "已解決",
+        "closed": "已關閉"
+      },
+      "type": {
+        "problem": "事故",
+        "incident": "事件",
+        "question": "問題",
+        "task": "任務"
+      }
+    }
+  }
+}

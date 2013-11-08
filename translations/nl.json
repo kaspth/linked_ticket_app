@@ -1,0 +1,86 @@
+{
+  "app": {
+    "description": "Een ticket maken en koppelen vanuit een bestaand ticket",
+    "name": "Gekoppeld ticket",
+    "parameters": {
+      "ancestry_field": {
+        "label": "Referentieveld",
+        "helpText": "Plaats hier een aangepaste tekstveld-id waarin de referentiegegevens van het gekoppelde ticket kunnen worden opgeslagen. Een voorbeeld: 2240041"
+      },
+      "child_tag": {
+        "label": "Onderliggende tag",
+        "helpText": "Deze tag wordt aan het gemaakte onderliggende ticket toegevoegd. Een voorbeeld: child_ticket"
+      }
+    }
+  },
+  "ajax_failure": "Er is een fout opgetreden. Probeer de app opnieuw te laden.",
+  "ancestry_field_missing": "<strong>Gekoppelde ticket-app:</strong> Hebt u de installatie-instructies gevolgd en een aangepast veld ingesteld?",
+  "has_parent": "Dit ticket heeft een bovenliggend ticket.",
+  "has_child": "Dit ticket heeft een onderliggend ticket.",
+  "form": {
+    "subject": {
+      "label": "Onderwerp"
+    },
+    "description": {
+      "label": "Beschrijving"
+    },
+    "requester_email": {
+      "label": "E-mail van aanvrager"
+    },
+    "requester_name": {
+      "label": "Aanvragernaam (alleen voor nieuwe aanvragers)"
+    },
+    "group": {
+      "label": "Groep"
+    },
+    "requester": {
+      "label": "Aanvrager",
+      "current_user": "ik",
+      "ticket_requester": "ticketaanvrager ",
+      "custom": "overig"
+    },
+    "assignee": {
+      "label": "Medewerker",
+      "current_user": "ik",
+      "ticket_assignee": "ticketmedewerker",
+      "custom": "overig",
+      "group_label": "Medewerkersgroep",
+      "name_label": "Medewerkernaam"
+    },
+    "copy_description": {
+      "label": "Huidige ticketbeschrijving kopiëren"
+    },
+    "ccs": {
+      "label": "Cc's"
+    },
+    "tags": {
+      "label": "Tags"
+    },
+    "submit": "Ticket maken",
+    "loading": "Verzenden..."
+  },
+  "ticket": {
+    "id": "Id",
+    "subject": "Onderwerp",
+    "status": "Status",
+    "type": "Type",
+    "assignee": "Medewerker",
+    "group": "Groep",
+    "values": {
+      "status": {
+        "new": "Nieuw",
+        "open": "Open",
+        "pending": "In afwachting",
+        "hold": "Geparkeerd",
+        "solved": "Opgelost",
+        "closed": "Gesloten"
+      },
+      "type": {
+        "problem": "Probleem",
+        "incident": "Incident",
+        "question": "Vraag",
+        "task": "Taak"
+      }
+    }
+  }
+}

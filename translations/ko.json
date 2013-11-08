@@ -1,0 +1,86 @@
+{
+  "app": {
+    "description": "기존의 것에서 티켓을 만들고 연결",
+    "name": "연결된 티켓",
+    "parameters": {
+      "ancestry_field": {
+        "label": "참조 필드",
+        "helpText": "연결된 티켓 참조 데이터를 저장하려면 여기에 사용자 지정 텍스트 필드 ID를 놓습니다. 예: 2240041"
+      },
+      "child_tag": {
+        "label": "하위 태그",
+        "helpText": "이 태그를 생성된 하위 티켓에 추가합니다. 예: child_ticket"
+      }
+    }
+  },
+  "ajax_failure": "오류가 발생했습니다. 앱을 다시 로드하십시오.",
+  "ancestry_field_missing": "<strong>연결된 티켓 앱:</strong> 설정에 관한 지침에 따라 사용자 지정 필드를 설정했습니까?",
+  "has_parent": "이 티켓에 상위 티켓이 있습니다.",
+  "has_child": "이 티켓에 하위 티켓이 있습니다.",
+  "form": {
+    "subject": {
+      "label": "제목"
+    },
+    "description": {
+      "label": "설명"
+    },
+    "requester_email": {
+      "label": "요청자 이메일"
+    },
+    "requester_name": {
+      "label": "요청자 이름(새로운 요청자일 경우만)"
+    },
+    "group": {
+      "label": "그룹"
+    },
+    "requester": {
+      "label": "요청자",
+      "current_user": "나",
+      "ticket_requester": "티켓 요청자",
+      "custom": "기타"
+    },
+    "assignee": {
+      "label": "담당자",
+      "current_user": "나",
+      "ticket_assignee": "티켓 담당자",
+      "custom": "기타",
+      "group_label": "담당자 그룹",
+      "name_label": "담당자 이름"
+    },
+    "copy_description": {
+      "label": "현재 티켓 설명 복사"
+    },
+    "ccs": {
+      "label": "참조"
+    },
+    "tags": {
+      "label": "태그"
+    },
+    "submit": "티켓 만들기",
+    "loading": "제출 중..."
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "제목",
+    "status": "상태",
+    "type": "유형",
+    "assignee": "담당자",
+    "group": "그룹",
+    "values": {
+      "status": {
+        "new": "신규",
+        "open": "등록",
+        "pending": "보류",
+        "hold": "대기",
+        "solved": "해결",
+        "closed": "종료"
+      },
+      "type": {
+        "problem": "문제",
+        "incident": "사건",
+        "question": "질문",
+        "task": "작업"
+      }
+    }
+  }
+}

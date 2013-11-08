@@ -65,6 +65,22 @@
     "status": "ステータス",
     "type": "タイプ",
     "assignee": "担当者",
-    "group": "グループ"
+    "group": "グループ",
+    "values": {
+      "status": {
+        "new": "新規",
+        "open": "オープン",
+        "pending": "保留中",
+        "hold": "保留",
+        "solved": "解決済み",
+        "closed": "終了"
+      },
+      "type": {
+        "problem": "問題",
+        "incident": "件の事象",
+        "question": "質問",
+        "task": "タスク"
+      }
+    }
   }
 }

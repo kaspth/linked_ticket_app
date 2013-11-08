@@ -1,22 +1,22 @@
 {
   "app": {
-    "description": "Créer et lier un ticket à partir d’un ticket existant",
-    "name": "Linked Ticket",
+    "description": "Créer et lier un billet à partir d’un billet existant",
+    "name": "Linked Billet",
     "parameters": {
       "ancestry_field": {
         "label": "Champ de référence",
-        "helpText": "Placez un ID de champ texte personnalisé pour stocker les données de référence Linked Ticket. Exemple : 2240041"
+        "helpText": "Placez un ID de champ texte personnalisé pour stocker les données de référence Linked Billet. Exemple : 2240041"
       },
       "child_tag": {
         "label": "Marqueur enfant",
-        "helpText": "Ce marqueur sera ajouté au ticket enfant créé. Exemple : ticket_enfant"
+        "helpText": "Ce marqueur sera ajouté au billet enfant créé. Exemple : billet_enfant"
       }
     }
   },
   "ajax_failure": "Une erreur est survenue. Essayez de recharger l’application.",
-  "ancestry_field_missing": "<strong>Application Linked Ticket :</strong> Avez-vous suivi les instructions de configuration et défini un champ personnalisé ?",
-  "has_parent": "Ce ticket a un ticket parent.",
-  "has_child": "Ce ticket a un ticket enfant.",
+  "ancestry_field_missing": "<strong>Application Linked Billet :</strong> Avez-vous suivi les instructions de configuration et défini un champ personnalisé ?",
+  "has_parent": "Ce billet a un billet parent.",
+  "has_child": "Ce billet a un billet enfant.",
   "form": {
     "subject": {
       "label": "Sujet"
@@ -25,7 +25,7 @@
       "label": "Description"
     },
     "requester_email": {
-      "label": "E-mail du demandeur"
+      "label": "Courriel du demandeur"
     },
     "requester_name": {
       "label": "Nom du demandeur (pour les nouveaux demandeurs uniquement)"
@@ -36,19 +36,19 @@
     "requester": {
       "label": "Demandeur",
       "current_user": "moi",
-      "ticket_requester": "demandeur du ticket",
+      "ticket_requester": "demandeur du billet",
       "custom": "autre"
     },
     "assignee": {
       "label": "Assigné",
       "current_user": "moi",
-      "ticket_assignee": "assigné au ticket",
+      "ticket_assignee": "assigné au billet",
       "custom": "autre",
       "group_label": "Groupe de l’assigné",
       "name_label": "Nom de l’assigné"
     },
     "copy_description": {
-      "label": "Copier la description du ticket actuel"
+      "label": "Copier la description du billet actuel"
     },
     "ccs": {
       "label": "CC"
@@ -56,7 +56,7 @@
     "tags": {
       "label": "Marqueurs"
     },
-    "submit": "Créer le ticket",
+    "submit": "Créer le billet",
     "loading": "Envoi..."
   },
   "ticket": {

@@ -1,0 +1,86 @@
+{
+  "app": {
+    "description": "Create and link a ticket from an existing one",
+    "name": "Linked Ticket",
+    "parameters": {
+      "ancestry_field": {
+        "label": "Reference Field",
+        "helpText": "Place a custom text field ID here to store the Linked Ticket reference data. Example : 2240041"
+      },
+      "child_tag": {
+        "label": "Child Tag",
+        "helpText": "This tag will be added to the created child ticket. Example : child_ticket"
+      }
+    }
+  },
+  "ajax_failure": "An error occurred. Please try reloading the app.",
+  "ancestry_field_missing": "<strong>Linked Ticket App:</strong> Did you follow the set up instructions and set up a custom field?",
+  "has_parent": "This ticket has a parent ticket.",
+  "has_child": "This ticket has a child ticket.",
+  "form": {
+    "subject": {
+      "label": "Subject"
+    },
+    "description": {
+      "label": "Description"
+    },
+    "requester_email": {
+      "label": "Requester Email"
+    },
+    "requester_name": {
+      "label": "Requester Name (For new requesters only)"
+    },
+    "group": {
+      "label": "Group"
+    },
+    "requester": {
+      "label": "Requester",
+      "current_user": "me",
+      "ticket_requester": "ticket requester",
+      "custom": "other"
+    },
+    "assignee": {
+      "label": "Assignee",
+      "current_user": "me",
+      "ticket_assignee": "ticket assignee",
+      "custom": "other",
+      "group_label": "Assignee group",
+      "name_label": "Assignee name"
+    },
+    "copy_description": {
+      "label": "Copy current ticket description"
+    },
+    "ccs": {
+      "label": "CCs"
+    },
+    "tags": {
+      "label": "Tags"
+    },
+    "submit": "Create Ticket",
+    "loading": "Submitting..."
+  },
+  "ticket": {
+    "id": "ID",
+    "subject": "Subject",
+    "status": "Status",
+    "type": "Type",
+    "assignee": "Assignee",
+    "group": "Group",
+    "values": {
+      "status": {
+        "new": "New",
+        "open": "Open",
+        "pending": "Pending",
+        "hold": "Hold",
+        "solved": "Solved",
+        "closed": "Closed"
+      },
+      "type": {
+        "problem": "Problem",
+        "incident": "Incident",
+        "question": "Question",
+        "task": "Task"
+      }
+    }
+  }
+}
