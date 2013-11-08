@@ -189,3 +189,7 @@ parts:
       key: "txt.apps.linked_ticket_app.ticket.values.type.task"
       title: "when the ticket type is about a task"
       value: "Task"
+  - translation:
+      key: "txt.apps.linked_ticket_app.delimiter"
+      title: "This is a placeholder text marking the different between the new text and the old one"
+      value: "Original Description"
