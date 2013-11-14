@@ -13,7 +13,7 @@
       'fetchGroups.done'                : function(data){ this.fillGroupWithCollection(data.groups); },
       'createChildTicket.fail'          : 'genericAjaxFailure',
       'updateTicket.fail'               : 'genericAjaxFailure',
-      'fetchTicket.fail'                : 'genericAjaxFailure',
+      'fetchTicket.fail'                : 'displayHome',
       'autocompleteRequester.fail'      : 'genericAjaxFailure',
       'fetchGroups.fail'                : 'genericAjaxFailure',
       'fetchUsersFromGroup.fail'        : 'genericAjaxFailure',
@@ -104,10 +104,13 @@
         if (this.hasChild() || this.hasParent())
           return this.ajax('fetchTicket', this.childID() || this.parentID());
 
-        this.switchTo('home');
-
-        this.doneLoading = true;
+        this.displayHome();
       }
+    },
+
+    displayHome: function(){
+      this.switchTo('home');
+      this.doneLoading = true;
     },
 
     displayForm: function(event){
