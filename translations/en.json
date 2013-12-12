@@ -21,10 +21,10 @@
   "create_ticket": "Create a ticket",
   "form": {
     "subject": {
-      "label": "Subject"
+      "label": "Subject:"
     },
     "description": {
-      "label": "Description"
+      "label": "Description:"
     },
     "requester_email": {
       "label": "Requester Email"
@@ -36,13 +36,13 @@
       "label": "Group"
     },
     "requester": {
-      "label": "Requester",
+      "label": "Requester:",
       "current_user": "me",
       "ticket_requester": "ticket requester",
       "custom": "other"
     },
     "assignee": {
-      "label": "Assignee",
+      "label": "Assignee:",
       "current_user": "me",
       "ticket_assignee": "ticket assignee",
       "custom": "other",
@@ -53,10 +53,10 @@
       "label": "Copy current ticket description"
     },
     "ccs": {
-      "label": "CCs"
+      "label": "CCs:"
     },
     "tags": {
-      "label": "Tags"
+      "label": "Tags:"
     },
     "submit": "Create Ticket",
     "loading": "Submitting..."

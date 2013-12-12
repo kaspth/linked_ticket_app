@@ -52,7 +52,7 @@ parts:
   - translation:
       key: "txt.apps.linked_ticket_app.form.description.label"
       title: "This is a form to create a linked ticket from an existing regular ticket, this is the description of the future child ticket"
-      value: "Description"
+      value: "Description:"
   - translation:
       key: "txt.apps.linked_ticket_app.form.requester_email.label"
       title: "This is a form to create a linked ticket from an existing regular ticket, this is the requester email of the future child ticket"
@@ -68,7 +68,7 @@ parts:
   - translation:
       key: "txt.apps.linked_ticket_app.form.requester.label"
       title: "This is a form to create a linked ticket from an existing regular ticket, this is the label for the requester from of the app"
-      value: "Requester"
+      value: "Requester:"
   - translation:
       key: "txt.apps.linked_ticket_app.form.requester.current_user"
       title: "This is a value from the requester dropdown, a bunch of options, one of them being making yourself as the requester"
@@ -112,11 +112,11 @@ parts:
   - translation:
       key: "txt.apps.linked_ticket_app.form.ccs.label"
       title: "this is a field containing CCs on this ticket"
-      value: "CCs"
+      value: "CCs:"
   - translation:
       key: "txt.apps.linked_ticket_app.form.tags.label"
       title: "this is a field containing tags on this ticket"
-      value: "Tags"
+      value: "Tags:"
   - translation:
       key: "txt.apps.linked_ticket_app.form.submit"
       title: "this is a big button to submit the ticket creation form"
@@ -132,7 +132,7 @@ parts:
   - translation:
       key: "txt.apps.linked_ticket_app.ticket.subject"
       title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the subject of the other ticket"
-      value: "Subject"
+      value: "Subject:"
   - translation:
       key: "txt.apps.linked_ticket_app.ticket.status"
       title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the status of the other ticket"
@@ -144,7 +144,7 @@ parts:
   - translation:
       key: "txt.apps.linked_ticket_app.ticket.assignee"
       title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the assignee of the other ticket"
-      value: "Assignee"
+      value: "Assignee:"
   - translation:
       key: "txt.apps.linked_ticket_app.ticket.group"
       title: "in the app once the ticket is created this is a form proving them with information on the other ticket child/parent real time state. this is for the group of the other ticket"
