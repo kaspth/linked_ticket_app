@@ -1,5 +1,5 @@
 <div class="well">
   <div class="row-fluid centered">
-    <a class="new-linked-ticket btn btn-success btn-large">{{t "form.submit"}}</a>
+    <a class="new-linked-ticket btn btn-success btn-large">{{t "create_ticket"}}</a>
   </div>
 </div>

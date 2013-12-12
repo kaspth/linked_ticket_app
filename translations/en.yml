@@ -48,7 +48,7 @@ parts:
   - translation:
       key: "txt.apps.linked_ticket_app.form.subject.label"
       title: "This is a form to create a linked ticket from an existing regular ticket, this is the subject of the future child ticket"
-      value: "Subject"
+      value: "Subject:"
   - translation:
       key: "txt.apps.linked_ticket_app.form.description.label"
       title: "This is a form to create a linked ticket from an existing regular ticket, this is the description of the future child ticket"
@@ -84,7 +84,7 @@ parts:
   - translation:
       key: "txt.apps.linked_ticket_app.form.assignee.label"
       title: "This is a form to create a linked ticket from an existing regular ticket, this is the label for the assignee from of the app"
-      value: "Assignee"
+      value: "Assignee:"
   - translation:
       key: "txt.apps.linked_ticket_app.form.assignee.current_user"
       title: "This is a value from the requester dropdown, a bunch of options, one of them being making yourself as the assignee"
@@ -193,3 +193,7 @@ parts:
       key: "txt.apps.linked_ticket_app.delimiter"
       title: "This is a placeholder text marking the different between the new text and the old one"
       value: "Original Description"
+  - translation:
+      key: "txt.apps.linked_ticket_app.create_ticket"
+      title: "empty"
+      value: "Create a ticket"
