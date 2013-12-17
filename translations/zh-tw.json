@@ -82,5 +82,7 @@
         "task": "任務"
       }
     }
-  }
+  },
+  "delimiter": "原描述",
+  "create_ticket": "Create a ticket"
 }

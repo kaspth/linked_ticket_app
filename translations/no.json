@@ -1,86 +1,88 @@
 {
   "app": {
-    "description": "Opret og sammenkæd en ticket fra en eksisterende ticket",
-    "name": "Sammenkædet ticket",
+    "description": "Create and link a ticket from an existing one",
+    "name": "Linked Ticket",
     "parameters": {
       "ancestry_field": {
-        "label": "Referencefelt",
-        "helpText": "Anbring id'et til et brugerdefineret tekstfelt her for at lagre referencedataene til den sammenkædede ticket. Eksempel: 2240041"
+        "label": "Reference Field",
+        "helpText": "Place a custom text field ID here to store the Linked Ticket reference data. Example : 2240041"
       },
       "child_tag": {
-        "label": "Underordnet tag",
-        "helpText": "Denne tag vil blive føjet til den oprettede underordnede ticket. Eksempel: Underordnet_ticket"
+        "label": "Child Tag",
+        "helpText": "This tag will be added to the created child ticket. Example : child_ticket"
       }
     }
   },
-  "ajax_failure": "Der forekom en fejl. Prøv at indlæse applikationen igen.",
-  "ancestry_field_missing": "<strong>Sammenkædet ticket-applikation:</strong> Fulgte du opsætningsinstruktionerne og konfigurerede et brugerdefineret felt?",
-  "has_parent": "Denne ticket har en overordnet ticket.",
-  "has_child": "Denne ticket har en underordnet ticket.",
+  "ajax_failure": "An error occurred. Please try reloading the app.",
+  "ancestry_field_missing": "<strong>Linked Ticket App:</strong> Did you follow the set up instructions and set up a custom field?",
+  "has_parent": "This ticket has a parent ticket.",
+  "has_child": "This ticket has a child ticket.",
   "form": {
     "subject": {
-      "label": "Emne"
+      "label": "Subject:"
     },
     "description": {
-      "label": "Beskrivelse"
+      "label": "Description:"
     },
     "requester_email": {
-      "label": "Anmoderens e-mail"
+      "label": "Requester Email"
     },
     "requester_name": {
-      "label": "Anmoderens navn (kun nye anmodere)"
+      "label": "Requester Name (For new requesters only)"
     },
     "group": {
-      "label": "Gruppe"
+      "label": "Group"
     },
     "requester": {
-      "label": "Anmoder",
-      "current_user": "mig",
-      "ticket_requester": "Ticket-anmoder",
-      "custom": "anden"
+      "label": "Requester:",
+      "current_user": "me",
+      "ticket_requester": "ticket requester",
+      "custom": "other"
     },
     "assignee": {
-      "label": "Ansvarlig",
-      "current_user": "mig",
-      "ticket_assignee": "ansvarlig for ticket",
-      "custom": "anden",
-      "group_label": "Gruppe med ansvarlige",
-      "name_label": "Navn på ansvarlig"
+      "label": "Assignee:",
+      "current_user": "me",
+      "ticket_assignee": "ticket assignee",
+      "custom": "other",
+      "group_label": "Assignee group",
+      "name_label": "Assignee name"
     },
     "copy_description": {
-      "label": "Kopier aktuel ticket-beskrivelse"
+      "label": "Copy current ticket description"
     },
     "ccs": {
-      "label": "CC’er"
+      "label": "CCs:"
     },
     "tags": {
-      "label": "Tags"
+      "label": "Tags:"
     },
-    "submit": "Opret ticket",
-    "loading": "Sender…"
+    "submit": "Create Ticket",
+    "loading": "Submitting..."
   },
   "ticket": {
-    "id": "Id",
-    "subject": "Emne",
+    "id": "ID",
+    "subject": "Subject:",
     "status": "Status",
     "type": "Type",
-    "assignee": "Ansvarlig",
-    "group": "Gruppe",
+    "assignee": "Assignee:",
+    "group": "Group",
     "values": {
       "status": {
-        "new": "Ny",
-        "open": "Åben",
-        "pending": "Venter",
-        "hold": "Sat i bero",
-        "solved": "Løst",
-        "closed": "Lukket"
+        "new": "New",
+        "open": "Open",
+        "pending": "Pending",
+        "hold": "Hold",
+        "solved": "Solved",
+        "closed": "Closed"
       },
       "type": {
         "problem": "Problem",
-        "incident": "Hændelse",
-        "question": "Spørgsmål",
-        "task": "Opgave"
+        "incident": "Incident",
+        "question": "Question",
+        "task": "Task"
       }
     }
-  }
+  },
+  "delimiter": "Original Description",
+  "create_ticket": "Create a ticket"
 }

@@ -82,5 +82,7 @@
         "task": "Tarefa"
       }
     }
-  }
+  },
+  "delimiter": "Descrição original",
+  "create_ticket": "Create a ticket"
 }

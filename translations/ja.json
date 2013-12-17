@@ -82,5 +82,7 @@
         "task": "タスク"
       }
     }
-  }
+  },
+  "delimiter": "元の説明",
+  "create_ticket": "Create a ticket"
 }

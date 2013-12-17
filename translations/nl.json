@@ -82,5 +82,7 @@
         "task": "Taak"
       }
     }
-  }
+  },
+  "delimiter": "Oorspronkelijke beschrijving",
+  "create_ticket": "Create a ticket"
 }

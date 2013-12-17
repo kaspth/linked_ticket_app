@@ -15,8 +15,8 @@
   },
   "ajax_failure": "오류가 발생했습니다. 앱을 다시 로드하십시오.",
   "ancestry_field_missing": "<strong>연결된 티켓 앱:</strong> 설정에 관한 지침에 따라 사용자 지정 필드를 설정했습니까?",
-  "has_parent": "이 티켓에 상위 티켓이 있습니다.",
-  "has_child": "이 티켓에 하위 티켓이 있습니다.",
+  "has_parent": "이 티켓에는 상위 티켓이 있습니다.",
+  "has_child": "이 티켓에는 하위 티켓이 있습니다.",
   "form": {
     "subject": {
       "label": "제목"
@@ -82,5 +82,7 @@
         "task": "작업"
       }
     }
-  }
+  },
+  "delimiter": "원래 설명",
+  "create_ticket": "Create a ticket"
 }

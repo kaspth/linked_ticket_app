@@ -64,7 +64,7 @@
     "subject": "Oggetto",
     "status": "Stato",
     "type": "Tipo",
-    "assignee": "Assegnatario",
+    "assignee": "Assegn.",
     "group": "Gruppo",
     "values": {
       "status": {
@@ -82,5 +82,7 @@
         "task": "Compito"
       }
     }
-  }
+  },
+  "delimiter": "Descrizione originale",
+  "create_ticket": "Create a ticket"
 }

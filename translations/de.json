@@ -82,5 +82,7 @@
         "task": "Aufgabe"
       }
     }
-  }
+  },
+  "delimiter": "Ursprüngliche Beschreibung",
+  "create_ticket": "Create a ticket"
 }
