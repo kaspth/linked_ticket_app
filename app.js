@@ -362,7 +362,7 @@
     childTicketAttributes: function(){
       var params = {
         "subject": this.formSubject(),
-        "comment": {"body": this.formDescription()},
+        "comment": { "body": this.formDescription() },
         "custom_fields": [
           { id: this.ancestryFieldId(), value: 'child_of:' + this.ticket().id() }
         ]
