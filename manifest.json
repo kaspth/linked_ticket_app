@@ -19,7 +19,7 @@
 
   "defaultLocale": "en",
   "private": false,
-  "location": "ticket_sidebar",
+  "location": ["ticket_sidebar", "new_ticket_sidebar"],
   "frameworkVersion": "1.0",
   "version": "1.7"
 }
