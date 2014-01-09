@@ -19,10 +19,10 @@
   "has_child": "このチケットには、子チケットがあります。",
   "form": {
     "subject": {
-      "label": "件名"
+      "label": "件名:"
     },
     "description": {
-      "label": "説明"
+      "label": "説明:"
     },
     "requester_email": {
       "label": "リクエスタのメール"
@@ -34,13 +34,13 @@
       "label": "グループ"
     },
     "requester": {
-      "label": "リクエスタ",
+      "label": "リクエスタ:",
       "current_user": "自分",
       "ticket_requester": "チケットリクエスタ",
       "custom": "その他"
     },
     "assignee": {
-      "label": "担当者",
+      "label": "担当者:",
       "current_user": "自分",
       "ticket_assignee": "チケット担当者",
       "custom": "その他",
@@ -51,20 +51,20 @@
       "label": "現在のチケットの説明をコピー"
     },
     "ccs": {
-      "label": "CC"
+      "label": "CC:"
     },
     "tags": {
-      "label": "タグ"
+      "label": "タグ:"
     },
     "submit": "チケットを作成",
     "loading": "送信中・・・"
   },
   "ticket": {
     "id": "ID",
-    "subject": "件名",
+    "subject": "件名:",
     "status": "ステータス",
     "type": "タイプ",
-    "assignee": "担当者",
+    "assignee": "担当者:",
     "group": "グループ",
     "values": {
       "status": {
@@ -82,5 +82,7 @@
         "task": "タスク"
       }
     }
-  }
+  },
+  "delimiter": "元の説明",
+  "create_ticket": "チケットを作成"
 }
