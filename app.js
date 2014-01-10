@@ -87,19 +87,17 @@
     },
 
     onActivated: function(data) {
-      this.doneLoading = false;
-
-      if (!this.hideAncestryField())
-        return this.doneLoading = true;
-
-      this.loadIfDataReady();
+      _.defer(function() {
+        if (this.hideAncestryField()) {
+          this.loadIfDataReady();
+        }
+      }.bind(this));
     },
 
     loadIfDataReady: function(){
-      if(!this.doneLoading &&
-         this.ticket() &&
-         this.ticket().id() &&
-        !_.isUndefined(this.ancestryValue())){
+      if (this.ticket() &&
+          this.ticket().id() &&
+          !_.isUndefined(this.ancestryValue())){
 
         if (this.hasChild() || this.hasParent())
           return this.ajax('fetchTicket', this.childID() || this.parentID());
