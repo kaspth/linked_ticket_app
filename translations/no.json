@@ -1,86 +1,88 @@
 {
   "app": {
-    "description": "Opret og sammenkæd en ticket fra en eksisterende ticket",
-    "name": "Sammenkædet ticket",
+    "description": "Opprett og koble til en sak fra en eksisterende sak",
+    "name": "Tilkoblet sak",
     "parameters": {
       "ancestry_field": {
-        "label": "Referencefelt",
-        "helpText": "Anbring id'et til et brugerdefineret tekstfelt her for at lagre referencedataene til den sammenkædede ticket. Eksempel: 2240041"
+        "label": "Referansefelt",
+        "helpText": "Plasser en egendefinert tekstfelt-ID her for å lagre referansedata for den tilkoblede saken. Eksempel: 2240041"
       },
       "child_tag": {
-        "label": "Underordnet tag",
-        "helpText": "Denne tag vil blive føjet til den oprettede underordnede ticket. Eksempel: Underordnet_ticket"
+        "label": "Tagg for underordnet sak",
+        "helpText": "Denne taggen blir lagt til i den opprettede underordnede saken. Eksempel: underordnet_sak"
       }
     }
   },
-  "ajax_failure": "Der forekom en fejl. Prøv at indlæse applikationen igen.",
-  "ancestry_field_missing": "<strong>Sammenkædet ticket-applikation:</strong> Fulgte du opsætningsinstruktionerne og konfigurerede et brugerdefineret felt?",
-  "has_parent": "Denne ticket har en overordnet ticket.",
-  "has_child": "Denne ticket har en underordnet ticket.",
+  "ajax_failure": "Det oppstod en feil. Prøv å laste appen på nytt.",
+  "ancestry_field_missing": "<strong>Tilkoblet saksapp:</strong>Fulgte du installeringsanvisningene og konfigurerte et egendefinert felt?",
+  "has_parent": "Denne saken har en overordnet sak.",
+  "has_child": "Denne saken har en underordnet sak.",
   "form": {
     "subject": {
-      "label": "Emne"
+      "label": "Emne:"
     },
     "description": {
-      "label": "Beskrivelse"
+      "label": "Beskrivelse:"
     },
     "requester_email": {
-      "label": "Anmoderens e-mail"
+      "label": "Anmoders e-post"
     },
     "requester_name": {
-      "label": "Anmoderens navn (kun nye anmodere)"
+      "label": "Anmoders navn (kun for nye anmodere)"
     },
     "group": {
       "label": "Gruppe"
     },
     "requester": {
-      "label": "Anmoder",
-      "current_user": "mig",
-      "ticket_requester": "Ticket-anmoder",
-      "custom": "anden"
+      "label": "Anmoder:",
+      "current_user": "meg",
+      "ticket_requester": "saksanmoder",
+      "custom": "annet"
     },
     "assignee": {
-      "label": "Ansvarlig",
-      "current_user": "mig",
-      "ticket_assignee": "ansvarlig for ticket",
-      "custom": "anden",
-      "group_label": "Gruppe med ansvarlige",
-      "name_label": "Navn på ansvarlig"
+      "label": "Saksansvarlig:",
+      "current_user": "meg",
+      "ticket_assignee": "saksansvarlig",
+      "custom": "annet",
+      "group_label": "Gruppe for saksansvarlig",
+      "name_label": "Navn på saksansvarlig"
     },
     "copy_description": {
-      "label": "Kopier aktuel ticket-beskrivelse"
+      "label": "Kopier gjeldende saksbeskrivelse"
     },
     "ccs": {
-      "label": "CC’er"
+      "label": "Kopi til-adresser:"
     },
     "tags": {
-      "label": "Tags"
+      "label": "Tagger:"
     },
-    "submit": "Opret ticket",
-    "loading": "Sender…"
+    "submit": "Opprett sak",
+    "loading": "Sender inn..."
   },
   "ticket": {
-    "id": "Id",
-    "subject": "Emne",
+    "id": "ID",
+    "subject": "Emne:",
     "status": "Status",
     "type": "Type",
-    "assignee": "Ansvarlig",
+    "assignee": "Saksansvarlig:",
     "group": "Gruppe",
     "values": {
       "status": {
         "new": "Ny",
-        "open": "Åben",
+        "open": "Åpen",
         "pending": "Venter",
-        "hold": "Sat i bero",
+        "hold": "På vent",
         "solved": "Løst",
-        "closed": "Lukket"
+        "closed": "Avsluttet"
       },
       "type": {
         "problem": "Problem",
-        "incident": "Hændelse",
-        "question": "Spørgsmål",
-        "task": "Opgave"
+        "incident": "Hendelse",
+        "question": "Spørsmål",
+        "task": "Oppgave"
       }
     }
-  }
+  },
+  "delimiter": "Opprinnelig beskrivelse",
+  "create_ticket": "Opprett sak"
 }

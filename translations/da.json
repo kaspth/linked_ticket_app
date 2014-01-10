@@ -19,10 +19,10 @@
   "has_child": "Denne ticket har en underordnet ticket.",
   "form": {
     "subject": {
-      "label": "Emne"
+      "label": "Emne:"
     },
     "description": {
-      "label": "Beskrivelse"
+      "label": "Beskrivelse:"
     },
     "requester_email": {
       "label": "Anmoderens e-mail"
@@ -34,13 +34,13 @@
       "label": "Gruppe"
     },
     "requester": {
-      "label": "Anmoder",
+      "label": "Anmoder:",
       "current_user": "mig",
       "ticket_requester": "Ticket-anmoder",
       "custom": "anden"
     },
     "assignee": {
-      "label": "Ansvarlig",
+      "label": "Ansvarlig:",
       "current_user": "mig",
       "ticket_assignee": "ansvarlig for ticket",
       "custom": "anden",
@@ -51,20 +51,20 @@
       "label": "Kopier aktuel ticket-beskrivelse"
     },
     "ccs": {
-      "label": "CC’er"
+      "label": "CC’er:"
     },
     "tags": {
-      "label": "Tags"
+      "label": "Tags:"
     },
     "submit": "Opret ticket",
     "loading": "Sender…"
   },
   "ticket": {
     "id": "Id",
-    "subject": "Emne",
+    "subject": "Emne:",
     "status": "Status",
     "type": "Type",
-    "assignee": "Ansvarlig",
+    "assignee": "Ansvarlig:",
     "group": "Gruppe",
     "values": {
       "status": {
@@ -82,5 +82,7 @@
         "task": "Opgave"
       }
     }
-  }
+  },
+  "delimiter": "Original beskrivelse",
+  "create_ticket": "Opret en ticket"
 }

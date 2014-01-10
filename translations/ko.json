@@ -15,14 +15,14 @@
   },
   "ajax_failure": "오류가 발생했습니다. 앱을 다시 로드하십시오.",
   "ancestry_field_missing": "<strong>연결된 티켓 앱:</strong> 설정에 관한 지침에 따라 사용자 지정 필드를 설정했습니까?",
-  "has_parent": "이 티켓에 상위 티켓이 있습니다.",
-  "has_child": "이 티켓에 하위 티켓이 있습니다.",
+  "has_parent": "이 티켓에는 상위 티켓이 있습니다.",
+  "has_child": "이 티켓에는 하위 티켓이 있습니다.",
   "form": {
     "subject": {
-      "label": "제목"
+      "label": "제목:"
     },
     "description": {
-      "label": "설명"
+      "label": "설명:"
     },
     "requester_email": {
       "label": "요청자 이메일"
@@ -34,13 +34,13 @@
       "label": "그룹"
     },
     "requester": {
-      "label": "요청자",
+      "label": "요청자:",
       "current_user": "나",
       "ticket_requester": "티켓 요청자",
       "custom": "기타"
     },
     "assignee": {
-      "label": "담당자",
+      "label": "담당자:",
       "current_user": "나",
       "ticket_assignee": "티켓 담당자",
       "custom": "기타",
@@ -51,20 +51,20 @@
       "label": "현재 티켓 설명 복사"
     },
     "ccs": {
-      "label": "참조"
+      "label": "참조:"
     },
     "tags": {
-      "label": "태그"
+      "label": "태그:"
     },
     "submit": "티켓 만들기",
     "loading": "제출 중..."
   },
   "ticket": {
     "id": "ID",
-    "subject": "제목",
+    "subject": "제목:",
     "status": "상태",
     "type": "유형",
-    "assignee": "담당자",
+    "assignee": "담당자:",
     "group": "그룹",
     "values": {
       "status": {
@@ -82,5 +82,7 @@
         "task": "작업"
       }
     }
-  }
+  },
+  "delimiter": "원래 설명",
+  "create_ticket": "티켓 만들기"
 }
