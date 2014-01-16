@@ -108,7 +108,6 @@
 
     displayHome: function(){
       this.switchTo('home');
-      this.doneLoading = true;
     },
 
     displayForm: function(event){
