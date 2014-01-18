@@ -3,6 +3,7 @@ title: "Linked Ticket"
 packages:
   - default
   - app_linked_ticket_app
+  - classic
 
 parts:
   - translation:
