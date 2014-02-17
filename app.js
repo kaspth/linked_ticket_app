@@ -265,6 +265,18 @@
 
       var is_child = this.childRegex.test(custom_field.value);
 
+      if (is_child) {
+        this.ajax('fetchTicket', this.ticket().id()).done(function(parentData) {
+          var excluding_ancestry = _.reject(parentData.ticket.custom_fields, function(field) {
+            return field.id == this.ancestryFieldId();
+          }, this);
+
+          this.ajax('updateTicket', data.ticket.id, { "ticket": {
+            "custom_fields": excluding_ancestry
+          }});
+        });
+      }
+
       var group = _.find(data.groups, function(item){
         return item.id == data.ticket.group_id;
       });
@@ -493,3 +505,4 @@
     }
   };
 }());
+
