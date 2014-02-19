@@ -10,10 +10,12 @@
       // AJAX EVENTS
       'createChildTicket.done'          : 'createChildTicketDone',
       'fetchTicket.done'                : 'fetchTicketDone',
+      'fetchParentTicket.done'          : 'fetchParentTicketDone',
       'fetchGroups.done'                : function(data){ this.fillGroupWithCollection(data.groups); },
       'createChildTicket.fail'          : 'genericAjaxFailure',
       'updateTicket.fail'               : 'genericAjaxFailure',
       'fetchTicket.fail'                : 'displayHome',
+      'fetchParentTicket.fail'          : 'displayHome',
       'autocompleteRequester.fail'      : 'genericAjaxFailure',
       'fetchGroups.fail'                : 'genericAjaxFailure',
       'fetchUsersFromGroup.fail'        : 'genericAjaxFailure',
@@ -60,6 +62,14 @@
         };
       },
       fetchTicket: function(id){
+        return {
+          url: '/api/v2/tickets/' + id + '.json?include=groups,users',
+          dataType: 'json',
+          type: 'GET'
+        };
+      },
+      fetchParentTicket: function(id) {
+        // defined so fetchTicketDone isn't called with sideeffects
         return {
           url: '/api/v2/tickets/' + id + '.json?include=groups,users',
           dataType: 'json',
@@ -265,17 +275,8 @@
 
       var is_child = this.childRegex.test(custom_field.value);
 
-      if (is_child) {
-        this.ajax('fetchTicket', this.ticket().id()).done(function(parentData) {
-          var excluding_ancestry = _.reject(parentData.ticket.custom_fields, function(field) {
-            return field.id == this.ancestryFieldId();
-          }, this);
-
-          this.ajax('updateTicket', data.ticket.id, { "ticket": {
-            "custom_fields": excluding_ancestry
-          }});
-        });
-      }
+      if (is_child)
+        this.ajax('fetchParentTicket', this.ticket().id());
 
       var group = _.find(data.groups, function(item){
         return item.id == data.ticket.group_id;
@@ -294,6 +295,16 @@
                                       assignee: assignee,
                                       group: group
                                     });
+    },
+
+    fetchParentTicketDone: function(data) {
+      var excluding_ancestry = _.reject(data.ticket.custom_fields, function(field) {
+        return field.id == this.ancestryFieldId();
+      }, this);
+
+      this.ajax('updateTicket', this.childID(),
+        { "ticket": { "custom_fields": excluding_ancestry }
+      });
     },
 
     localizeTicketValue: function(name, value) {
