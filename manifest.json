@@ -1,8 +1,8 @@
 {
-  "name": "Linked Ticket",
+  "name": "Linked Ticket with Parent Values",
   "author": {
-    "name": "Zendesk",
-    "email": "support@zendesk.com"
+    "name": "Kasper Timm Hansen",
+    "email": "kaspth@gmail.com"
   },
 
   "parameters": [
@@ -21,5 +21,5 @@
   "private": true,
   "location": ["ticket_sidebar", "new_ticket_sidebar"],
   "frameworkVersion": "1.0",
-  "version": "1.7"
+  "version": "1.7.1"
 }
