@@ -114,15 +114,12 @@
     },
 
     ticketTagsChanged: function() {
-      console.log(this.childID());
-      if (!this.childID()) return;
+      if (!this.parentID()) return;
 
-      console.log(this.tags());
       var reminderPrefix = 'reminder_';
       var reminderTags = _.filter(this.tags(), function(tag) {
         return tag.slice(0, reminderPrefix.length) == reminderPrefix;
       });
-      console.log(reminderTags);
 
       // this.ajax('fetchParentTicket', this.parentID()).done(function(data) {
       //   var tags = _.union(reminderTags, data.ticket.tags);
