@@ -43,9 +43,7 @@
         return {
           url: '/api/v2/tickets.json',
           dataType: 'json',
-          data: JSON.stringify(ticket),
-          processData: false,
-          contentType: 'application/json',
+          data: ticket,
           type: 'POST'
         };
       },
@@ -53,9 +51,7 @@
         return {
           url: '/api/v2/tickets/'+ id +'.json',
           dataType: 'json',
-          data: JSON.stringify(data),
-          processData: false,
-          contentType: 'application/json',
+          data: data,
           type: 'PUT'
         };
       },
