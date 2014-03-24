@@ -121,13 +121,9 @@
         return tag.slice(0, reminderPrefix.length) == reminderPrefix;
       });
 
-      // this.ajax('fetchParentTicket', this.parentID()).done(function(data) {
-      //   var tags = _.union(reminderTags, data.ticket.tags);
-      //
-      //   this.ajax('updateTicket', data.ticket.id, {
-      //     "ticket": { "tags": tags }
-      //   });
-      // });
+      this.ajax('updateTicket', this.parentID(), {
+        "ticket": { "tags": reminderTags }
+      });
     },
 
     displayHome: function(){
